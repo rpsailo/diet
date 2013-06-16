@@ -7,5 +7,3 @@ extras/documentation
 db.php
 .DS_Store
 application/configs/db.php
-
-application/configs/db.php
