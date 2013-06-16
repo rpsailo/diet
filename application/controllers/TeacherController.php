@@ -37,7 +37,7 @@ class TeacherController extends Zend_Controller_Action
         	}
         }
 
-		$this->view->form = $this->programform;
+		$this->view->form = $this->teacherform;
 	}
 }
 

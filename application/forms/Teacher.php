@@ -1,42 +1,89 @@
 <?php
-class Form_Program extends Twitter_Bootstrap_Form_Horizontal
+class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
 {
     public function init()
     {
         $this->setMethod('post')->setAttrib('class','form form-horizontal well');
         $this->_addClassNames('well');
       
-        $this->addElement('text', 'programname', array(
-            'label'             => 'Program Name',
-            'class'             => 'input-xxlarge',
-            'required'          => true,
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
-        ));
-
-        $this->addElement('text', 'duration', array(
-            'label'             => 'Duration',
+        $this->addElement('select', 'school_id', array(
+            'label'             => 'School',
             'class'             => 'input-large',
-            'append'            => 'Days/Weeks',
+            'required'          => true,
+            'multiOptions'      => array(''=>'---Select School---', 's_id_1'=>'Chaltlang High School')
+        ));
+
+        $this->addElement('text', 'name', array(
+            'label'             => 'Name',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('text', 'target', array(
-            'label'             => 'Target',
-            'class'             => 'input-xxlarge',
+        $this->addElement('select', 'sex', array(
+            'label'             => 'Sex',
+            'class'             => 'input-large',
+            'required'          => true,
+            'multiOptions'      => array(''=>'---Select Sex---', 'male'=>'Male','female'=>'Female')
+        ));
+
+        $this->addElement('text', 'dob', array(
+            'label'             => 'Date of Birth',
+            'class'             => 'datepicker input-medium',
+            'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('textarea', 'objectives', array(
-            'label'             => 'Objectives',
-            'class'             => 'input-xxlarge',
-            'rows'              => 4,
+
+        $this->addElement('text', 'doj', array(
+            'label'             => 'Date of Joining',
+            'class'             => 'datepicker input-medium',
+            'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        	
+
+        $this->addElement('select', 'educational_qualification', array(
+            'label'             => 'Educational Qualification',
+            'class'             => 'input-large',
+            'required'          => true,
+            'multiOptions'      => array(''=>'---Select Qualification---', 'under_graduate'=>'Under Graduate','post_graduate'=>'Post_Graduate', 'PhD'=>'PhD', 'ohers'=>'Others')
+        ));
+
+
+        $this->addElement('text', 'specialization', array(
+            'label'             => 'Specialization',
+            'class'             => 'input-xlarge',
+            'required'          => true,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('select', 'training_status', array(
+            'label'             => 'Training Status',
+            'class'             => 'input-large',
+            'required'          => true,
+            'multiOptions'      => array(''=>'---Select Training Status---', 'Trained'=>'Trained','Un-Trained'=>'Un-Trained')
+        ));
+        
+
+        $this->addElement('text', 'year_of_retirement', array(
+            'label'             => 'Year of Retirement',
+            'class'             => 'input-large',
+            'append'            => 'YYYY-MM-DD',
+            'required'          => true,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+
+        $this->addElement('file', 'photo', array(
+            'label'             => 'Photo',
+            'class'             => 'input-large',
+            'required'          => true,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
         $this->addElement('button', 'add', array(
             'label'         => 'Save',
             'type'          => 'submit',

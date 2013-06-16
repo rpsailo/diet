@@ -36,8 +36,10 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:user:reset-password"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:program:add"), "default");
-		
+
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:add"), "default");
+
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:add"), "default");
 		
 	}
 	
