@@ -6,7 +6,7 @@ $configuration = array(
 			'host'     => 'localhost',
 			'dbname'   => 'diet',
 			'username' => 'root',
-			'password' => ''
+			'password' => 'pass'
 		)
 	)
 );
