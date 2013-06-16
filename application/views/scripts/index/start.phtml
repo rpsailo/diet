@@ -1,0 +1,262 @@
+<div class="row-fluid">
+	<?php echo $this->partial('partials/exam-menu.phtml', array('questions'=>$this->questions, 'current_question'=>$this->current_question));?>
+	
+	<div class="span9">
+		<?php if($this->current_question): ?>
+		<?php //echo $this->current_question['question_no']; ?>
+		<fieldset>
+			<legend id="question_title"><span class="question-number">(Q<?php echo $this->current_question['question_no'];?>)</span> <?php echo $this->current_question['question']->question;?></legend>
+			<div class="row-fluid">
+				<div class="span12">
+					<form action="" method="post" id="question_form">
+						<input type="hidden" name="question_no" id="current_question_no" value="<?php echo $this->current_question['question_no'];?>" />
+						<?php $ans = $this->questions[$this->current_question['question_no']-1]['a']; ?>
+						<table id="question_options" class="table table-striped answer-options table-hover">
+							<?php if($this->current_question['question']->opt1 != ''):?>
+							<tr>
+								<td>
+									<label for="option1">
+										<input onclick="save_answer()" <?php echo ($ans == 'opt1')?'checked="checked"':'';?> type="radio" name="answer" value="opt1" id="option1" />
+										<span><?php echo $this->current_question['question']->opt1;?></span>
+									</label>
+								</td>
+							</tr>
+							<?php endif;?>
+							<?php if($this->current_question['question']->opt2 != ''):?>
+							<tr>
+								<td>
+									<label for="option2">
+										<input onclick="save_answer()" <?php echo ($ans == 'opt2')?'checked="checked"':'';?> type="radio" name="answer" value="opt2" id="option2" />
+										<span><?php echo $this->current_question['question']->opt2;?></span>
+									</label>
+								</td>
+							</tr>
+							<?php endif;?>
+							<?php if($this->current_question['question']->opt3 != ''):?>
+							<tr>
+								<td>
+									<label for="option3">
+										<input onclick="save_answer()" <?php echo ($ans == 'opt3')?'checked="checked"':'';?> type="radio" name="answer" value="opt3" id="option3" />
+										<span><?php echo $this->current_question['question']->opt3;?></span>
+									</label>
+								</td>
+							</tr>
+							<?php endif;?>
+							<?php if($this->current_question['question']->opt4 != ''):?>
+							<tr>
+								<td>
+									<label for="option4">
+										<input onclick="save_answer()" <?php echo ($ans == 'opt4')?'checked="checked"':'';?> type="radio" name="answer" value="opt4" id="option4" />
+										<span><?php echo $this->current_question['question']->opt4;?></span>
+									</label>
+								</td>
+							</tr>
+							<?php endif;?>
+						</table>
+
+						<div id="control_buttons" class="answer-buttons">
+							<div class="container-fluid">
+								<div class="row-fluid">
+									<div class="span3"></div>
+									<div class="span9">
+										<div class="row-fluid btn-toolbar">
+											<div class="span6 text-left">
+												<div class="btn-group">
+													<button data-target="#myModal" data-toggle="modal" id="final_submit" class='btn btn-large btn-danger'>Final Submission</button>
+												</div>
+											</div>
+											<div class="span6 text-right">
+												<div class="btn-group next_previous">
+													<?php if($this->current_question['question_no'] == 1): ?>
+													<button type="button" id="previous_question" class="btn btn-primary disabled btn-large"><i class="icon icon-double-angle-left"></i> Previous</button>
+													<?php else: ?>
+													<button type="button" id="previous_question" class="btn btn-primary btn-large"><i class="icon icon-double-angle-left"></i> Previous</button>
+													<?php endif;?>
+													
+													<button id="clear_form" type="reset" class="btn btn-warning btn-large">Clear Answer</button>
+
+													<?php if(sizeof($this->questions) == $this->current_question['question_no']):?>
+													<button type="button" id="next_question" class="btn btn-primary disabled btn-large">Next <i class="icon icon-double-angle-right"></i></button>
+													<?php else:?>
+													<button type="button" id="next_question" class="btn btn-primary btn-large">Next <i class="icon icon-double-angle-right"></i></button>
+													<?php endif; ?>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</fieldset>
+		<?php endif;?>
+	</div>
+</div>
+<script>
+var total_questions = <?php echo sizeof($this->questions);?>;
+$(function(){
+  	$('.question_numbers button.btn').on('click', function(ev){
+		// $('.question_numbers button.btn.btn-primary').removeClass('btn-success btn-primary');
+  		
+  // 		$(this).removeClass('btn-info').addClass('btn-primary');
+  		
+		$('#next_question').removeClass('disabled');
+		$('#previous_question').removeClass('disabled');
+
+		if(parseInt($(this).val()) == 1)
+			$('#previous_question').addClass('disabled');
+
+		if(parseInt($(this).val()) == total_questions)
+			$('#next_question').addClass('disabled');
+
+  		load_question($(this).val());
+
+  		// update_question_numbers();
+  	});
+
+  	$('#previous_question').on('click', function(ev){
+		var previous = parseInt($("#current_question_no").val()) - 1;
+		$('#next_question').removeClass('disabled');
+		if(previous != 0 && previous > 0)
+		{
+			if(previous == 1)
+				$('#previous_question').addClass('disabled');
+
+			$('.question_numbers button.btn.btn-primary').removeClass('btn-primary').addClass('btn-info');
+	  		$('.question_numbers #button_'+previous).removeClass('btn-info').addClass('btn-primary');
+
+			load_question(previous);
+		}
+  	});
+  	$('#next_question').on('click', function(ev){
+		var next = parseInt($("#current_question_no").val()) + 1;
+		$('#previous_question').removeClass('disabled');
+		if(next <= total_questions)
+		{
+			if(next == total_questions)
+				$('#next_question').addClass('disabled');
+
+			$('.question_numbers button.btn.btn-primary').removeClass('btn-primary').addClass('btn-info');
+	  		$('.question_numbers #button_'+next).removeClass('btn-info').addClass('btn-primary');
+
+			load_question(next);
+		}
+  	});
+
+  	$("#clear_form").on('click', function(){
+  		$("#question_options input").removeAttr('checked');
+
+  		save_answer('clear');
+  	});
+});
+
+function load_question(question_no)
+{
+	$.ajax({
+		url: '/ajax/question/question_no/'+question_no,
+		type: 'get'
+	})
+	.done(function(result){
+		console.log('Loading question Q'+question_no);
+		$("#current_question_no").val(question_no);
+		$("#question_title").html('<span class="question-number">(Q'+question_no+')</span> '+result.question);
+
+		var options = '';
+		if(result.opt1.length)
+		{
+			if(result.ans == 'opt1')
+				options += '<tr><td><label for="option1"><input checked="checked" onclick="save_answer()" type="radio" name="answer" value="opt1" id="option1" /><span>'+result.opt1+'</span></label></td></tr>';
+			else
+				options += '<tr><td><label for="option1"><input onclick="save_answer()" type="radio" name="answer" value="opt1" id="option1" /><span>'+result.opt1+'</span></label></td></tr>';
+		}
+		if(result.opt2.length)
+		{
+			if(result.ans == 'opt2')
+				options += '<tr><td><label for="option2"><input checked="checked" onclick="save_answer()" type="radio" name="answer" value="opt2" id="option2" /><span>'+result.opt2+'</span></label></td></tr>';
+			else
+				options += '<tr><td><label for="option2"><input onclick="save_answer()" type="radio" name="answer" value="opt2" id="option2" /><span>'+result.opt2+'</span></label></td></tr>';
+		}
+		if(result.opt3.length)
+		{
+			if(result.ans == 'opt3')
+				options += '<tr><td><label for="option3"><input checked="checked" onclick="save_answer()" type="radio" name="answer" value="opt3" id="option3" /><span>'+result.opt3+'</span></label></td></tr>';
+			else
+				options += '<tr><td><label for="option3"><input onclick="save_answer()" type="radio" name="answer" value="opt3" id="option3" /><span>'+result.opt3+'</span></label></td></tr>';
+		}
+		if(result.opt4.length)
+		{
+			if(result.ans == 'opt4')
+				options += '<tr><td><label for="option4"><input checked="checked" onclick="save_answer()" type="radio" name="answer" value="opt4" id="option4" /><span>'+result.opt4+'</span></label></td></tr>';
+			else
+				options += '<tr><td><label for="option4"><input onclick="save_answer()" type="radio" name="answer" value="opt4" id="option4" /><span>'+result.opt4+'</span></label></td></tr>';
+		}
+		$("#question_options").html(options);
+
+		update_question_numbers();
+	});
+}
+
+function save_answer(type)
+{
+	$.ajax({
+		url: '/ajax/save-answer/',
+		data: $("#question_form").serialize()
+	})
+	.done(function(result){
+		console.log(result);
+		if(type == 'clear')
+			$("#button_"+$('#current_question_no').val()+"").addClass('btn-info').removeClass('btn-success');
+		else
+			$("#button_"+$('#current_question_no').val()+"").addClass('btn-success').removeClass('btn-primary');
+
+		update_question_numbers();
+	});
+}
+
+function update_question_numbers()
+{
+	$.ajax({
+		url: '/ajax/get-questions/'
+	})
+	.done(function(result){
+		console.log('Update question numbers button');
+		$(result).each(function(i,v){
+			if(v.a == "opt1" || v.a == "opt2" || v.a == "opt3" || v.a == "opt4")
+			{
+				console.log('success_'+i);
+				$("#button_"+(i+1)).addClass('btn-success').removeClass('btn-info').removeClass('btn-primary');
+			}
+			else
+			{
+				console.log('normal_'+i);
+				$("#button_"+(i+1)).addClass('btn-info').removeClass('btn-primary').removeClass('btn-success');
+			}
+		});
+
+		$("#button_"+$('#current_question_no').val()+"").addClass('btn-primary').removeClass('btn-info').removeClass('btn-success');
+
+		console.log($('#current_question_no').val());
+	});
+}
+
+function evaluate_exam()
+{
+	$.ajax({
+		url: '/ajax/evaluate/',
+		beforeSend: function(){
+			$("#myModalLabel").html('Processing...');
+			$("#myModal .modal-footer").hide();
+			$("#myModal .modal-body").html('<p class="text-center"><img src="/templates/default/default/images/loader-velocity.gif" /></p>');
+		}
+	})
+	.done(function(result){
+		window.location.reload();
+	});
+
+	return false;
+}
+
+</script>
+<!--<pre><?php //print_r($this->questions) ?></pre>-->

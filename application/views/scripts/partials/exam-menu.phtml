@@ -1,0 +1,59 @@
+<div class="span3">
+  	<div class="alert alert-info">
+  		TIME LEFT: <span id="time_left"></span>
+  		<p style="display:none;font-style:italic;font-size:11px;" id="time_left_message">Your answers will be submitted automatically when the time is up.</p>
+  	</div>
+  	<div class="row-fluid">
+		<p>Questions Quick Navigation</p>
+		<div class="question_numbers">
+	  		<?php foreach($this->questions as $i=>$q): ?>
+	  		
+	  		<?php if($this->current_question['question_no']-1 == $i): ?>
+	  		<button type="button" value="<?php echo $i+1;?>" id="button_<?php echo ($i+1);?>" class="btn btn-primary"><?php echo ($i+1);?></button>
+	  		<?php elseif($q['a'] != ''): ?>
+	  		<button type="button" value="<?php echo $i+1;?>" id="button_<?php echo ($i+1);?>" class="btn btn-success"><?php echo ($i+1);?></button>
+	  		<?php else:?>
+	  		<button type="button" value="<?php echo $i+1;?>" id="button_<?php echo ($i+1);?>" class="btn btn-info"><?php echo ($i+1);?></button>
+	  		<?php endif;?>
+
+	  		<?php endforeach; ?>
+		</div>
+  	</div>
+</div>
+<script>
+var interval = setInterval('checkExamEndAt()', 1000);
+
+function checkExamEndAt()
+{
+	jQuery.ajax({
+		url: '/ajax/check-exam-end-at/',
+		type: 'get'
+	})
+	.done(function(result){
+		console.log(result.countdown);
+		if(result.countdown <= 600) // Give red alert on 10 minutes
+		{
+			if(result.countdown <= 1)
+				evaluate_exam();
+			
+			jQuery("#time_left_message").show();
+			jQuery("#time_left").parent().removeClass('alert-info').addClass('alert-error');
+			jQuery("#time_left").html(result.time_left);
+		}
+		else
+		{
+			jQuery("#time_left_message").hide();
+			jQuery("#time_left").parent().removeClass('alert-error').addClass('alert-info');
+			jQuery("#time_left").html(result.time_left);
+		}
+
+			// prepareSession();
+
+		// if(result.countdown == 0)
+		// {
+			// clearInterval(interval);
+			// window.location.reload();
+		// }
+	});
+}
+</script>

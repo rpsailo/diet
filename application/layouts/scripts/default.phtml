@@ -1,0 +1,91 @@
+<?php $this->LoadTemplate($this->zone, $this->template); ?><!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">	
+	<?php echo $this->headTitle(); ?>
+	
+	<?php echo $this->headLink(); ?>
+	
+	<?php echo $this->headScript(); ?>
+	
+	<?php echo $this->headStyle(); ?>
+</head>
+<body class="<?php echo $this->actionName; ?> <?php echo $this->controllerName; ?> fl full">
+	<div class="navbar navbar-inverse navbar-fixed-top print-remove">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				
+				<a class="brand" href="/"><i class="icon-globe"></i> DIET Training Management System </a>
+				
+				<div class="nav-collapse collapse">
+					<?php if($this->authenticate):?>
+					<p class="navbar-text pull-right">
+						Logged in as <a href="#profile" class="navbar-link"><?php echo ucwords($this->user->username);?></a>
+					</p>
+					<?php endif;?>
+					
+					<ul class="nav">
+						<?php if($this->authenticate):?>
+						<li class="active"><a href="/">Home</a></li>
+						<li><a href="/user/view/id/<?php echo $this->user->id;?>">Profile</a></li>
+						<li><a href="/user/reset-password/id/<?php echo $this->user->id;?>">Change Password</a></li>
+						<li><a href="/auth/logout">Logout</a></li>
+						<?php endif;?>
+					</ul>
+				</div>
+			</div>
+		</div>
+    </div>	
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<?php if($this->authenticate):?>
+			<div class="span2 print-remove">
+				<ul class="nav nav-tabs nav-pills nav-stacked">
+					<li class="nav-header">Training</li>
+					<li<?php echo ($this->controllerName == 'training' && $this->actionName == 'add')?' class="active"':'';?>><a href="/training/add/"><i class="icon-plus"></i> Add Training</a></li>
+					<li<?php echo ($this->controllerName == 'training' && $this->actionName == 'list')?' class="active"':'';?>><a href="/training/list/"><i class="icon-list-ul"></i> List Trainings</a></li>
+
+					<li class="nav-header">School</li>
+					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'add')?' class="active"':'';?>><a href="/school/add/"><i class="icon-plus"></i> Add School</a></li>
+					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'list')?' class="active"':'';?>><a href="/school/list/"><i class="icon-list-ul"></i> List Schools</a></li>
+
+					<li class="nav-header">Teachers</li>
+					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'add')?' class="active"':'';?>><a href="/teacher/add/"><i class="icon-plus"></i> Add Teacher</a></li>
+					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'list')?' class="active"':'';?>><a href="/teacher/list/"><i class="icon-list-ul"></i> List Teachers</a></li>
+
+					<li class="nav-header">Programs</li>
+					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'add')?' class="active"':'';?>><a href="/program/add/"><i class="icon-plus"></i> Add Program</a></li>
+					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'list')?' class="active"':'';?>><a href="/program/list/"><i class="icon-list-ul"></i> List Programs</a></li>
+
+					<li class="nav-header">Users</li>
+					<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'add')?' class="active"':'';?>><a href="/user/add/"><i class="icon-list-ul"></i> Add User</a></li>
+					<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'index')?' class="active"':'';?>><a href="/user/"><i class="icon-list-ul"></i> List Users</a></li>					
+				</ul>
+			</div>
+			<?php endif;?>
+
+			<?php if($this->authenticate):?>
+			<div class="span10">
+			<?php else: ?>
+			<div class="span4"></div>
+			<div class="span4">
+			<?php endif;?>
+				<?php echo $this->Alert();?>
+				<?php echo $this->layout()->content; ?>
+			</div>
+			<?php if(!$this->authenticate):?>
+			<div class="span4"></div>
+			<?php endif;?>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<p class="muted credit">Copyright Reserved. <a href="http://alan.pachuau.me">Alan Pachuau</a> and <a href="http://ryanfait.com/sticky-footer/">Ryan Fait</a>.</p>
+	</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+	<globalstyles>
+		<stylesheet>
+			<file>/library/bootstrap/css/bootstrap.min.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+		<stylesheet>
+			<file>/library/bootstrap/css/bootstrap-responsive.min.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+		<stylesheet>
+			<file>/library/bootstrap/css/font-awesome.min.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+		<stylesheet>
+			<file>/library/bootstrap/css/font-awesome-ie7.min.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+<!-- 		<stylesheet>
+			<file>/library/datepicker/css/datepicker.css</file>
+			<media>screen, projection</media>
+		</stylesheet> -->
+		<stylesheet>
+			<file>/library/bootstrap-datetimepicker-0.0.10/css/bootstrap-datetimepicker.min.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+	</globalstyles>
+	
+	<stylesheets>
+		<stylesheet>
+			<file>css/template.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+		<stylesheet>
+			<file>css/print.css</file>
+			<media>print</media>
+		</stylesheet>
+	</stylesheets>
+	
+	<globalscripts>
+		<script>/library/jquery/jquery-1.9.1.min.js</script>
+		<!-- <script>/library/jquery/jquery-1.8.3.min.js</script> -->
+		<script>/library/bootstrap/js/bootstrap.min.js</script>
+		<!-- <script>/library/datepicker/js/bootstrap-datepicker.js</script> -->
+		<script>/library/bootstrap-datetimepicker-0.0.10/js/bootstrap-datetimepicker.min.js</script>
+	</globalscripts>
+
+	<scripts>
+		<script>js/script.js</script>
+	</scripts>
+</template>

@@ -1,0 +1,140 @@
+<div class="row-fluid">
+	<div class="span6 print-remove">
+		<fieldset>
+			<legend>Your Answers</legend>
+			<div class="row-fluid">
+				<div class="span12">
+					<table id="question_answers_overview" class="table table-striped">
+					<?php
+					$total_questions_answered = 0;
+					$total_correct = 0;
+					$total_wrong = 0;
+					$correct_mark = $this->Setting('correct_mark');
+					$incorrect_mark = $this->Setting('incorrect_mark');
+					?>
+					<?php foreach($this->questions as $no=>$q): ?>
+					<?php
+						$question = $this->questionm->get($q['q']);
+						if($q['a'] == 'opt1' || $q['a'] == 'opt2' || $q['a'] == 'opt3' || $q['a'] == 'opt4')
+							$total_questions_answered++;
+
+						if($q['a'] != '')
+						{
+							if( $question->ans == $q['a'] )
+								$total_correct++;
+							elseif( $question->ans != $q['a'] )
+								$total_wrong++;
+						}
+					?>
+							<tr>
+								<td class="span11">
+									<h6>(Q<?php echo $no+1;?>): <?php echo $question->question; ?></h6>
+									<p><b>Your Answer: </b><?php
+									if($q['a'] == 'opt1')
+										echo "Option 1 - ".$question->opt1;
+									else if($q['a'] == 'opt2')
+										echo "Option 2 - ".$question->opt2;
+									else if($q['a'] == 'opt3')
+										echo "Option 3 - ".$question->opt3;
+									else if($q['a'] == 'opt4')
+										echo "Option 4 - ".$question->opt4;
+									else
+										echo "Not Answered";
+									?></p>
+									<p><b>Correct Answer: </b><?php
+									if($question->ans == 'opt1')
+										echo "Option 1 - ".$question->opt1;
+									if($question->ans == 'opt2')
+										echo "Option 2 - ".$question->opt2;
+									if($question->ans == 'opt3')
+										echo "Option 3 - ".$question->opt3;
+									if($question->ans == 'opt4')
+										echo "Option 4 - ".$question->opt4;
+									?></p>
+								</td>
+
+								<?php if($q['a'] == ""): ?>
+								<td class="span1" valign="middle" style="vertical-align:middle;font-size:20px;color:#b94a48"></td>
+								<?php elseif($question->ans == $q['a']) : ?>
+								<td class="span1" valign="middle" style="vertical-align:middle;font-size:20px;color:#468847"><i class="icon-ok"></i></td>
+								<?php else : ?>
+								<td class="span1" valign="middle" style="vertical-align:middle;font-size:20px;color:#b94a48"><i class="icon-remove"></i></td>
+								<?php endif; ?>
+							</tr>
+					<?php endforeach;?>
+					</table>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class="span6">
+		<div class="row-fluid">
+			<div class="span12">
+				<fieldset>
+					<legend>Profile</legend>
+					<div class="row-fluid">
+						<div class="student-detail">
+							<div class="row-fluid">
+								<div class="span2 student-photo">
+									<img src="<?php echo $this->student->passport;?>" alt="Passport Photo" />
+								</div>
+								<div class="span10">
+									<div class="row-fluid">
+										<span class="span4"><b>Name</b></span>
+										<span class="span8"><?php echo $this->student->student_name;?></span>
+									</div>
+									
+									<div class="row-fluid">
+										<span class="span4"><b>Roll No</b></span>
+										<span class="span8"><?php echo $this->student->roll_no;?></span>
+									</div>
+									
+									<div class="row-fluid">
+										<span class="span4"><b>Course</b></span>
+										<span class="span8"><?php echo $this->Course($this->student->course_id);?></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<fieldset>
+					<legend>Result - <?php echo $this->exam->exam_name;?> Exam (<?php echo $this->Date($this->exam->start_at);?>)</legend>
+					<div class="row-fluid">
+						<div class="span12">
+							<div class="row-fluid">
+								<span class="span4"><b>Total Questions</b></span>
+								<span class="span8"><?php echo sizeof($this->questions);?></span>
+							</div>
+							<div class="row-fluid">
+								<span class="span4"><b>Total Questions Answered</b></span>
+								<span class="span8"><?php echo $total_questions_answered;?></span>
+							</div>
+							<div class="row-fluid">
+								<span class="span4"><b>Total Correct Answers</b></span>
+								<span class="span8"><?php echo $total_correct . " (+" . ($total_correct * $correct_mark)." Marks)";?></span>
+							</div>
+							<div class="row-fluid">
+								<span class="span4"><b>Total Wrong Answers</b></span>
+								<span class="span8"><?php echo $total_wrong . " (-" . ($total_wrong * $incorrect_mark)." Marks)"; ?></span>
+							</div>
+							<div class="row-fluid">
+								<span class="span4"><b class="lead">Final Grade</b></span>
+								<span class="span8"><b class="lead">(<?php
+								$total_mark = sizeof($this->questions) * $correct_mark;
+								$mark_secured = (($total_correct * $correct_mark) - ($total_wrong * $incorrect_mark));
+								$percent = ($mark_secured / $total_mark) * 100;
+								echo $this->Grade($percent);
+								?>)</b></span>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</div>

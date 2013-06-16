@@ -1,0 +1,279 @@
+* {
+	margin:0;
+	padding:0;
+}
+body {
+	font-family:arial;
+	font-size:14px;
+	color:#666;
+}
+.fl {
+	float:left;
+}
+.fr {
+	float:right;
+}
+.full {
+	width:100%;
+}
+.clear {
+	clear:both;
+}
+.dif-color {
+	color:#29d7c5;
+}
+.db {
+	display:block;
+}
+.center {
+	text-align:center;
+}
+.same-wid {
+	width:624px;
+}
+caption {
+	font-size:20px;
+	border:1px solid #999;
+	padding:4px 0;
+}
+.outer-wrapper {
+	width:100%;
+	margin:0 auto;
+}
+.inner-wrapper {
+	width:100%;
+}
+/***************************
+login style
+**************************/
+.login-wrapper {
+	margin:100px auto;
+	width:574px;
+	height:448px;
+	border:1px solid #999;
+}
+.login-wrapper h1,
+.login-wrapper  p {
+	text-align:center;
+}
+.login-wrapper h1 {
+	margin: 56px 0 8px 0px;
+	font-size:32px;
+}
+.login-wrapper p {
+	font-size:26px;
+	margin-bottom:62px;
+}
+.log-field {
+	margin-bottom:20px;
+	text-align:Center;
+}
+.log-field input.field ,
+.log-field input[type=text]{
+	width:190px;
+	height:22px;
+	padding-left:10px;
+	font-style:italic;
+	color:#888;
+	background:none;
+	border:1px solid #999;
+}
+.log-field .login,
+#submit-element input[type=submit] {
+	width:90px;
+	height:26px;
+	background:#dedede;
+	border:1px solid #999;
+	cursor:pointer;
+	color:#333;
+}
+/************************************
+main style
+*************************************/
+.main-wrapper {
+	border:2px solid #999;
+	margin-top:50px;
+	width:99.84%;
+}
+.main-wrapper .top-content {
+	border-bottom:1px solid #999;
+	height:46px;
+	padding:0 44px;
+	width:95.4%;
+	line-height:46px;
+}
+/************************
+left content style
+************************/
+.main-wrapper .left-content {
+	width:208px;
+	border-right:1px solid #999;
+	padding:26px 0 26px 16px;
+}
+.main-wrapper .left-content h3 {
+	border-bottom:1px solid #999;
+	width:168px;
+	padding-bottom:6px;
+	margin-bottom:10px;
+}
+.main-wrapper .left-content ul li a:hover,
+.main-wrapper .left-content ul li a.active,
+.main-wrapper .left-content ul li a.active:hover {
+	color:#29d7c5;
+}
+.main-wrapper .left-content ul {
+	list-style:none;
+	margin-left:26px;
+	float:left;
+}
+.main-wrapper .left-content ul li {
+	margin-bottom:8px;
+}
+.main-wrapper .left-content ul li a {
+	text-decoration:none;
+	color:#555;
+}
+.main-wrapper .left-content .left-span {
+	margin-bottom:10px;
+	font-size:16px;
+}
+.main-wrapper .left-content .small-box {
+	margin-left:20px;
+	clear:both;
+}
+/****************************************
+main-content
+****************************************/
+.main-wrapper .main-content {
+	width:87.2%;
+	margin:18px 0 18px 16px;
+}
+.main-wrapper .main-content .welcome-page h2 {
+	font-size:44px;
+}
+.main-wrapper .main-content .welcome-page p {
+	font-size:22px;
+	margin:10px 0;
+}
+/*****************************
+reoport style
+********************************/
+.main-wrapper .main-content .text-head {
+	font-size:24px;
+	margin-bottom:32px;
+}
+.main-wrapper .main-content .text-head.small,
+.hint {
+	font-size:18px;
+	margin:0 0 30px 10px;
+	text-align:left;
+}
+.main-wrapper .main-content .report-wrapper select {
+	width:176px;
+	height:22px;
+	margin-bottom:30px;
+}
+.main-wrapper .main-content .report-wrapper .selec-wrap {
+	margin-right:10px;
+}
+.main-wrapper .main-content .report-wrapper label {
+	float:left;
+	margin-right:8px;
+	text-align:left;
+	margin-left:10px;
+}
+.main-wrapper .main-content .report-wrapper .display-button {
+	margin-top:20px;
+}
+.main-wrapper .main-content .report-wrapper .display-button  input{
+	width:102px;
+	height:27px;
+	background:#dedede;
+	border:1px solid #999;
+	color:#333;
+	cursor:pointer;
+}
+/****************
+add new account
+****************/
+.main-wrapper .main-content .report-wrapper .add-new {
+	margin:0 0 0 40px;
+}
+.main-wrapper .main-content .report-wrapper .add-new .log-field {
+	text-align:justify;
+}
+.main-wrapper .main-content .report-wrapper .add-new .log-field.add-new-btn {
+	margin-left:68px;
+}
+.main-wrapper .main-content .report-wrapper .add-new .log-field label {
+	width:60px;
+}
+/****************
+add new rd block
+****************/
+.main-wrapper .main-content .report-wrapper .add-new-rdb .log-field label {
+	width:130px;
+}
+.main-wrapper .main-content .report-wrapper .add-new .log-field.add-new-btn.add-rdb,
+#submit-element {
+    margin-left: 48px;
+}
+/**************************************
+scheduled insert style
+***************************************/
+.main-wrapper .main-content .scheduled .col-wrap {
+	margin-bottom:60px;
+}
+.main-wrapper .main-content .scheduled .block-wrap {
+	margin-right:108px;
+}
+.main-wrapper .main-content  label {
+	width:200px;
+}
+
+.main-wrapper .main-content  input[type='text']{
+	height: 22px;
+    margin-bottom: 30px;
+    width: 160px;
+}
+/**************mix***********/
+dd,dt {
+	float:left;
+}
+.fixed-form label {
+	margin:0 10px 0 46px;
+}
+.main-wrapper .main-content fieldset {
+	float: left;
+    height: 462px;
+    margin-bottom: 18px;
+    margin-right: 64px;
+    padding: 34px 0 0;
+    width: 470px;
+}
+.main-content .fixed {
+	width:100%;
+	overflow:hidden;
+	overflow-x:scroll;
+	margin-top:56px;
+	float:left;
+}
+.main-content .fixed table {
+	border:1px solid #999;
+	border-collapse:collapse;
+	margin-bottom:75px;
+}
+.main-content .fixed table th {
+	padding:0 25px;
+	height:84px;
+}
+.main-content .fixed table td {
+	padding:10px;
+}
+.main-content .fixed .vill_abs table td {
+	padding:6px 25px;
+}
+.main-content .fixed table td, 
+.main-content .fixed table th {
+	border:1px solid #999;
+}

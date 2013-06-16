@@ -1,0 +1,14 @@
+* {position: relative;}
+.print-remove{display:none;}
+body {
+	line-height: 24px;
+	font-size: 16px;
+}
+.lead {font-weight: bold; font-size: 20px;margin:10px 0 0;}
+fieldset {border:none;}
+#result_title {font-weight:bold;font-size:18px;}
+table {width:100%;position: relative;border-collapse: collapse;}
+table th {border-bottom: 2px solid #222;padding:5px 10px;position: relative;}
+table td {border-bottom: 1px solid #555;padding:5px 10px;position: relative;}
+table tr { page-break-after:always;page-break-inside:avoid; position: relative;}
+thead {display: table-header-group;}

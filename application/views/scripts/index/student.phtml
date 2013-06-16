@@ -1,0 +1,136 @@
+<div class="row-fluid">
+	<div class="span6">
+		<fieldset>
+			<legend>Profile</legend>
+			<div class="row-fluid">
+				<div class="student-detail">
+					<div class="row-fluid">
+						<div class="span2 student-photo">
+							<img src="<?php echo $this->student->passport;?>" alt="Passport Photo" />
+						</div>
+						<div class="span10">
+							<div class="row-fluid">
+								<span class="span4"><b>Name</b></span>
+								<span class="span8"><?php echo $this->student->student_name;?></span>
+							</div>
+							
+							<div class="row-fluid">
+								<span class="span4"><b>Roll No</b></span>
+								<span class="span8"><?php echo $this->student->roll_no;?></span>
+							</div>
+							
+							<div class="row-fluid">
+								<span class="span4"><b>Date of Birth</b></span>
+								<span class="span8"><?php echo $this->student->dob;?></span>
+							</div>
+							
+							<div class="row-fluid">
+								<span class="span4"><b>Course</b></span>
+								<span class="span8"><?php echo $this->Course($this->student->course_id);?></span>
+							</div>
+							
+							<div class="row-fluid">
+								<span class="span4"><b>Sex</b></span>
+								<span class="span8"><?php echo $this->student->sex;?></span>
+							</div>
+							
+							<div class="row-fluid">
+								<span class="span4"><b>Nationality</b></span>
+								<span class="span8"><?php echo $this->student->nationality;?></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+	<div class="span6">
+		<fieldset>
+			<legend>Exam</legend>
+			<div class="row-fluid">
+				<div class="student-detail">
+					<div class="row-fluid">
+						<div class="span12">
+							<?php if($this->exam): ?>
+							<div class="row-fluid">
+								<span class="span4"><b>Exam</b></span>
+								<span class="span8"><?php echo $this->exam->exam_name;?></span>
+							</div>
+							<div class="row-fluid">
+								<span class="span4"><b>Date</b></span>
+								<span class="span8"><?php echo $this->Date($this->exam->start_at, 'dS M Y, l');?></span>
+							</div>
+							<div class="row-fluid">
+								<span class="span4"><b>Duration</b></span>
+								<span class="span8"><?php echo $this->exam->exam_duration;?> Minutes</span>
+							</div>
+							<div class="row-fluid">
+								<span class="span4"><b>Start At</b></span>
+								<span class="span8"><?php echo $this->Date($this->exam->start_at, 'h:i A');?></span>
+							</div>
+							<div class="row-fluid">
+								<span class="span4"><b>End At</b></span>
+								<span class="span8"><?php echo $this->Date($this->exam->end_at, 'h:i A');?></span>
+							</div>
+							<?php else:?>
+							<div class="row-fluid">
+								<span class="span12 alert alert-error"><b>Exam not available</b></span>
+							</div>
+							<?php endif;?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>
+<?php if($this->exam): ?>
+<div class="row-fluid">
+	<div class="span12">
+		<div class="alert alert-info text-center lead">Please wait! Exam will start automatically at <b id="exam_start_at"><?php echo $this->Date($this->exam->start_at, 'h:i A');?></b>. Time left: <b id="exam_start_time_left"></b></div>
+	</div>
+</div>
+<script type="text/javascript">
+
+startexam();
+
+var checkExamStartAtInterval;
+
+function startexam()
+{
+	checkExamStartAtInterval = setInterval('checkExamStartAt()', 1000);
+}
+
+function checkExamStartAt()
+{
+	jQuery.ajax({
+		url: '/ajax/check-exam-start-at/',
+		type: 'get'
+	})
+	.done(function(result){
+		jQuery("#exam_start_at").text(result.start_at);
+		jQuery("#exam_start_time_left").text(result.time_left);
+		console.log(result.countdown);
+		if(result.countdown == 3)
+			prepareSession();
+
+		if(result.countdown == 0)
+		{
+			clearInterval(checkExamStartAtInterval);
+			window.location.reload();
+		}
+	});
+}
+
+function prepareSession()
+{
+	jQuery.ajax({
+		url: '/ajax/prepare-session/',
+		type: 'get'
+	})
+	.done(function(result){
+		console.log(result);
+	});
+}
+</script>
+<?php endif;?>
