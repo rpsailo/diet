@@ -20,4 +20,11 @@ class Model_School extends System_DbTable
         return $new_row->save();
     }
 
+    public function all()
+    {
+        $select = $this->select();
+        $select->order('name asc');
+        return $this->fetchAll($select);
+    }
+
 }

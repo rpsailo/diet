@@ -10,8 +10,12 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
             'label'             => 'School',
             'class'             => 'input-large',
             'required'          => true,
-            'multiOptions'      => array(''=>'---Select School---', 's_id_1'=>'Chaltlang High School')
+            'multiOptions'      => array(''=>'---Select School---')
         ));
+        $schoolmodel = new Model_School();
+        $schools = $schoolmodel->all();
+        foreach($schools as $school)
+            $this->school_id->addMultiOption($school->id, $school->name);
 
         $this->addElement('text', 'name', array(
             'label'             => 'Name',
@@ -36,7 +40,7 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
         ));
 
 
-        $this->addElement('text', 'doj', array(
+        $this->addElement('text', 'date_of_joining', array(
             'label'             => 'Date of Joining',
             'class'             => 'datepicker input-medium',
             'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
@@ -45,11 +49,11 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
         ));
 
 
-        $this->addElement('select', 'educational_qualification', array(
+        $this->addElement('text', 'educational_qualification', array(
             'label'             => 'Educational Qualification',
-            'class'             => 'input-large',
+            'class'             => 'input-xlarge',
             'required'          => true,
-            'multiOptions'      => array(''=>'---Select Qualification---', 'under_graduate'=>'Under Graduate','post_graduate'=>'Post_Graduate', 'PhD'=>'PhD', 'ohers'=>'Others')
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
 
@@ -70,14 +74,14 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
 
         $this->addElement('text', 'year_of_retirement', array(
             'label'             => 'Year of Retirement',
-            'class'             => 'input-large',
-            'append'            => 'YYYY-MM-DD',
+            'class'             => 'input-medium',
+            'append'            => 'YYYY',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
 
-        $this->addElement('file', 'photo', array(
+        $this->addElement('file', 'picture', array(
             'label'             => 'Photo',
             'class'             => 'input-large',
             'required'          => true,
