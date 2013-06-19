@@ -17,7 +17,7 @@ class Form_SchoolToolbar extends Twitter_Bootstrap_Form_Inline
         $this->addElement('select', 'type', array(
             'label'             => 'Type',
             'class'             => 'input-medium',
-            'multiOptions'      => array(''=>'Type - All', 'Adhoc'=>'Adhoc')
+            'multiOptions'      => array(''=>'Type - All','Govt'=>'Govt','Deficit'=>'Deficit','Adhoc'=>'Adhoc','Aided'=>'Aided','Private'=>'Private')
         ));
 
         $this->addElement('text', 'year_of_establishment', array(
