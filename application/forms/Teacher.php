@@ -89,7 +89,7 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
         ));
 
 
-        $this->addElement('file', 'photo', array(
+        $this->addElement('file', 'picture', array(
             'label'             => 'Photo',
             'class'             => 'input-large',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
