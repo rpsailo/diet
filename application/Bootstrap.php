@@ -161,7 +161,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		}
 		
 		$view->doctype('XHTML1_TRANSITIONAL');
-		$view->headTitle('DIET Training Management System');
+		$view->headTitle('DIET Serchhip Training Management System');
 		
 		$view->addHelperPath( dirname(__FILE__) . '/views/helpers/' );
 		$view->addScriptPath( dirname(__FILE__) . '/views/scripts/' );

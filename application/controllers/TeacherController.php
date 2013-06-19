@@ -304,49 +304,6 @@ class TeacherController extends Zend_Controller_Action
 			$this->_redirect('/teacher/');
 		}
 	}
-
-	public function editTrainingAction()
-	{
-		$id = $this->_request->getParam('id'); // Teacher ID
-
-		if($id)
-		{
-			$teacher = $this->teachermodel->find($id)->current();
-			
-			if($teacher)
-			{
-			 	if($this->_request->isPost())
-		        {
-		        	if($this->trainingform->isValid($_POST))
-		        	{
-			            $result = $this->trainingmodel->create($this->_request->getPost());
-			            if($result)
-			            {
-			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> New training added for "'.$teacher->name.'".', "status"=>"success"));
-			                $this->_redirect("/teacher/training/id/".$teacher->id);
-			            }
-		        	}
-		        }
-				
-				$this->trainingform->teacher_id->setValue($teacher->id);
-				$this->trainingform->from->setValue(date('Y-m-d',strtotime('today')));
-				$this->trainingform->to->setValue(date('Y-m-d',strtotime('tomorrow')));
-				$this->trainingform->status->setValue('Active');
-				$this->view->form = $this->trainingform;
-				$this->view->teacher = $teacher;
-			}
-			else
-			{
-				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid teacher ID.', "status"=>"error"));
-				$this->_redirect('/teacher/');
-			}
-		}
-		else
-		{
-			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect teacher ID.', "status"=>"error"));
-			$this->_redirect('/teacher/');
-		}
-	}
 }
 
 
