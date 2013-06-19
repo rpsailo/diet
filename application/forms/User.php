@@ -10,7 +10,6 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
             'label'             => 'Display Name',
             'class'             => 'input-xlarge',
             'required'          => true,
-            'validators'        => array(new Zend_Validate_Alnum()),
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
