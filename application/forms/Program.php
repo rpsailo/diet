@@ -40,7 +40,7 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('select', 'faculties', array(
+        $this->addElement('multiselect', 'faculties', array(
             'label'             => 'Faculties',
             'class'             => 'input-xxlarge',
             'multiple'          => 'multiple',
@@ -50,9 +50,10 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
         ));
         $usermodel = new Model_User();
         $faculties = $usermodel->faculties();
-        foreach ($faculties as $key => $f) {
-            $this->faculties->addMultiOption($f->id, $f->name." - ".$f->educational_qualification);
-        }
+        $faculty_data = array();
+        foreach ($faculties as $key => $f)
+            $faculty_data[$f->id] = $f->name." - ".$f->educational_qualification;
+        $this->faculties->setMultiOptions($faculty_data);
         	
         $this->addElement('button', 'add', array(
             'label'         => 'Save',
