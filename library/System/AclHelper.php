@@ -40,6 +40,9 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:program:edit"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:program:remove"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:program:view"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:program:trainee"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:program:add-trainee"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:program:remove-trainee"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:add"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:index"), "default");
@@ -53,8 +56,10 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:view"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:training"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:add-training"), "default");
-		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:edit-training"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:remove-training"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:change-training-status"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:change-training-date"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:typeahead"), "default");
 		
 	}
 	

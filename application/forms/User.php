@@ -37,16 +37,18 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
 
         $this->addElement('text', 'dob', array(
             'label'             => 'Date of Birth',
-            'class'             => 'datepicker input-medium',
-            'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
+            'class'             => 'pickadate input-medium',
+            // 'class'             => 'datepicker input-medium',
+            // 'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'date_of_joining', array(
             'label'             => 'Date of Joining',
-            'class'             => 'datepicker input-medium',
-            'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
+            'class'             => 'pickadate input-medium',
+            // 'class'             => 'datepicker input-medium',
+            // 'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));

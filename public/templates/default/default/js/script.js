@@ -19,6 +19,13 @@ jQuery(function(){
 		});
 	}
 
+	if(jQuery('.pickadate').length > 0 )
+	{
+		jQuery('.pickadate').pickadate({
+			format: 'yyyy-mm-dd'
+		});
+	}
+
 	if(jQuery('#clock').length > 0)
 	{
 		updateClock();

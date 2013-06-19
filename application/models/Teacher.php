@@ -60,4 +60,23 @@ class Model_Teacher extends System_DbTable
         $select->order('specialization asc');
         return $this->fetchAll($select);
     }
+
+    public function typeahead($name, $limit)
+    {
+        if($name == '')
+            return null;
+
+        $select = $this->select();
+        $select->setIntegrityCheck(false);
+        $select->from($this->_name, array('id', 'school_id', 'name'));
+        $select->join('school', $this->_name.'.school_id = school.id', array('school_name'=>'school.name'));
+
+        $select->where($this->_name.".`name` LIKE '%".$name."%'");
+        
+        if(is_numeric($limit))
+            $select->limit($limit);
+        
+        $select->order('teacher.name asc');
+        return $this->fetchAll($select);
+    }
 }

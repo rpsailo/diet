@@ -1,5 +1,5 @@
 <?php
-class Form_Training extends Twitter_Bootstrap_Form_Horizontal
+class Form_Trainee extends Twitter_Bootstrap_Form_Horizontal
 {
     public function init()
     {
@@ -8,18 +8,20 @@ class Form_Training extends Twitter_Bootstrap_Form_Horizontal
         $this->_addClassNames('form-horizontal');
         $this->_addClassNames('well');
       
-        $this->addElement('select', 'program_id', array(
-            'label'             => 'Progamme',
-            'class'             => 'input-large',
+        $this->addElement('text', 'teacher', array(
+            'label'             => 'Teacher',
+            'class'             => 'input-xxlarge',
             'required'          => true,
-            'multiOptions'      => array(''=>'---Select Programme---')
+            'placeholder'       => 'Teacher Name',
+            'autocomplete'      => 'off'
         ));
-        $programmodel = new Model_Program();
-        $programs = $programmodel->all();
-        foreach($programs as $program)
-            $this->program_id->addMultiOption($program->id, $program->name);
 
         $this->addElement('hidden', 'teacher_id', array(
+            'required'          => true,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('hidden', 'program_id', array(
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));

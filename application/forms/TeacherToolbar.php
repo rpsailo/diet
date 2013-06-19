@@ -33,6 +33,17 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
             $this->specialization->addMultiOption($s->specialization, $s->specialization);
         }
 
+        $this->addElement('select', 'school', array(
+            'label'             => 'School',
+            'class'             => 'input-medium',
+            'multiOptions'      => array(''=>'School - All')
+        ));
+        $schoolmodel = new Model_School();
+        $schools = $schoolmodel->all();
+        foreach ($schools as $key => $s) {
+            $this->school->addMultiOption($s->id, $s->name);
+        }
+
         $this->addElement('text', 'year_of_retirement', array(
             'label'             => 'Year of Retirement',
             'placeholder'             => 'Year of Retirement',

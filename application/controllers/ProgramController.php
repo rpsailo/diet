@@ -7,12 +7,16 @@ class ProgramController extends Zend_Controller_Action
 	protected $programmodel;
 	protected $programform;
 	protected $programtoolbarform;
+	protected $trainingmodel;
+	protected $traineeform;
 
 	public function init()
 	{
 		$this->programmodel = new Model_Program();
 		$this->programform = new Form_Program();
 		$this->programtoolbarform = new Form_ProgramToolbar();
+		$this->trainingmodel = new Model_Training();
+		$this->traineeform = new Form_Trainee();
 
 		$this->_alert = $this->_helper->getHelper("FlashMessenger");
 		$this->auth = Zend_Auth::getInstance();
@@ -152,6 +156,113 @@ class ProgramController extends Zend_Controller_Action
 		{
 			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect programme ID.', "status"=>"error"));
 			$this->_redirect('/program/');
+		}
+	}
+
+	public function traineeAction()
+	{
+		$id = $this->_request->getParam('id', null); // Program ID
+		$page = $this->_request->getParam('page', 1);
+		
+		if($id)
+		{
+			$program = $this->programmodel->find($id)->current();
+			
+			if($program)
+			{
+				$params = array(
+		    		'page'		=> $page,
+		    		'order'		=> 'teacher_name asc',
+		    		'condition'	=> array('program_id = '.$id),
+		    		'table'			=> 'training',
+					'field'			=> 'training.*',
+					'join_table'	=> 'teacher',
+		    		'join_on'		=> 'training.teacher_id = teacher.id',
+		    		'join_field'	=> array('teacher_name'=>'teacher.name', 'school_id')
+				);
+				$this->view->data = $this->trainingmodel->paginate($params);
+				$this->view->program = $program;
+			}
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid programme ID.', "status"=>"error"));
+				$this->_redirect('/program/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect programme ID.', "status"=>"error"));
+			$this->_redirect('/program/');
+		}
+	}
+
+	public function addTraineeAction()
+	{
+		$id = $this->_request->getParam('id'); // Program ID
+
+		if($id)
+		{
+			$program = $this->programmodel->find($id)->current();
+			
+			if($program)
+			{
+			 	if($this->_request->isPost())
+		        {
+		        	if($this->traineeform->isValid($_POST))
+		        	{
+			            $result = $this->trainingmodel->create($this->_request->getPost());
+			            if($result)
+			            {
+			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> New trainee added for "'.$program->name.'".', "status"=>"success"));
+			                $this->_redirect("/program/trainee/id/".$program->id);
+			            }
+		        	}
+		        }
+				
+				$this->traineeform->program_id->setValue($program->id);
+				$this->traineeform->from->setValue(date('Y-m-d',strtotime('today')));
+				$this->traineeform->to->setValue(date('Y-m-d',strtotime('tomorrow')));
+				$this->traineeform->status->setValue('Active');
+				$this->view->form = $this->traineeform;
+				$this->view->program = $program;
+			}
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid programme ID.', "status"=>"error"));
+				$this->_redirect('/program/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect programme ID.', "status"=>"error"));
+			$this->_redirect('/program/');
+		}
+	}
+
+	public function removeTrainingAction()
+	{
+		$id = $this->_request->getParam('id'); // Training ID
+
+		if($id)
+		{
+			$training = $this->trainingmodel->find($id)->current();
+			
+			if($training)
+			{
+				$teacher_id = $training->teacher_id;
+				$training->delete();
+                $this->_redirect("/teacher/training/id/".$teacher_id);
+			}
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid training ID.', "status"=>"error"));
+				$this->_redirect('/teacher/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect training ID.', "status"=>"error"));
+			$this->_redirect('/teacher/');
 		}
 	}
 }

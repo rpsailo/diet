@@ -30,6 +30,7 @@ class TeacherController extends Zend_Controller_Action
     	$year_of_retirement = $this->_request->getParam('year_of_retirement', null);
     	$training_status = $this->_request->getParam('training_status', null);
     	$specialization = $this->_request->getParam('specialization', null);
+    	$school = $this->_request->getParam('school', null);
     	$limit = $this->_request->getParam('limit', 20);
     	$page = $this->_request->getParam('page', 1);
 
@@ -65,6 +66,12 @@ class TeacherController extends Zend_Controller_Action
     		$url_params .= '/specialization/'.$specialization;
     		$params['condition'][] = "`specialization` = '".$specialization."'";
     		$this->teachertoolbarform->specialization->setValue($specialization);
+    	}
+    	if($school != null)
+    	{
+    		$url_params .= '/school/'.$school;
+    		$params['condition'][] = "`school_id` = ".$school;
+    		$this->teachertoolbarform->school->setValue($school);
     	}
 
 		if($this->_request->isPost())
@@ -303,6 +310,115 @@ class TeacherController extends Zend_Controller_Action
 			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect teacher ID.', "status"=>"error"));
 			$this->_redirect('/teacher/');
 		}
+	}
+
+	public function removeTrainingAction()
+	{
+		$id = $this->_request->getParam('id'); // Training ID
+
+		if($id)
+		{
+			$training = $this->trainingmodel->find($id)->current();
+			
+			if($training)
+			{
+				$teacher_id = $training->teacher_id;
+				$training->delete();
+                $this->_redirect("/teacher/training/id/".$teacher_id);
+			}
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid training ID.', "status"=>"error"));
+				$this->_redirect('/teacher/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect training ID.', "status"=>"error"));
+			$this->_redirect('/teacher/');
+		}
+	}
+
+	public function changeTrainingStatusAction()
+	{
+		$id = $this->_request->getParam('id'); // Training ID
+		$status = $this->_request->getParam('status'); // Training ID
+
+		if($id)
+		{
+			$training = $this->trainingmodel->find($id)->current();
+			
+			if($training)
+			{
+				$training->status = ucwords($status);
+				$training->save();
+                $this->_redirect("/teacher/training/id/".$training->teacher_id);
+			}
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid training ID.', "status"=>"error"));
+				$this->_redirect('/teacher/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect training ID.', "status"=>"error"));
+			$this->_redirect('/teacher/');
+		}
+	}
+
+	public function changeTrainingDateAction()
+	{
+		$id = $this->_request->getParam('id'); // Training ID
+		$field = $this->_request->getParam('field'); // From or To column
+		$date = $this->_request->getParam('date'); // New date
+
+		if($id)
+		{
+			$training = $this->trainingmodel->find($id)->current();
+			
+			if($training)
+			{
+				$newdate = date('dS F, Y', ($date / 1000));
+				$date = date('Y-m-d', ($date / 1000));
+
+				if($field == 'from')
+					$training->from = $date;
+
+				if($field == 'to')
+					$training->to = $date;
+
+				$training->save();
+				if($this->_request->isXmlHttpRequest())
+					$this->_helper->json(array('date'=>$newdate));
+				else
+                	$this->_redirect("/teacher/training/id/".$training->teacher_id);
+			}
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid training ID.', "status"=>"error"));
+				$this->_redirect('/teacher/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect training ID.', "status"=>"error"));
+			$this->_redirect('/teacher/');
+		}
+	}
+
+	public function typeaheadAction()
+	{
+		$q = $this->_request->getParam('q', '');
+		$limit = $this->_request->getParam('limit', 8);
+
+		$teachers = $this->teachermodel->typeahead($q, $limit);
+		
+		$jsonData = array();
+		foreach($teachers as $t)
+			$jsonData[] = $t->name." - ".$t->school_name." (ID:".$t->id.")";
+
+		$this->_helper->json($jsonData);
 	}
 }
 

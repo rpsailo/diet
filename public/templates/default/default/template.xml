@@ -22,15 +22,15 @@
 			<media>screen, projection</media>
 		</stylesheet>
 		<stylesheet>
-			<file>/library/pickadate/themes/default.css</file>
+			<file>/library/pickadate/themes/classic.css</file>
 			<media>screen, projection</media>
 		</stylesheet>
 		<stylesheet>
-			<file>/library/pickadate/themes/default.date.css</file>
+			<file>/library/pickadate/themes/classic.date.css</file>
 			<media>screen, projection</media>
 		</stylesheet>
 		<stylesheet>
-			<file>/library/pickadate/themes/default.time.css</file>
+			<file>/library/pickadate/themes/classic.time.css</file>
 			<media>screen, projection</media>
 		</stylesheet>
 	</globalstyles>
