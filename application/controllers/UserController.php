@@ -187,6 +187,7 @@ class UserController extends Zend_Controller_Action
 			
 			$this->userform->password->setLabel('New Password');
 			$this->userform->repeat_password->setLabel('Confirm New Password');
+			$this->userform->removeElement('name');
 			$this->userform->removeElement('username');
 			$this->userform->removeElement('role');
 			$this->userform->removeElement('dob');
@@ -195,6 +196,8 @@ class UserController extends Zend_Controller_Action
 			$this->userform->removeElement('specialization');
 			$this->userform->removeElement('phone');
 			$this->userform->removeElement('address');
+			$this->userform->removeElement('locality');
+			$this->userform->removeElement('picture');
 			$this->userform->cancel->setAttrib('onclick', 'window.location="/user/"');
 			$this->userform->add->setLabel('Submit');
 			
