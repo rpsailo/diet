@@ -11,6 +11,7 @@ class AuthController extends Zend_Controller_Action
     
     public function loginAction()
     {
+        $this->_helper->layout()->setLayout('login');
         if(!$this->_auth->hasIdentity())
         {
             if($this->_request->isPost() && $this->_form->isValid($_POST))

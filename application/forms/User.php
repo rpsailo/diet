@@ -6,9 +6,17 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
         $this->setMethod('post')->setAttrib('class','form form-horizontal');
         $this->_addClassNames('well');
       
+        $this->addElement('text', 'name', array(
+            'label'             => 'Display Name',
+            'class'             => 'input-xlarge',
+            'required'          => true,
+            'validators'        => array(new Zend_Validate_Alnum()),
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
         $this->addElement('text', 'username', array(
             'label'             => 'Username',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'validators'        => array(new Zend_Validate_Alnum(), new Zend_Validate_Db_NoRecordExists('user', 'username')),
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
@@ -16,14 +24,14 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
 
         $this->addElement('password', 'password', array(
             'label'             => 'Password',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('password', 'repeat_password', array(
             'label'             => 'Confirm Password',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
@@ -54,33 +62,46 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
 
         $this->addElement('text', 'educational_qualification', array(
             'label'             => 'Educational Qualification',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'specialization', array(
             'label'             => 'Specialization',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-xlarge',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('textarea', 'address', array(
             'label'             => 'Address',
-            'class'             => 'input-xxlarge',
-            'rows'              => 4,
+            'class'             => 'input-xlarge',
+            'rows'              => 2,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'locality', array(
+            'label'             => 'Locality/Village (Khua)',
+            'class'             => 'input-xlarge',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('select', 'role', array(
             'label'             => 'Role',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'multiOptions'      => array('administrator'=>'Administrator', 'faculty'=>'Faculty')
             ));
 
         $this->repeat_password->addValidator("identical", false, array("token" => "password", "messages" => "The two passwords should be identical"));
 	
+        $this->addElement('file', 'picture', array(
+            'label'             => 'Picture',
+            'class'             => 'input-large',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+        $this->picture->getDecorator('Description')->setOption('escape', false);
+
         $this->addElement('button', 'add', array(
             'label'         => 'Save',
             'type'          => 'submit',

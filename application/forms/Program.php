@@ -3,12 +3,14 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-horizontal well');
+        $this->setMethod('post');
+        $this->_addClassNames('form');
+        $this->_addClassNames('form-horizontal');
         $this->_addClassNames('well');
       
-        $this->addElement('text', 'programname', array(
+        $this->addElement('text', 'name', array(
             'label'             => 'Program Name',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
@@ -16,14 +18,16 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
         $this->addElement('text', 'duration', array(
             'label'             => 'Duration',
             'class'             => 'input-large',
-            'append'            => 'Days/Weeks',
+            'append'            => 'Days',
+            'description'       => 'Enter the number of days.',
             'required'          => true,
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'validators'        => array(new Zend_Validate_Digits())
         ));
 
         $this->addElement('text', 'target', array(
             'label'             => 'Target',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
@@ -31,11 +35,24 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
         $this->addElement('textarea', 'objectives', array(
             'label'             => 'Objectives',
             'class'             => 'input-xxlarge',
-            'rows'              => 4,
+            'rows'              => 5,
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
+        $this->addElement('select', 'faculties', array(
+            'label'             => 'Faculties',
+            'class'             => 'input-xxlarge',
+            'multiple'          => 'multiple',
+            'style'             => 'height:200px',
+            'description'       => 'Select faculties for this programme. Press and hold CTRL key to select more than one faculty.',
+            'required'          => true
+        ));
+        $usermodel = new Model_User();
+        $faculties = $usermodel->faculties();
+        foreach ($faculties as $key => $f) {
+            $this->faculties->addMultiOption($f->id, $f->name." - ".$f->educational_qualification);
+        }
         	
         $this->addElement('button', 'add', array(
             'label'         => 'Save',

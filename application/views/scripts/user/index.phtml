@@ -1,3 +1,8 @@
+<ul class="breadcrumb">
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li class="active">Users</li>
+</ul>
+
 <fieldset>
 	<legend><i class="icon-table"></i> List Users</legend>
 	<div class="row-fluid">
@@ -7,7 +12,7 @@
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>User ID</th>
+					<th>Display Name</th>
 					<th>Username</th>
 					<th>Role</th>
 					<th>Action</th>
@@ -19,11 +24,11 @@
 
 		<?php foreach($this->data as $row): ?>
 			<tr>
-				<td><?php echo $row->id;?></td>
+				<td><?php echo $row->name;?></td>
 				<td><?php echo $row->username;?></td>
 				<td><?php echo ucwords($row->role);?></td>
 				<td>
-					<a class="btn btn-mini btn-primary action-tooltip" data-target="#view_user_<?php echo $row->id;?>" data-toggle="modal" href="/user/view/id/<?php echo $row->id;?>/" title="View Users"><i class="icon-eye-open"></i></a>
+					<a class="btn btn-mini btn-primary action-tooltip" data-target="#view_user_<?php echo $row->id;?>" data-toggle="modal" href="/user/view/id/<?php echo $row->id;?>/" title="View User"><i class="icon-eye-open"></i></a>
 					
 					<a class="btn btn-mini btn-primary action-tooltip" href="/user/edit/id/<?php echo $row->id;?>" title="Edit User"><i class="icon-pencil"></i></a>
 					

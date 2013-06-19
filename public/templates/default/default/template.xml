@@ -17,12 +17,20 @@
 			<file>/library/bootstrap/css/font-awesome-ie7.min.css</file>
 			<media>screen, projection</media>
 		</stylesheet>
-<!-- 		<stylesheet>
-			<file>/library/datepicker/css/datepicker.css</file>
-			<media>screen, projection</media>
-		</stylesheet> -->
 		<stylesheet>
 			<file>/library/bootstrap-datetimepicker-0.0.10/css/bootstrap-datetimepicker.min.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+		<stylesheet>
+			<file>/library/pickadate/themes/default.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+		<stylesheet>
+			<file>/library/pickadate/themes/default.date.css</file>
+			<media>screen, projection</media>
+		</stylesheet>
+		<stylesheet>
+			<file>/library/pickadate/themes/default.time.css</file>
 			<media>screen, projection</media>
 		</stylesheet>
 	</globalstyles>
@@ -44,6 +52,10 @@
 		<script>/library/bootstrap/js/bootstrap.min.js</script>
 		<!-- <script>/library/datepicker/js/bootstrap-datepicker.js</script> -->
 		<script>/library/bootstrap-datetimepicker-0.0.10/js/bootstrap-datetimepicker.min.js</script>
+		<script>/library/pickadate/legacy.js</script>
+		<script>/library/pickadate/picker.js</script>
+		<script>/library/pickadate/picker.date.js</script>
+		<script>/library/pickadate/picker.time.js</script>
 	</globalscripts>
 
 	<scripts>

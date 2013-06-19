@@ -25,15 +25,15 @@
 				<div class="nav-collapse collapse">
 					<?php if($this->authenticate):?>
 					<p class="navbar-text pull-right">
-						Logged in as <a href="#profile" class="navbar-link"><?php echo ucwords($this->user->username);?></a>
+						Logged in as <a href="/user/view/id/<?php echo $this->user->id;?>" class="navbar-link"><?php echo ucwords($this->user->username);?></a>
 					</p>
 					<?php endif;?>
 					
 					<ul class="nav">
 						<?php if($this->authenticate):?>
-						<li class="active"><a href="/">Home</a></li>
-						<li><a href="/user/view/id/<?php echo $this->user->id;?>">Profile</a></li>
-						<li><a href="/user/reset-password/id/<?php echo $this->user->id;?>">Change Password</a></li>
+						<li<?php echo ($this->controllerName == 'index' && $this->actionName == 'index')?' class="active"':'';?>><a href="/">Home</a></li>
+						<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'view')?' class="active"':'';?>><a href="/user/view/id/<?php echo $this->user->id;?>">Profile</a></li>
+						<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'reset-password')?' class="active"':'';?>><a href="/user/reset-password/id/<?php echo $this->user->id;?>">Change Password</a></li>
 						<li><a href="/auth/logout">Logout</a></li>
 						<?php endif;?>
 					</ul>
@@ -45,23 +45,19 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<?php if($this->authenticate):?>
-			<div class="span2 print-remove">
-				<ul class="nav nav-tabs nav-pills nav-stacked">
-					<li class="nav-header">Training</li>
-					<li<?php echo ($this->controllerName == 'training' && $this->actionName == 'add')?' class="active"':'';?>><a href="/training/add/"><i class="icon-plus"></i> Add Training</a></li>
-					<li<?php echo ($this->controllerName == 'training' && $this->actionName == 'list')?' class="active"':'';?>><a href="/training/list/"><i class="icon-list-ul"></i> List Trainings</a></li>
-
-					<li class="nav-header">School</li>
-					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'add')?' class="active"':'';?>><a href="/school/add/"><i class="icon-plus"></i> Add School</a></li>
-					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'list')?' class="active"':'';?>><a href="/school/list/"><i class="icon-list-ul"></i> List Schools</a></li>
-
+			<div class="span2 print-remove well sidebar-nav">
+				<ul class="nav nav-list">
 					<li class="nav-header">Teachers</li>
 					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'add')?' class="active"':'';?>><a href="/teacher/add/"><i class="icon-plus"></i> Add Teacher</a></li>
-					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'list')?' class="active"':'';?>><a href="/teacher/list/"><i class="icon-list-ul"></i> List Teachers</a></li>
+					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'index')?' class="active"':'';?>><a href="/teacher/"><i class="icon-list-ul"></i> List Teachers</a></li>
 
 					<li class="nav-header">Programs</li>
 					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'add')?' class="active"':'';?>><a href="/program/add/"><i class="icon-plus"></i> Add Program</a></li>
-					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'list')?' class="active"':'';?>><a href="/program/list/"><i class="icon-list-ul"></i> List Programs</a></li>
+					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'index')?' class="active"':'';?>><a href="/program/"><i class="icon-list-ul"></i> List Programs</a></li>
+
+					<li class="nav-header">School</li>
+					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'add')?' class="active"':'';?>><a href="/school/add/"><i class="icon-plus"></i> Add School</a></li>
+					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school/"><i class="icon-list-ul"></i> List Schools</a></li>
 
 					<li class="nav-header">Users</li>
 					<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'add')?' class="active"':'';?>><a href="/user/add/"><i class="icon-list-ul"></i> Add User</a></li>
@@ -73,19 +69,19 @@
 			<?php if($this->authenticate):?>
 			<div class="span10">
 			<?php else: ?>
-			<div class="span4"></div>
-			<div class="span4">
+			<div class="span5"></div>
+			<div class="span3">
 			<?php endif;?>
 				<?php echo $this->Alert();?>
 				<?php echo $this->layout()->content; ?>
 			</div>
 			<?php if(!$this->authenticate):?>
-			<div class="span4"></div>
+			<div class="span5"></div>
 			<?php endif;?>
 		</div>
 	</div>
-	<div class="container-fluid">
-		<p class="muted credit">Copyright Reserved. <a href="http://alan.pachuau.me">Alan Pachuau</a> and <a href="http://www.facebook.com/">Rempuia Sailo</a>.</p>
-	</div>
+    <div class="container-fluid">
+      <p class="muted credit text-center">&copy; Copyright Reserved. DIET Traning Management System.</p>
+    </div>    
 </body>
 </html>

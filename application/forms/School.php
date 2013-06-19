@@ -16,38 +16,41 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
         $this->addElement('textarea', 'address', array(
             'label'             => 'Address',
             'class'             => 'input-xxlarge',
-            'rows'              => 4,
-            'required'          => true,
+            'rows'              => 2,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'phone', array(
-            'label'             => 'Phone',
+            'label'             => 'Contact Number',
             'class'             => 'input-medium',
             'prepend'           => '+91',
+            'description'       => 'Ex: 943XXXXXXX, 372XXXXXXX, 389XXXXXXX',
             'required'          => true,
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'validators'        => array(new Zend_Validate_Digits())
         ));
 
         $this->addElement('text', 'year_of_establishment', array(
             'label'             => 'Year of Establishment',
             'class'             => 'input-large',
             'required'          => true,
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'validators'        => array(new Zend_Validate_Digits())
         ));
 
-        $this->addElement('text', 'type', array(
+        $this->addElement('select', 'type', array(
             'label'             => 'Type',
-            'class'             => 'input-xxlarge',
+            'class'             => 'input-large',
             'required'          => true,
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+            'multioptions'      => array(''=>'---Select Type---', 'Adhoc'=>'Adhoc')
         ));
 
         $this->addElement('text', 'no_of_teachers', array(
             'label'             => 'No of Teachers',
             'class'             => 'input-large',
             'required'          => true,
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'validators'        => array(new Zend_Validate_Digits())
         ));
 
             

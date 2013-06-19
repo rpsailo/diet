@@ -8,7 +8,7 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
       
         $this->addElement('select', 'school_id', array(
             'label'             => 'School',
-            'class'             => 'input-large',
+            'class'             => 'input-xlarge',
             'required'          => true,
             'multiOptions'      => array(''=>'---Select School---')
         ));
@@ -39,6 +39,18 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
+        $this->addElement('textarea', 'address', array(
+            'label'             => 'Address',
+            'class'             => 'input-xlarge',
+            'rows'              => 2,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'locality', array(
+            'label'             => 'Locality/Village (Khua)',
+            'class'             => 'input-xlarge',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
 
         $this->addElement('text', 'date_of_joining', array(
             'label'             => 'Date of Joining',
@@ -84,9 +96,9 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
         $this->addElement('file', 'picture', array(
             'label'             => 'Photo',
             'class'             => 'input-large',
-            'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
+        $this->picture->getDecorator('Description')->setOption('escape', false);
 
         $this->addElement('button', 'add', array(
             'label'         => 'Save',

@@ -14,6 +14,7 @@ class UserController extends Zend_Controller_Action
 		$this->usertoolbarform = new Form_UserToolbar();
 
 		$this->_alert = $this->_helper->getHelper("FlashMessenger");
+		$this->_uploads_rel = SITE_PATH.DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR;
 		$this->auth = Zend_Auth::getInstance();
     }
 
@@ -63,6 +64,7 @@ class UserController extends Zend_Controller_Action
 	            $result = $this->usermodel->create($this->_request->getPost());
 	            if($result)
 	            {
+	            	$this->upload($result);
 	                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> New user added.', "status"=>"success"));
 	                $this->_redirect("/user/");
 	            }
@@ -150,6 +152,7 @@ class UserController extends Zend_Controller_Action
 			            $result = $this->usermodel->edit($this->_request->getPost(), $user->id);
 			            if($result)
 			            {
+			            	$this->upload($user->id);
 			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i>  User "'.$user->username.'" updated.', "status"=>"success"));
 			                $this->_redirect("/user");
 			            }
@@ -157,6 +160,7 @@ class UserController extends Zend_Controller_Action
 		        }
 				
 				$this->userform->populate($user->toArray());
+				$this->userform->picture->setDescription('Upload new picture to change current picture.<br><img src="'.$user->picture.'" width="100px" height="auto" />');
 				$this->view->form = $this->userform;
 				$this->view->user = $user;
 			}
@@ -225,7 +229,46 @@ class UserController extends Zend_Controller_Action
 			$this->_redirect('/user/');
 		}
 	}
+
+	public function upload($user_id)
+	{
+		$adapter = new Zend_File_Transfer_Adapter_Http();
+		
+		$adapter->addValidator('Extension', false, 'jpg,png,gif,jpeg');
+		$datas = array();
+		
+		$files = $adapter->getFileInfo();
+		foreach ($files as $file => $info)
+		{
+			$name = $adapter->getFileName($file);			
+			$fileName = $adapter->getFileName($file,false);
+			
+			// file uploaded & is valid
+			if (!$adapter->isUploaded($file)) continue; 
+			if (!$adapter->isValid($file))
+			{
+				$datas[] = array('error'=>'Files of type jpg, png or gif are allowed. Maximum allowed file size is 2mb.');
+				continue;
+			}
+			
+			$adapter->receive($file);
+
+			if(!is_dir($this->_uploads_rel.'/users/'))
+				mkdir('uploads/users/');
+			
+			$resizer = new System_Resize();
+			
+			$iWidth = 200;
+			$iHeight = 200;
+			
+			$resizer->setImage($name);
+			$resizer->resizeImage($iWidth,$iHeight);
+			
+			echo $resizer->saveImage('uploads/users/'.$user_id.$resizer->getExtension(),100);
+				
+			unlink($name);
+				
+			$this->usermodel->update(array('picture'=>'/uploads/users/'.$user_id.$resizer->getExtension()),'id='.$user_id);
+		}
+	}
 }
-
-
-

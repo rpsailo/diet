@@ -1,0 +1,83 @@
+<ul class="breadcrumb">
+	<li><a href="/">Home</a> <span class="divider">/</span></li>
+  	<li><a href="/teacher/">Teachers</a> <span class="divider">/</span></li>
+  	<li class="active"><?php echo $this->teacher->name;?> &rsaquo; Training List</li>
+</ul>
+<fieldset>
+	<legend><i class="icon-table"></i> <?php echo $this->teacher->name;?> Training List <a class="btn btn-mini pull-right" href="/teacher/add-training/id/<?php echo $this->teacher->id;?>">ADD TRAINING</a></legend>
+	<div class="row-fluid">
+		<table class="table table-striped table-bordered table-hover teacher-training-list">
+			<thead>
+				<tr>
+					<th>Programme</th>
+					<th>From</th>
+					<th>To</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+
+		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>5)); ?>
+
+		<?php foreach($this->data as $row): ?>
+			<tr>
+				<td><?php echo $this->Program($row->program_id)->name;?></td>
+				<td><span class="action-tooltip from" title="Click to change the FROM date"><?php echo $this->Date($row->from, 'dS F, Y');?></span></td>
+				<td><span class="action-tooltip to" title="Click to change the TO date"><?php echo $this->Date($row->to, 'dS F, Y');?></span></td>
+				<td>
+					<?php
+					$btn = 'primary';
+					switch($row->status)
+					{
+						case 'Active':
+							$btn = 'primary';
+							break;
+						case 'Completed':
+							$btn = 'success';
+							break;
+					}
+
+					?>
+					<div class="btn-group teacher-change-training-status">
+						<button class="btn btn-mini btn-<?php echo $btn;?>"><?php echo strtoupper($row->status);?></button>
+						<button class="btn btn-mini btn-<?php echo $btn;?> dropdown-toggle" data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="/">Active</a></li>
+							<li><a href="/">Completed</a></li>
+							<li><a href="/">Withheld</a></li>
+							<li><a href="/">Cancelled</a></li>
+						</ul>
+					</div>
+				</td>
+				<td>
+					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete this training?')" href="/teacher/remove-training/id/<?php echo $row->id;?>" title="Delete Training"><i class="icon-remove"></i></a>
+				</td>
+			</tr>
+		<?php endforeach;?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="5" class="text-right"><span>Total Training: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+				</tr>
+			</tfoot>
+		</table>
+
+		<?php echo $this->data; ?>
+	</div>
+</fieldset>
+
+<script>
+jQuery(function(){
+	jQuery('.from').pickadate({
+	    weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+	    showMonthsShort: true
+	});
+	jQuery('.to').pickadate({
+	    weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+	    showMonthsShort: true
+	});
+});
+</script>

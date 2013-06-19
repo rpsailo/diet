@@ -1,0 +1,67 @@
+<ul class="breadcrumb">
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li class="active">Teachers</li>
+</ul>
+<fieldset>
+	<legend><i class="icon-table"></i> List Teachers</legend>
+	<div class="row-fluid">
+
+		<?php echo $this->form;?>
+
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Training Status</th>
+					<th>Qualification</th>
+					<th>Specialization</th>
+					<th>Retirement</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+
+		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>6)); ?>
+
+		<?php foreach($this->data as $row): ?>
+			<tr>
+				<td><?php echo $row->name;?></td>
+				<td><?php echo $row->training_status;?></td>
+				<td><?php echo $row->educational_qualification;?></td>
+				<td><?php echo $row->specialization;?></td>
+				<td><?php echo $row->year_of_retirement;?></td>
+				<td>					
+					<a class="btn btn-mini btn-primary action-tooltip" data-target="#view_teacher_<?php echo $row->id;?>" data-toggle="modal" href="/teacher/view/id/<?php echo $row->id;?>/" title="View Teacher"><i class="icon-eye-open"></i></a>
+
+					<a class="btn btn-mini btn-primary action-tooltip" href="/teacher/edit/id/<?php echo $row->id;?>" title="Edit Teacher"><i class="icon-pencil"></i></a>
+
+					<a class="btn btn-mini btn-primary action-tooltip" href="/teacher/training/id/<?php echo $row->id;?>" title="Manage Training"><i class="icon-cog"></i></a>
+					
+					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete teacher \'<?php echo $row->name;?>\'?')" href="/teacher/remove/id/<?php echo $row->id;?>" title="Delete Teacher"><i class="icon-remove"></i></a>
+
+					<div id="view_teacher_<?php echo $row->id;?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="view_teacher_<?php echo $row->id;?>_label" aria-hidden="true">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+							<h3 id="view_teacher_<?php echo $row->id;?>_label">Teacher: <?php echo $row->name;?></h3>
+						</div>
+						<div class="modal-body">
+						</div>
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						</div>
+					</div>
+
+				</td>
+			</tr>
+		<?php endforeach;?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="6" class="text-right"><span>Total Teachers: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+				</tr>
+			</tfoot>
+		</table>
+
+		<?php echo $this->data; ?>
+	</div>
+</fieldset>

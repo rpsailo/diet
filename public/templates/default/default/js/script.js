@@ -3,6 +3,7 @@ jQuery(function(){
 	{
 		jQuery('.datepicker').parent().datetimepicker({
 			maskInput: true,           // disables the text input mask
+			pickTime:false,
 			format: 'yyyy-MM-dd'
 		});
 	}

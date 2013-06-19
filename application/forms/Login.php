@@ -1,40 +1,30 @@
 <?php
-class Form_Login extends Twitter_Bootstrap_Form_Horizontal
+class Form_Login extends Twitter_Bootstrap_Form_Inline
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-horizontal well');
-        $this->_addClassNames('well');
+        $this->setMethod('post')->setAttrib('class','form form-inline');
         
         $this->addElement('text', 'user_login', array(
-            'label'             => 'Username',
-            'class'             => 'input-large',
+            'placeholder'       => 'Username',
+            'class'             => 'input-block-level',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('password', 'user_password', array(
-            'label'             => 'Password',
-            'class'             => 'input-large',
+            'placeholder'       => 'Password',
+            'class'             => 'input-block-level',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('button', 'login', array(
-            'label'         => 'Login',
             'type'          => 'submit',
+            'label'          => 'Sign In',
+            'class'          => 'btn-primary btn-large',
             'buttonType'    => 'default',
-            'icon'          => 'lock',
             'escape'        => false
         ));
-
-        $this->addDisplayGroup(
-            array('login'),
-            'actions',
-            array(
-                'disableLoadDefaultDecorators' => true,
-                'decorators' => array('Actions')
-            )
-        );
     }
 }

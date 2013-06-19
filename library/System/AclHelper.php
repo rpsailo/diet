@@ -36,10 +36,25 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:user:reset-password"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:program:add"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:program:index"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:program:edit"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:program:remove"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:program:view"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:add"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:index"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:edit"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:remove"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:add"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:index"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:edit"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:remove"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:view"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:training"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:add-training"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:edit-training"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:remove-training"), "default");
 		
 	}
 	

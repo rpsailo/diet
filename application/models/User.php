@@ -13,6 +13,7 @@ class Model_User extends System_DbTable
         $new_row->username = $data['username'];
         $new_row->password = md5($data['password'] . $salt);
         $new_row->password_salt = $salt;
+        $new_row->name = ($data['name'] != '')? $data['name'] : $data['username'];
         $new_row->role = $data['role'];
         $new_row->dob = $data['dob'];
         $new_row->phone = $data['phone'];
@@ -20,6 +21,7 @@ class Model_User extends System_DbTable
         $new_row->educational_qualification = $data['educational_qualification'];
         $new_row->specialization = $data['specialization'];
         $new_row->address = $data['address'];
+        $new_row->locality = $data['locality'];
         $new_row->created_at = new Zend_Db_Expr('NOW()');
         $new_row->updated_at = new Zend_Db_Expr('NOW()');
         $new_row->loggedin_at = new Zend_Db_Expr('NOW()');
@@ -31,6 +33,7 @@ class Model_User extends System_DbTable
         if(is_numeric($id))
         {
             $row = $this->find($id)->current();
+            $row->name = ($data['name'] != '')? $data['name'] : $row->username;
             $row->role = $data['role'];
             $row->dob = $data['dob'];
             $row->phone = $data['phone'];
@@ -38,6 +41,7 @@ class Model_User extends System_DbTable
             $row->educational_qualification = $data['educational_qualification'];
             $row->specialization = $data['specialization'];
             $row->address = $data['address'];
+            $row->locality = $data['locality'];
             $row->updated_at = new Zend_Db_Expr('NOW()');
             return $row->save();
         }
@@ -62,5 +66,23 @@ class Model_User extends System_DbTable
             }
         }
         else return false;
+    }
+
+    public function faculties($ids = '')
+    {
+        $select = $this->select();
+        
+        if(is_array($ids) && !empty($ids))
+        {
+            $select->where('id in ('.implode($ids).')');
+        }
+        else if($ids != '')
+        {
+            $select->where('id in ('.$ids.')');
+        }
+
+        $select->where('role = "faculty"');
+        $select->order('name asc');
+        return $this->fetchAll($select);
     }
 }
