@@ -42,7 +42,7 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
             'label'             => 'Type',
             'class'             => 'input-large',
             'required'          => true,
-            'multioptions'      => array(''=>'---Select Type---', 'Adhoc'=>'Adhoc')
+            'multioptions'      => array(''=>'---Select Type---','Govt'=>'Govt','Deficit'=>'Deficit','Adhoc'=>'Adhoc','Aided'=>'Aided','Private'=>'Private')
         ));
 
         $this->addElement('text', 'no_of_teachers', array(
