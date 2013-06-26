@@ -20,6 +20,16 @@ class Form_SchoolToolbar extends Twitter_Bootstrap_Form_Inline
             'multiOptions'      => array(''=>'Type - All','Govt'=>'Govt','Deficit'=>'Deficit','Adhoc'=>'Adhoc','Aided'=>'Aided','Private'=>'Private')
         ));
 
+        $this->addElement('select', 'level', array(
+            'label'             => 'Level',
+            'class'             => 'input-medium',
+            'multiOptions'      => array(
+                ''=>'Level - All',
+                'Primary School'=>'Primary School',
+                'Middle School'=>'Middle School'
+                )
+        ));
+
         $this->addElement('text', 'year_of_establishment', array(
             'label'             => 'Year of Establishment',
             'placeholder'             => 'Year of Establishment',

@@ -78,6 +78,10 @@ class UserController extends Zend_Controller_Action
 	{
 		$id = $this->_request->getParam('id');
 
+		$identity = $this->auth->getIdentity();
+		if($identity->role == 'user' && $id != $identity->id)
+			$this->_forward('noauth','error');
+
 		if($id)
 		{
 			$user = $this->usermodel->find($id)->current();
@@ -133,6 +137,10 @@ class UserController extends Zend_Controller_Action
 	{
 		$id = $this->_request->getParam('id');
 
+		$identity = $this->auth->getIdentity();
+		if($identity->role == 'user' && $id != $identity->id)
+			$this->_forward('noauth','error');
+
 		if($id)
 		{
 			$user = $this->usermodel->find($id)->current();
@@ -153,8 +161,17 @@ class UserController extends Zend_Controller_Action
 			            if($result)
 			            {
 			            	$this->upload($user->id);
-			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i>  User "'.$user->username.'" updated.', "status"=>"success"));
-			                $this->_redirect("/user");
+
+			            	if($identity->id == $id)
+			            	{
+			                	$this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i>  Profile updated.', "status"=>"success"));
+			                	$this->_redirect("/user/view/id/".$id);
+			                }
+			            	else
+			            	{
+			                	$this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i>  User "'.$user->username.'" updated.', "status"=>"success"));
+			                	$this->_redirect("/user");
+			                }
 			            }
 		        	}
 		        }
@@ -162,7 +179,7 @@ class UserController extends Zend_Controller_Action
 				$this->userform->populate($user->toArray());
 				$this->userform->picture->setDescription('Upload new picture to change current picture.<br><img src="'.$user->picture.'" width="100px" height="auto" />');
 				$this->view->form = $this->userform;
-				$this->view->user = $user;
+				$this->view->viewuser = $user;
 			}
 			else
 			{
@@ -180,6 +197,10 @@ class UserController extends Zend_Controller_Action
 	public function resetPasswordAction()
 	{
 		$id = $this->_request->getParam('id');
+		
+		$identity = $this->auth->getIdentity();
+		if($identity->role == 'user' && $id != $identity->id)
+			$this->_forward('noauth','error');
 
 		if($id)
 		{
@@ -193,10 +214,11 @@ class UserController extends Zend_Controller_Action
 			$this->userform->removeElement('dob');
 			$this->userform->removeElement('date_of_joining');
 			$this->userform->removeElement('educational_qualification');
-			$this->userform->removeElement('specialization');
+			$this->userform->removeElement('professional_qualification');
+			$this->userform->removeElement('other_qualification');
 			$this->userform->removeElement('phone');
-			$this->userform->removeElement('address');
-			$this->userform->removeElement('locality');
+			$this->userform->removeElement('present_address');
+			$this->userform->removeElement('permanent_address');
 			$this->userform->removeElement('picture');
 			$this->userform->cancel->setAttrib('onclick', 'window.location="/user/"');
 			$this->userform->add->setLabel('Submit');
@@ -210,15 +232,23 @@ class UserController extends Zend_Controller_Action
 			            $result = $this->usermodel->change_password($this->_request->getParam('password'), $user->id);
 			            if($result)
 			            {
-			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> Password reset succesful for "'.$user->username.'".', "status"=>"success"));
-			                $this->_redirect("/user/");
+			            	if($identity->id == $user->id)
+			            	{
+				                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> Password updated.', "status"=>"success"));
+				                $this->_redirect("/user/reset-password/id/".$user->id);
+			            	}
+			            	else
+			            	{
+				                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> Password reset succesful for "'.$user->username.'".', "status"=>"success"));
+				                $this->_redirect("/user/");			            		
+			            	}
 			            }
 		        	}
 		        }
 				
 				$this->userform->populate($user->toArray());
 				$this->view->form = $this->userform;
-				$this->view->user = $user;
+				$this->view->viewuser = $user;
 			}
 			else
 			{

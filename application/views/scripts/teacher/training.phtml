@@ -13,16 +13,24 @@
 					<th>From</th>
 					<th>To</th>
 					<th>Status</th>
+					<?php if($this->user->role == 'administrator'):?>
 					<th>Action</th>
+					<?php endif;?>
 				</tr>
 			</thead>
 			<tbody>
-
-		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>5)); ?>
+		
+		<?php
+		if($this->user->role == 'administrator')
+			echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>5));
+		else
+			echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>4));
+		?>
 
 		<?php foreach($this->data as $row): ?>
 			<tr>
 				<td><?php echo $this->Program($row->program_id)->name;?></td>
+				
 				<td><a href="/teacher/change-training-date/id/<?php echo $row->id;?>/field/from/" class="action-tooltip change-training-date" title="Click to change this date"><?php echo $this->Date($row->from, 'dS F, Y');?></a></td>
 				<td><a href="/teacher/change-training-date/id/<?php echo $row->id;?>/field/to/" class="action-tooltip change-training-date" title="Click to change this date"><?php echo $this->Date($row->to, 'dS F, Y');?></a></td>
 				<td>
@@ -58,15 +66,22 @@
 						</ul>
 					</div>
 				</td>
+
+				<?php if($this->user->role == 'administrator'):?>
 				<td>
 					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete this training?')" href="/teacher/remove-training/id/<?php echo $row->id;?>" title="Delete Training"><i class="icon-remove"></i></a>
 				</td>
+				<?php endif;?>
 			</tr>
 		<?php endforeach;?>
 			</tbody>
 			<tfoot>
 				<tr>
+					<?php if($this->user->role == 'administrator'):?>
 					<th colspan="5" class="text-right"><span>Total Training: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+					<?php else:?>
+					<th colspan="4" class="text-right"><span>Total Training: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+					<?php endif;?>
 				</tr>
 			</tfoot>
 		</table>

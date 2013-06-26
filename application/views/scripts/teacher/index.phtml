@@ -13,23 +13,21 @@
 				<tr>
 					<th>Name</th>
 					<th>School</th>
-					<th>Training Status</th>
 					<th>Qualification</th>
-					<th>Specialization</th>
+					<th>Status</th>
 					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
 
-		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>6)); ?>
+		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>5)); ?>
 
 		<?php foreach($this->data as $row): ?>
 			<tr>
 				<td><?php echo $row->name;?></td>
 				<td><?php echo $this->School($row->school_id)->name;?></td>
-				<td><?php echo $row->training_status;?></td>
 				<td><?php echo $row->educational_qualification;?></td>
-				<td><?php echo $row->specialization;?></td>
+				<td><?php echo $row->status;?></td>
 				<td>					
 					<a class="btn btn-mini btn-primary action-tooltip" data-target="#view_teacher_<?php echo $row->id;?>" data-toggle="modal" href="/teacher/view/id/<?php echo $row->id;?>/" title="View Teacher"><i class="icon-eye-open"></i></a>
 
@@ -37,7 +35,9 @@
 
 					<a class="btn btn-mini btn-primary action-tooltip" href="/teacher/training/id/<?php echo $row->id;?>" title="Manage Training"><i class="icon-cog"></i></a>
 					
+					<?php if($this->user->role == 'administrator'):?>
 					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete teacher \'<?php echo $row->name;?>\'?')" href="/teacher/remove/id/<?php echo $row->id;?>" title="Delete Teacher"><i class="icon-remove"></i></a>
+					<?php endif;?>
 
 					<div id="view_teacher_<?php echo $row->id;?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="view_teacher_<?php echo $row->id;?>_label" aria-hidden="true">
 						<div class="modal-header">
@@ -57,7 +57,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="6" class="text-right"><span>Total Teachers: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+					<th colspan="5" class="text-right"><span>Total Teachers: <?php echo $this->data->getTotalItemCount(); ?></span></th>
 				</tr>
 			</tfoot>
 		</table>

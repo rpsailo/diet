@@ -19,9 +19,10 @@ class Model_User extends System_DbTable
         $new_row->phone = $data['phone'];
         $new_row->date_of_joining = $data['date_of_joining'];
         $new_row->educational_qualification = $data['educational_qualification'];
-        $new_row->specialization = $data['specialization'];
-        $new_row->address = $data['address'];
-        $new_row->locality = $data['locality'];
+        $new_row->professional_qualification = $data['professional_qualification'];
+        $new_row->other_qualification = $data['other_qualification'];
+        $new_row->present_address = $data['present_address'];
+        $new_row->permanent_address = $data['permanent_address'];
         $new_row->created_at = new Zend_Db_Expr('NOW()');
         $new_row->updated_at = new Zend_Db_Expr('NOW()');
         $new_row->loggedin_at = new Zend_Db_Expr('NOW()');
@@ -39,9 +40,10 @@ class Model_User extends System_DbTable
             $row->phone = $data['phone'];
             $row->date_of_joining = $data['date_of_joining'];
             $row->educational_qualification = $data['educational_qualification'];
-            $row->specialization = $data['specialization'];
-            $row->address = $data['address'];
-            $row->locality = $data['locality'];
+            $row->professional_qualification = $data['professional_qualification'];
+            $row->other_qualification = $data['other_qualification'];
+            $row->present_address = $data['present_address'];
+            $row->permanent_address = $data['permanent_address'];
             $row->updated_at = new Zend_Db_Expr('NOW()');
             return $row->save();
         }
@@ -84,5 +86,17 @@ class Model_User extends System_DbTable
         $select->where('role = "faculty"');
         $select->order('name asc');
         return $this->fetchAll($select);
+    }
+
+    public function all()
+    {
+        $select = $this->select();
+        $select->order('username asc');
+        return $this->fetchAll($select);
+    }
+
+    public function stats()
+    {
+        return $this->all()->count();
     }
 }

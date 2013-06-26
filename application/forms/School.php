@@ -20,6 +20,12 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
+        $this->addElement('text', 'sub_division', array(
+            'label'             => 'Sub Division',
+            'class'             => 'input-xlarge',
+            'required'          => true
+        ));
+        
         $this->addElement('text', 'phone', array(
             'label'             => 'Contact Number',
             'class'             => 'input-medium',
@@ -42,7 +48,24 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
             'label'             => 'Type',
             'class'             => 'input-large',
             'required'          => true,
-            'multioptions'      => array(''=>'---Select Type---','Govt'=>'Govt','Deficit'=>'Deficit','Adhoc'=>'Adhoc','Aided'=>'Aided','Private'=>'Private')
+            'multioptions'      => array(
+                ''=>'---Select Type---',
+                'Govt'=>'Govt',
+                'Deficit'=>'Deficit',
+                'Aided'=>'Aided',
+                'Private'=>'Private'
+                )
+        ));
+
+        $this->addElement('select', 'level', array(
+            'label'             => 'Level',
+            'class'             => 'input-large',
+            'required'          => true,
+            'multioptions'      => array(
+                ''=>'---Select Level---',
+                'Primary School'=>'Primary School',
+                'Middle School'=>'Middle School'
+                )
         ));
 
         $this->addElement('text', 'no_of_teachers', array(

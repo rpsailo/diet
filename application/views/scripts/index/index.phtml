@@ -1,7 +1,37 @@
 <fieldset>
 	<legend>Home</legend>
 	<div class="row-fluid">
-		<h3>Welcome</h3>
-		<p></p>
+		<h4>Overview</h4>
+		<div class="span12">
+			<div class="row">
+				<div class="span6">
+					<div class="btn-group span11">
+					  <button class="btn disabled span8 btn-normal btn-large">Total Number of Programmes</button>
+					  <button class="btn span3 btn-success btn-large" onclick="window.location='/program/'"><?php echo $this->programmodel->stats();?></button>
+					</div>					
+				</div>		
+				<div class="span6">
+					<div class="btn-group span11">
+					  <button class="btn disabled span8 btn-normal btn-large">Total Number of Teachers</button>
+					  <button class="btn span3 btn-danger btn-large" onclick="window.location='/teacher/'"><?php echo $this->teachermodel->stats();?></button>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" style="margin-top:20px;">
+				<div class="span6">
+					<div class="btn-group span11">
+					  <button class="btn disabled span8 btn-normal btn-large">Total Number of Schools</button>
+					  <button class="btn span3 btn-info btn-large" onclick="window.location='/school/'"><?php echo $this->schoolmodel->stats();?></button>
+					</div>
+				</div>		
+				<div class="span6">
+					<div class="btn-group span11">
+					  <button class="btn disabled span8 btn-normal btn-large">Total Number of Users</button>
+					  <button class="btn span3 btn-primary btn-large" onclick="window.location='/user/'"><?php echo $this->usermodel->stats();?></button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </fieldset>

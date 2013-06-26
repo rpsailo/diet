@@ -34,7 +34,7 @@ class AuthController extends Zend_Controller_Action
                 {
                     $storage = $this->_auth->getStorage();
                     
-                    $storage->write($adapter->getResultRowObject(array('id', 'username', 'role')));
+                    $storage->write($adapter->getResultRowObject(array('id', 'username', 'role', 'name')));
                     
                     $identity = $this->_auth->getIdentity();
 

@@ -4,19 +4,17 @@ class IndexController extends Zend_Controller_Action
 {
 	protected $auth;
 
-	protected $userm;
-
 	public function init()
 	{
-		$this->userm = new Model_User();
-
 		$this->auth = Zend_Auth::getInstance();
     }
 
 	public function indexAction()
     {
-		if($this->auth->hasIdentity())
-			$current_user = $this->auth->getIdentity();
+    	$this->view->programmodel = new Model_Program();
+    	$this->view->teachermodel = new Model_Teacher();
+    	$this->view->schoolmodel = new Model_School();
+    	$this->view->usermodel = new Model_User();
 	}
 }
 

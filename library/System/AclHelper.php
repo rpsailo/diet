@@ -11,7 +11,7 @@ class System_AclHelper
 	public function setRoles()
 	{
 		$this->acl->addRole(new Zend_Acl_Role('public'));
-		$this->acl->addRole(new Zend_Acl_Role('faculty'));
+		$this->acl->addRole(new Zend_Acl_Role('user'));
 		$this->acl->addRole(new Zend_Acl_Role('administrator'));
 	}
 	
@@ -48,6 +48,7 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:index"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:edit"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:remove"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:fetch-by-level"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:add"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:index"), "default");
@@ -67,11 +68,39 @@ class System_AclHelper
 	{
 		$this->acl->deny(array(
 			'public',
-			'faculty',
+			'user',
 			'administrator'
 			), null);
 
-		$this->acl->allow('faculty', array(
+		$this->acl->allow('user', array(
+			"default:index:index",
+			"default:change-password:index",
+			"default:error:error",
+			"default:auth:login",
+			"default:auth:logout",
+			"default:user:reset-password",
+			"default:user:view",
+			"default:user:edit",
+			"default:program:add",
+			"default:program:index",
+			"default:program:edit",
+			"default:program:view",
+			"default:program:trainee",
+			"default:program:add-trainee",
+			"default:program:remove-trainee",
+			"default:school:add",
+			"default:school:index",
+			"default:school:edit",
+			"default:school:fetch-by-level",
+			"default:teacher:add",
+			"default:teacher:index",
+			"default:teacher:edit",
+			"default:teacher:view",
+			"default:teacher:training",
+			"default:teacher:add-training",
+			"default:teacher:change-training-status",
+			"default:teacher:change-training-date",
+			"default:teacher:typeahead"
 			));
 		$this->acl->allow('administrator', null);
 		$this->acl->allow(null, array(

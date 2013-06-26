@@ -28,9 +28,14 @@ class TeacherController extends Zend_Controller_Action
 
     	$search = $this->_request->getParam('search', null);
     	$year_of_retirement = $this->_request->getParam('year_of_retirement', null);
-    	$training_status = $this->_request->getParam('training_status', null);
-    	$specialization = $this->_request->getParam('specialization', null);
+    	$status = $this->_request->getParam('status', null);
+    	$professional_qualification = $this->_request->getParam('professional_qualification', null);
     	$school = $this->_request->getParam('school', null);
+    	$sex = $this->_request->getParam('sex', null);
+    	$tet = $this->_request->getParam('tet', null);
+    	$main_subject_taught = $this->_request->getParam('main_subject_taught', null);
+    	$date_of_joining = $this->_request->getParam('date_of_joining', null);
+
     	$limit = $this->_request->getParam('limit', 20);
     	$page = $this->_request->getParam('page', 1);
 
@@ -55,23 +60,47 @@ class TeacherController extends Zend_Controller_Action
     		$params['condition'][] = "`year_of_retirement` = ".$year_of_retirement;
     		$this->teachertoolbarform->year_of_retirement->setValue($year_of_retirement);
     	}
-    	if($training_status != null)
+    	if($status != null)
     	{
-    		$url_params .= '/training_status/'.$training_status;
-    		$params['condition'][] = "`training_status` = '".$training_status."'";
-    		$this->teachertoolbarform->training_status->setValue($training_status);
+    		$url_params .= '/status/'.$status;
+    		$params['condition'][] = "`status` = '".$status."'";
+    		$this->teachertoolbarform->status->setValue($status);
     	}
-    	if($specialization != null)
+    	if($professional_qualification != null)
     	{
-    		$url_params .= '/specialization/'.$specialization;
-    		$params['condition'][] = "`specialization` = '".$specialization."'";
-    		$this->teachertoolbarform->specialization->setValue($specialization);
+    		$url_params .= '/professional_qualification/'.$professional_qualification;
+    		$params['condition'][] = "`professional_qualification` = '".$professional_qualification."'";
+    		$this->teachertoolbarform->professional_qualification->setValue($professional_qualification);
     	}
     	if($school != null)
     	{
     		$url_params .= '/school/'.$school;
     		$params['condition'][] = "`school_id` = ".$school;
     		$this->teachertoolbarform->school->setValue($school);
+    	}
+    	if($sex != null)
+    	{
+    		$url_params .= '/sex/'.$sex;
+    		$params['condition'][] = "`sex` = '".$sex."'";
+    		$this->teachertoolbarform->sex->setValue($sex);
+    	}
+    	if($tet != null)
+    	{
+    		$url_params .= '/tet/'.$tet;
+    		$params['condition'][] = "`tet` = '".$tet."'";
+    		$this->teachertoolbarform->tet->setValue($tet);
+    	}
+    	if($main_subject_taught != null)
+    	{
+    		$url_params .= '/main_subject_taught/'.$main_subject_taught;
+    		$params['condition'][] = "`main_subject_taught` = '".$main_subject_taught."'";
+    		$this->teachertoolbarform->main_subject_taught->setValue($main_subject_taught);
+    	}
+    	if($date_of_joining != null)
+    	{
+    		$url_params .= '/date_of_joining/'.$date_of_joining;
+    		$params['condition'][] = "`date_of_joining` = '".$date_of_joining."'";
+    		$this->teachertoolbarform->date_of_joining->setValue($date_of_joining);
     	}
 
 		if($this->_request->isPost())
@@ -250,7 +279,7 @@ class TeacherController extends Zend_Controller_Action
 		    		'page'		=> $page,
 		    		'order'		=> 'created_at desc',
 		    		'condition'	=> array(
-		    			'teacher_id'	=> $teacher->id
+		    			'`teacher_id` = '.$teacher->id
 		    			)
 				);
 				$this->view->data = $this->trainingmodel->paginate($params);

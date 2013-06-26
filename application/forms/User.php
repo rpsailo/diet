@@ -37,18 +37,18 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
 
         $this->addElement('text', 'dob', array(
             'label'             => 'Date of Birth',
-            'class'             => 'pickadate input-medium',
-            // 'class'             => 'datepicker input-medium',
-            // 'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
+            // 'class'             => 'pickadate input-medium',
+            'class'             => 'datepicker input-medium',
+            'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'date_of_joining', array(
             'label'             => 'Date of Joining',
-            'class'             => 'pickadate input-medium',
-            // 'class'             => 'datepicker input-medium',
-            // 'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
+            // 'class'             => 'pickadate input-medium',
+            'class'             => 'datepicker input-medium',
+            'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
@@ -68,22 +68,29 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('text', 'specialization', array(
-            'label'             => 'Specialization',
+        $this->addElement('text', 'professional_qualification', array(
+            'label'             => 'Professional Qualification',
             'class'             => 'input-xlarge',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('textarea', 'address', array(
-            'label'             => 'Address',
+        $this->addElement('text', 'other_qualification', array(
+            'label'             => 'Other Qualification',
+            'class'             => 'input-xlarge',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('textarea', 'present_address', array(
+            'label'             => 'Present Address',
             'class'             => 'input-xlarge',
             'rows'              => 2,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('text', 'locality', array(
-            'label'             => 'Locality/Village (Khua)',
+        $this->addElement('textarea', 'permanent_address', array(
+            'label'             => 'Permanent Address',
             'class'             => 'input-xlarge',
+            'rows'              => 2,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
@@ -91,7 +98,7 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
             'label'             => 'Role',
             'class'             => 'input-xlarge',
             'required'          => true,
-            'multiOptions'      => array('administrator'=>'Administrator', 'faculty'=>'Faculty')
+            'multiOptions'      => array('administrator'=>'Administrator', 'user'=>'User')
             ));
 
         $this->repeat_password->addValidator("identical", false, array("token" => "password", "messages" => "The two passwords should be identical"));

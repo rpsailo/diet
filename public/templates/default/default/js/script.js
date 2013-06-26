@@ -22,7 +22,9 @@ jQuery(function(){
 	if(jQuery('.pickadate').length > 0 )
 	{
 		jQuery('.pickadate').pickadate({
-			format: 'yyyy-mm-dd'
+			format: 'yyyy-mm-dd',
+			selectYears: true,
+			selectMonths: true
 		});
 	}
 

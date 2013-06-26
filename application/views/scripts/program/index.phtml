@@ -34,7 +34,9 @@
 
 					<a class="btn btn-mini btn-primary action-tooltip" href="/program/trainee/id/<?php echo $row->id;?>" title="Manage Trainees"><i class="icon-cog"></i></a>
 					
+					<?php if($this->user->role == 'administrator'):?>
 					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete programme \'<?php echo $row->name;?>\'?')" href="/program/remove/id/<?php echo $row->id;?>" title="Delete Programme"><i class="icon-remove"></i></a>
+					<?php endif;?>
 
 					<div id="view_programme_<?php echo $row->id;?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="view_programme_<?php echo $row->id;?>_label" aria-hidden="true">
 						<div class="modal-header">

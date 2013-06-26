@@ -10,9 +10,11 @@ class Model_School extends System_DbTable
         $new_row = $this->createRow();
         $new_row->name = $data['name'];
         $new_row->address = $data['address'];
+        $new_row->sub_division = $data['sub_division'];
         $new_row->phone = $data['phone'];
         $new_row->year_of_establishment = $data['year_of_establishment'];
         $new_row->type = $data['type'];
+        $new_row->level = $data['level'];
         $new_row->no_of_teachers = $data['no_of_teachers'];
         $new_row->user_id = $loggedin_user->id;
         $new_row->created_at = new Zend_Db_Expr('NOW()');
@@ -30,9 +32,11 @@ class Model_School extends System_DbTable
             $row = $this->find($id)->current();
             $row->name = $data['name'];
             $row->address = $data['address'];
+            $row->sub_division = $data['sub_division'];
             $row->phone = $data['phone'];
             $row->year_of_establishment = $data['year_of_establishment'];
             $row->type = $data['type'];
+            $row->level = $data['level'];
             $row->no_of_teachers = $data['no_of_teachers'];
             $row->user_id = $loggedin_user->id;
             $row->updated_at = new Zend_Db_Expr('NOW()');
@@ -56,4 +60,19 @@ class Model_School extends System_DbTable
         return $this->fetchAll($select);
     }
 
+    public function getByLevel($level)
+    {
+        $select = $this->select();
+        
+        if($level != '')
+            $select->where("`level` = '".$level."'");
+
+        $select->order('name asc');
+        return $this->fetchAll($select);
+    }
+
+    public function stats()
+    {
+        return $this->all()->count();
+    }
 }

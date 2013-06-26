@@ -13,13 +13,17 @@ class Model_Teacher extends System_DbTable
         $new_row->name = $data['name'];
         $new_row->sex = $data['sex'];
         $new_row->dob = $data['dob'];
-        $new_row->address = $data['address'];
-        $new_row->locality = ucwords($data['locality']);
+        $new_row->present_address = $data['present_address'];
+        $new_row->permanent_address = $data['permanent_address'];
+        $new_row->sub_division = $data['sub_division'];
         $new_row->date_of_joining = $data['date_of_joining'];
         $new_row->educational_qualification = $data['educational_qualification'];
-        $new_row->specialization = $data['specialization'];
-        $new_row->training_status = $data['training_status'];
+        $new_row->professional_qualification = $data['professional_qualification'];
+        $new_row->other_qualification = $data['other_qualification'];
         $new_row->year_of_retirement = $data['year_of_retirement'];
+        $new_row->tet = $data['tet'];
+        $new_row->main_subject_taught = $data['main_subject_taught'];
+        $new_row->status = $data['status'];
         
         $new_row->user_id = $loggedin_user->id;
         $new_row->created_at = new Zend_Db_Expr('NOW()');
@@ -40,24 +44,28 @@ class Model_Teacher extends System_DbTable
         $row->name = $data['name'];
         $row->sex = $data['sex'];
         $row->dob = $data['dob'];
-        $row->address = $data['address'];
-        $row->locality = ucwords($data['locality']);
+        $row->present_address = $data['present_address'];
+        $row->permanent_address = $data['permanent_address'];
+        $row->sub_division = $data['sub_division'];
         $row->date_of_joining = $data['date_of_joining'];
         $row->educational_qualification = $data['educational_qualification'];
-        $row->specialization = $data['specialization'];
-        $row->training_status = $data['training_status'];
+        $row->professional_qualification = $data['professional_qualification'];
+        $row->other_qualification = $data['other_qualification'];
         $row->year_of_retirement = $data['year_of_retirement'];
+        $row->tet = $data['tet'];
+        $row->main_subject_taught = $data['main_subject_taught'];
+        $row->status = $data['status'];
         
         $row->user_id = $loggedin_user->id;
         $row->updated_at = new Zend_Db_Expr('NOW()');
         return $row->save();
     }
 
-    public function specializations()
+    public function professionalQualifications()
     {
         $select = $this->select();
-        $select->from($this->_name, array('specialization' => new Zend_Db_Expr('DISTINCT(`specialization`)')));
-        $select->order('specialization asc');
+        $select->from($this->_name, array('professional_qualification' => new Zend_Db_Expr('DISTINCT(`professional_qualification`)')));
+        $select->order('professional_qualification asc');
         return $this->fetchAll($select);
     }
 
@@ -78,5 +86,17 @@ class Model_Teacher extends System_DbTable
         
         $select->order('teacher.name asc');
         return $this->fetchAll($select);
+    }
+
+    public function all()
+    {
+        $select = $this->select();
+        $select->order('name asc');
+        return $this->fetchAll($select);
+    }
+
+    public function stats()
+    {
+        return $this->all()->count();
     }
 }

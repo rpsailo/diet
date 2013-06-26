@@ -25,6 +25,14 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
             'validators'        => array(new Zend_Validate_Digits())
         ));
 
+        $this->addElement('text', 'no_of_intake', array(
+            'label'             => 'No of Intake',
+            'class'             => 'input-large',
+            'required'          => true,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'validators'        => array(new Zend_Validate_Digits())
+        ));
+
         $this->addElement('text', 'target', array(
             'label'             => 'Target',
             'class'             => 'input-xlarge',

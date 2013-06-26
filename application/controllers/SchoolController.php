@@ -25,6 +25,7 @@ class SchoolController extends Zend_Controller_Action
     	$search = $this->_request->getParam('search', null);
     	$year_of_establishment = $this->_request->getParam('year_of_establishment', null);
     	$type = $this->_request->getParam('type', null);
+    	$level = $this->_request->getParam('level', null);
     	$limit = $this->_request->getParam('limit', 20);
     	$page = $this->_request->getParam('page', 1);
 
@@ -54,6 +55,12 @@ class SchoolController extends Zend_Controller_Action
     		$url_params .= '/type/'.$type;
     		$params['condition'][] = "`type` = '".$type."'";
     		$this->schooltoolbarform->type->setValue($type);
+    	}
+    	if($level != null)
+    	{
+    		$url_params .= '/level/'.$level;
+    		$params['condition'][] = "`level` = '".$level."'";
+    		$this->schooltoolbarform->level->setValue($level);
     	}
 
 		if($this->_request->isPost())
@@ -141,6 +148,18 @@ class SchoolController extends Zend_Controller_Action
 			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect school ID.', "status"=>"error"));
 			$this->_redirect('/school/');
 		}
+	}
+
+	public function fetchByLevelAction()
+	{
+		$level = $this->_request->getParam('level');
+
+		$schools = $this->schoolmodel->getByLevel($level);
+		$schooldata = array();
+		foreach($schools as $s)
+			$schooldata[] = array('id'=>$s->id, 'name'=>$s->name);
+
+		$this->_helper->json($schooldata);
 	}
 }
 
