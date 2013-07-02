@@ -11,8 +11,11 @@ class SchoolController extends Zend_Controller_Action
 	public function init()
 	{
 		$this->schoolmodel = new Model_School();
+		$this->schoolstatisticmodel = new Model_SchoolStatistic();
 		$this->schoolform = new Form_School();
+		$this->schoolstatisticform = new Form_SchoolStatistic();
 		$this->schooltoolbarform = new Form_SchoolToolbar();
+		$this->schoolstatistictoolbarform = new Form_SchoolStatisticToolbar();
 
 		$this->_alert = $this->_helper->getHelper("FlashMessenger");
 		$this->auth = Zend_Auth::getInstance();
@@ -161,7 +164,56 @@ class SchoolController extends Zend_Controller_Action
 
 		$this->_helper->json($schooldata);
 	}
+
+	public function statisticsAction()
+    {
+    	$id = $this->_request->getParam('id');
+
+		if($id)
+		{
+			$school = $this->schoolmodel->find($id)->current();
+			
+			if($school)
+			{
+				$url_params = '';
+
+		    	$year = $this->_request->getParam('year', null);
+		    	$limit = $this->_request->getParam('limit', 20);
+		    	$page = $this->_request->getParam('page', 1);
+
+		    	$params = array(
+		    		'limit' 	=> $limit,
+		    		'page'		=> $page,
+		    		'order'		=> 'year desc',
+		    		'condition'	=> array()
+				);
+
+				$this->schoolstatistictoolbarform->limit->setValue($limit);
+
+		    	if($year != null)
+		    	{
+		    		$url_params .= '/year/'.$year;
+		    		$params['condition'][] = "`year` = ".$year;
+		    		$this->schoolstatistictoolbarform->year->setValue($year);
+		    	}
+
+				if($this->_request->isPost())
+		    		$this->_redirect('/school/statistics/id/'.$school->id.'/'.$url_params.'/page/'.$page.'/limit/'.$limit);
+
+		    	$this->view->data = $this->schoolstatisticmodel->paginate($params);
+		    	$this->view->form = $this->schooltoolbarform;
+		    }
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid school ID.', "status"=>"error"));
+				$this->_redirect('/school/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect school ID.', "status"=>"error"));
+			$this->_redirect('/school/');
+		}
+	}
 }
-
-
 

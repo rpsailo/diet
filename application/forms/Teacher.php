@@ -126,7 +126,7 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
                 'SS'=>'SS',
                 'Science'=>'Science',
                 'WE'=>'WE',
-                'Health and Physical Science'=>'Health & Physical Science',
+                'Health and Physical Education'=>'Health & Physical Education',
                 'ECCE'=>'ECCE',
                 'Others'=>'Others'
                 )

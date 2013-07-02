@@ -49,6 +49,10 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:edit"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:remove"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:fetch-by-level"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:new-statistic"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:remove-statistic"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:edit-statistic"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:statistic"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:add"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:index"), "default");
