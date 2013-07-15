@@ -33,9 +33,13 @@
 				<td><?php echo $row->address;?></td>
 				<td><?php echo $row->no_of_teachers;?></td>
 				<td>					
-					<a class="btn btn-mini btn-primary action-tooltip" href="/school/edit/id/<?php echo $row->id;?>" title="Edit School"><i class="icon-pencil"></i></a>
-					
+					<a class="btn btn-mini btn-info action-tooltip" href="/school/edit/id/<?php echo $row->id;?>" title="Edit School"><i class="icon-pencil"></i></a>
+
+					<a class="btn btn-mini btn-info action-tooltip" href="/school/statistics/id/<?php echo $row->id;?>" title="View Statistics"><i class="icon-bar-chart"></i></a>
+
 					<?php if($this->user->role == 'administrator'):?>
+					<a class="btn btn-mini btn-info action-tooltip" href="/school/new-statistic/id/<?php echo $row->id;?>" title="New Statistic"><i class="icon-plus"></i></a>
+
 					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete school \'<?php echo $row->name;?>\'?')" href="/school/remove/id/<?php echo $row->id;?>" title="Delete School"><i class="icon-remove"></i></a>
 					<?php endif;?>
 				</td>

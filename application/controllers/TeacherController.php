@@ -315,6 +315,8 @@ class TeacherController extends Zend_Controller_Action
 			            $result = $this->trainingmodel->create($this->_request->getPost());
 			            if($result)
 			            {
+			            	$this->teachermodel->update(array('training_attended'=>'Yes'), 'id='.$teacher->id);
+
 			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> New training added for "'.$teacher->name.'".', "status"=>"success"));
 			                $this->_redirect("/teacher/training/id/".$teacher->id);
 			            }
@@ -353,6 +355,10 @@ class TeacherController extends Zend_Controller_Action
 			{
 				$teacher_id = $training->teacher_id;
 				$training->delete();
+
+				if(!$this->trainingmodel->teacherCount($teacher_id))
+					$this->teachermodel->update(array('training_attended'=>'No'), 'id='.$teacher_id);
+                
                 $this->_redirect("/teacher/training/id/".$teacher_id);
 			}
 			else

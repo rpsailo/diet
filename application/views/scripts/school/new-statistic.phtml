@@ -1,0 +1,23 @@
+<ul class="breadcrumb">
+	<li><a href="/">Home</a> <span class="divider">/</span></li>
+	<li><a href="/school/">Schools</a> <span class="divider">/</span></li>
+	<li><a href="/school/statistics/id/<?php echo $this->school->id;?>"><?php echo $this->school->name;?> &rsaquo; Statistics</a> <span class="divider">/</span></li>
+  	<li class="active">New Statistic</li>
+</ul>
+<fieldset>
+	<legend><i class="icon-table"></i> <?php echo $this->school->name;?> &rsaquo; New Statistic</legend>
+	<div class="row-fluid">
+		<?php echo $this->form;?>
+	</div>
+</fieldset>
+<script>
+$(function(){
+	$('.boys').each(function(){
+		var element = $(this).closest('.input-append');
+		var wrap = $(this).closest('.control-group');
+		wrap.next().find('.input-append').before(element);
+		wrap.next().find('.input-append').eq(1).before("&nbsp;&nbsp;");
+		wrap.remove();
+	});
+});
+</script>

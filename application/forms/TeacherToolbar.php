@@ -13,7 +13,7 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
             'label'             => 'Limit',
             'class'             => 'input-mini action-tooltip',
             'title'             => 'Results in one page',
-            'multiOptions'      => array(0=>'All', 1=>10, 20=>20, 30=>30,40=>40,50=>50,60=>60,100=>100),
+            'multiOptions'      => array(0=>'All', 10=>10, 20=>20, 30=>30,40=>40,50=>50,60=>60,100=>100),
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 

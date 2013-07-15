@@ -10,7 +10,7 @@ class Form_SchoolToolbar extends Twitter_Bootstrap_Form_Inline
         $this->addElement('select', 'limit', array(
             'label'             => 'Limit',
             'class'             => 'input-small',
-            'multiOptions'      => array(0=>'Limit: All', 1=>10, 20=>20, 30=>30,40=>40,50=>50,60=>60,100=>100),
+            'multiOptions'      => array(0=>'Limit: All', 10=>10, 20=>20, 30=>30,40=>40,50=>50,60=>60,100=>100),
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
@@ -47,7 +47,7 @@ class Form_SchoolToolbar extends Twitter_Bootstrap_Form_Inline
         $this->addElement('button', 'submit', array(
             'label'         => 'Search',
             'type'          => 'submit',
-            'buttonType'    => 'primary',
+            'buttonType'    => 'success',
             'icon'          => 'search',
             'escape'        => false
         ));

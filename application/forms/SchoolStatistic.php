@@ -6,21 +6,27 @@ class Form_SchoolStatistic extends Twitter_Bootstrap_Form_Horizontal
         $this->setMethod('post')->setAttrib('class','form form-horizontal well');
         $this->_addClassNames('well');
       
-        $this->addElement('select', 'class', array(
-            'label'             => 'Class',
-            'class'             => 'input-medium',
-            'required'          => true,
-            'multioptions'      => array(
-                '1' => 'Class I',
-                '2' => 'Class II',
-                '3' => 'Class III',
-                '4' => 'Class IV',
-                '5' => 'Class V',
-                '6' => 'Class VI',
-                '7' => 'Class VII',
-                '8' => 'Class VIII'
-                )
+        $this->addElement('select', 'school_level', array(
+            'label'             => 'Level',
+            'class'             => 'input-xlarge',
+            'value'             => 'Primary School',
+            'multiOptions'      => array(
+                'Primary School'=>'Primary School',
+                'Middle School'=>'Middle School'
+                ),
+            'onchange'           => 'getSchoolByLevel(this.value);'
         ));
+      
+        $this->addElement('select', 'school_id', array(
+            'label'             => 'School',
+            'class'             => 'input-xlarge',
+            'required'          => true,
+            'multiOptions'      => array(''=>'---Select School---')
+        ));
+        $schoolmodel = new Model_School();
+        $schools = $schoolmodel->all();
+        foreach($schools as $s)
+            $this->school_id->addMultiOption($s->id, $s->name);
 
         $this->addElement('text', 'year', array(
             'label'             => 'Year',
@@ -30,20 +36,108 @@ class Form_SchoolStatistic extends Twitter_Bootstrap_Form_Horizontal
             'validators'        => array(new Zend_Validate_Digits())
         ));
 
-        $this->addElement('text', 'boys', array(
-            'label'             => 'Boys',
-            'class'             => 'input-medium',
-            'required'          => true,
-            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags"),
-            'validators'        => array(new Zend_Validate_Digits())
+        $this->addElement('text', 'boys_1', array(
+            'class'             => 'input-mini boys',
+            'append'            => 'Boys',
+            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('text', 'girls', array(
-            'label'             => 'Girls',
-            'class'             => 'input-medium',
-            'required'          => true,
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
-            'validators'        => array(new Zend_Validate_Digits())
+        $this->addElement('text', 'girls_1', array(
+            'label'             => 'Class I',
+            'class'             => 'input-mini girls',
+            'append'            => 'Girls',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'boys_2', array(
+            'class'             => 'input-mini boys',
+            'append'            => 'Boys',
+            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'girls_2', array(
+            'label'             => 'Class II',
+            'class'             => 'input-mini girls',
+            'append'            => 'Girls',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'boys_3', array(
+            'class'             => 'input-mini boys',
+            'append'            => 'Boys',
+            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'girls_3', array(
+            'label'             => 'Class III',
+            'class'             => 'input-mini girls',
+            'append'            => 'Girls',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'boys_4', array(
+            'class'             => 'input-mini boys',
+            'append'            => 'Boys',
+            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'girls_4', array(
+            'label'             => 'Class IV',
+            'class'             => 'input-mini girls',
+            'append'            => 'Girls',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'boys_5', array(
+            'class'             => 'input-mini boys',
+            'append'            => 'Boys',
+            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'girls_5', array(
+            'label'             => 'Class V',
+            'class'             => 'input-mini girls',
+            'append'            => 'Girls',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'boys_6', array(
+            'class'             => 'input-mini boys',
+            'append'            => 'Boys',
+            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'girls_6', array(
+            'label'             => 'Class VI',
+            'class'             => 'input-mini girls',
+            'append'            => 'Girls',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'boys_7', array(
+            'class'             => 'input-mini boys',
+            'append'            => 'Boys',
+            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'girls_7', array(
+            'label'             => 'Class VII',
+            'class'             => 'input-mini girls',
+            'append'            => 'Girls',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'boys_8', array(
+            'class'             => 'input-mini boys',
+            'append'            => 'Boys',
+            'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
+        $this->addElement('text', 'girls_8', array(
+            'label'             => 'Class VIII',
+            'class'             => 'input-mini girls',
+            'append'            => 'Girls',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('button', 'add', array(

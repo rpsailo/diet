@@ -28,4 +28,11 @@ class Model_Training extends System_DbTable
         $select->order('created_at desc');
         return $this->fetchAll($select);
     }
+
+    public function teacherCount($teacher_id)
+    {
+        $select = $this->select();
+        $select->where('`teacher_id` = ?', $teacher_id);
+        return $this->fetchAll($select)->count();
+    }
 }

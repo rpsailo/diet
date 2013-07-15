@@ -1,10 +1,10 @@
 <ul class="breadcrumb">
 	<li><a href="/">Home</a> <span class="divider">/</span></li>
 	<li><a href="/school/">Schools</a> <span class="divider">/</span></li>
-  	<li class="active">Statistics</li>
+  	<li class="active"><?php echo $this->school->name;?> &rsaquo; Statistics</li>
 </ul>
 <fieldset>
-	<legend><i class="icon-table"></i> List Schools</legend>
+	<legend><i class="icon-table"></i> <?php echo $this->school->name;?> &rsaquo; Statistics</legend>
 	<div class="row-fluid">
 
 		<?php echo $this->form;?>
@@ -12,40 +12,88 @@
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Type</th>
-					<th>Established</th>
-					<th>Phone</th>
-					<th>Address</th>
-					<th>No of Teachers</th>
+					<th colspan="2">Year</th>
+					<?php if($this->school->level == "Primary School"): ?>
+					<th>I</th>
+					<th>II</th>
+					<th>III</th>
+					<th>IV</th>
+					<?php elseif($this->school->level == "Middle School"): ?>
+					<th>V</th>
+					<th>VI</th>
+					<th>VII</th>
+					<th>VIII</th>
+					<?php endif;?>
+					<th>Total</th>
 					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
 
-		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>7)); ?>
+		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>8)); ?>
 
 		<?php foreach($this->data as $row): ?>
 			<tr>
-				<td><?php echo $row->name;?></td>
-				<td><?php echo $row->type;?></td>
-				<td><?php echo $row->year_of_establishment;?></td>
-				<td><?php echo $row->phone;?></td>
-				<td><?php echo $row->address;?></td>
-				<td><?php echo $row->no_of_teachers;?></td>
-				<td>					
-					<a class="btn btn-mini btn-primary action-tooltip" href="/school/edit/id/<?php echo $row->id;?>" title="Edit School"><i class="icon-pencil"></i></a>
+				<td rowspan="3"><?php echo $row->year;?></td>
+				<th>Boys</th>
+				<?php if($this->school->level == "Primary School"): ?>
+				<td><?php echo $row->boys_1;?></td>
+				<td><?php echo $row->boys_2;?></td>
+				<td><?php echo $row->boys_3;?></td>
+				<td><?php echo $row->boys_4;?></td>
+				<td><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4;?></td>
+				<?php elseif($this->school->level == "Middle School"): ?>
+				<td><?php echo $row->boys_5;?></td>
+				<td><?php echo $row->boys_6;?></td>
+				<td><?php echo $row->boys_7;?></td>
+				<td><?php echo $row->boys_8;?></td>
+				<td><?php echo $row->boys_5 + $row->boys_6 + $row->boys_7 + $row->boys_8;?></td>
+				<?php endif;?>
+				<td rowspan="3">
+					<a class="btn btn-mini btn-primary action-tooltip" href="/school/edit-statistic/id/<?php echo $row->id;?>" title="Edit Statistic"><i class="icon-pencil"></i></a>
 					
 					<?php if($this->user->role == 'administrator'):?>
-					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete school \'<?php echo $row->name;?>\'?')" href="/school/remove/id/<?php echo $row->id;?>" title="Delete School"><i class="icon-remove"></i></a>
+					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete <?php echo $row->year;?> statistic?')" href="/school/remove-statistic/id/<?php echo $row->id;?>" title="Delete Statistic"><i class="icon-remove"></i></a>
 					<?php endif;?>
 				</td>
 			</tr>
+			<tr>
+				<th>Girls</th>
+				<?php if($this->school->level == "Primary School"): ?>
+				<td><?php echo $row->girls_1;?></td>
+				<td><?php echo $row->girls_2;?></td>
+				<td><?php echo $row->girls_3;?></td>
+				<td><?php echo $row->girls_4;?></td>
+				<td><?php echo $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4;?></td>
+				<?php elseif($this->school->level == "Middle School"): ?>
+				<td><?php echo $row->girls_5;?></td>
+				<td><?php echo $row->girls_6;?></td>
+				<td><?php echo $row->girls_7;?></td>
+				<td><?php echo $row->girls_8;?></td>
+				<td><?php echo $row->girls_5 + $row->girls_6 + $row->girls_7 + $row->girls_8;?></td>
+				<?php endif;?>
+			</tr>
+			<tr>
+				<th>Total</th>
+				<?php if($this->school->level == "Primary School"): ?>
+				<td><?php echo $row->boys_1 + $row->girls_1;?></td>
+				<td><?php echo $row->boys_2 + $row->girls_2;?></td>
+				<td><?php echo $row->boys_3 + $row->girls_3;?></td>
+				<td><?php echo $row->boys_4 + $row->girls_4;?></td>
+				<th><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4;?></th>
+				<?php elseif($this->school->level == "Middle School"): ?>
+				<td><?php echo $row->boys_5 + $row->girls_5;?></td>
+				<td><?php echo $row->boys_6 + $row->girls_6;?></td>
+				<td><?php echo $row->boys_7 + $row->girls_7;?></td>
+				<td><?php echo $row->boys_8 + $row->girls_8;?></td>
+				<th><?php echo $row->boys_5 + $row->boys_6 + $row->boys_7 + $row->boys_8 + $row->girls_5 + $row->girls_6 + $row->girls_7 + $row->girls_8;?></th>
+				<?php endif;?>
+			</tr>			
 		<?php endforeach;?>
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="7" class="text-right"><span>Total Schools: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+					<th colspan="8" class="text-right"><span>Total Records: <?php echo $this->data->getTotalItemCount(); ?></span></th>
 				</tr>
 			</tfoot>
 		</table>

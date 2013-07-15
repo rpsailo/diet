@@ -142,6 +142,13 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
                 )
         ));
 
+        $this->addElement('textarea', 'achievement', array(
+            'label'             => 'Achievement',
+            'class'             => 'input-xlarge',
+            'rows'              => 2,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
         // $this->addElement('select', 'training_status', array(
         //     'label'             => 'Training Status',
         //     'class'             => 'input-large',

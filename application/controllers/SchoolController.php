@@ -7,6 +7,7 @@ class SchoolController extends Zend_Controller_Action
 	protected $schoolmodel;
 	protected $schoolform;
 	protected $schooltoolbarform;
+	protected $schoolstatistictoolbarform;
 
 	public function init()
 	{
@@ -185,9 +186,13 @@ class SchoolController extends Zend_Controller_Action
 		    		'limit' 	=> $limit,
 		    		'page'		=> $page,
 		    		'order'		=> 'year desc',
-		    		'condition'	=> array()
+		    		'condition'	=> array(
+		    			'school_id = '.$school->id
+		    			)
 				);
 
+				$this->schoolstatistictoolbarform->setAction('/school/statistics/id/'.$school->id);
+				$this->schoolstatistictoolbarform->new->setAttrib('onclick',"window.location='/school/new-statistic/id/".$school->id."'");
 				$this->schoolstatistictoolbarform->limit->setValue($limit);
 
 		    	if($year != null)
@@ -198,10 +203,11 @@ class SchoolController extends Zend_Controller_Action
 		    	}
 
 				if($this->_request->isPost())
-		    		$this->_redirect('/school/statistics/id/'.$school->id.'/'.$url_params.'/page/'.$page.'/limit/'.$limit);
+		    		$this->_redirect('/school/statistics/id/'.$school->id.$url_params.'/page/'.$page.'/limit/'.$limit);
 
 		    	$this->view->data = $this->schoolstatisticmodel->paginate($params);
-		    	$this->view->form = $this->schooltoolbarform;
+		    	$this->view->form = $this->schoolstatistictoolbarform;
+		    	$this->view->school = $school;
 		    }
 			else
 			{
@@ -215,5 +221,173 @@ class SchoolController extends Zend_Controller_Action
 			$this->_redirect('/school/');
 		}
 	}
+
+	public function newStatisticAction()
+	{
+		$id = $this->_request->getParam('id');
+
+		if($id)
+		{
+			$school = $this->schoolmodel->find($id)->current();
+			
+			if($school)
+			{
+				$this->schoolstatisticform->removeElement('school_level');
+				$this->schoolstatisticform->removeElement('school_id');
+		        if($school->level == 'Primary School')
+		        {
+		        	$this->schoolstatisticform->removeElement('boys_8');
+		        	$this->schoolstatisticform->removeElement('boys_7');	
+		        	$this->schoolstatisticform->removeElement('boys_6');	
+		        	$this->schoolstatisticform->removeElement('boys_5');	
+		        	$this->schoolstatisticform->removeElement('girls_8');	
+		        	$this->schoolstatisticform->removeElement('girls_7');	
+		        	$this->schoolstatisticform->removeElement('girls_6');	
+		        	$this->schoolstatisticform->removeElement('girls_5');	
+		        }
+	        	else if($school->level == 'Middle School')
+	        	{
+	        		$this->schoolstatisticform->removeElement('boys_1');
+	        		$this->schoolstatisticform->removeElement('boys_2');
+	        		$this->schoolstatisticform->removeElement('boys_3');
+	        		$this->schoolstatisticform->removeElement('boys_4');
+	        		$this->schoolstatisticform->removeElement('girls_1');
+	        		$this->schoolstatisticform->removeElement('girls_2');
+	        		$this->schoolstatisticform->removeElement('girls_3');
+	        		$this->schoolstatisticform->removeElement('girls_4');
+	        	}
+
+				if($this->_request->isPost())
+		        {
+		        	if($this->schoolstatisticform->isValid($_POST))
+		        	{
+		        		$form_data = $this->_request->getPost();
+		        		$form_data['school_id'] = $school->id;
+		        		
+		        		if($school->level == 'Primary School')
+			            	$result = $this->schoolstatisticmodel->create($form_data, 'Primary School');
+			        	else if($school->level == 'Middle School')
+			            	$result = $this->schoolstatisticmodel->create($form_data, 'Middle School');
+			            
+			            if($result)
+			            {
+			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> New statistic for "'.$school->name.'" added.', "status"=>"success"));
+			                $this->_redirect("/school/statistics/id/".$school->id);
+			            }
+		        	}
+		        }
+
+		    	$this->view->form = $this->schoolstatisticform;
+		    	$this->view->school = $school;
+		    }
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid school ID.', "status"=>"error"));
+				$this->_redirect('/school/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect school ID.', "status"=>"error"));
+			$this->_redirect('/school/');
+		}
+	}
+
+	public function editStatisticAction()
+	{
+		$id = $this->_request->getParam('id');
+
+		if($id)
+		{
+			$schoolstatistic = $this->schoolstatisticmodel->find($id)->current();
+			$school = $this->schoolmodel->find($schoolstatistic->school_id)->current();
+			
+			if($school)
+			{
+		        if($school->level == 'Primary School')
+		        {
+		        	$this->schoolstatisticform->removeElement('boys_8');	
+		        	$this->schoolstatisticform->removeElement('boys_7');	
+		        	$this->schoolstatisticform->removeElement('boys_6');	
+		        	$this->schoolstatisticform->removeElement('boys_5');	
+		        	$this->schoolstatisticform->removeElement('girls_8');	
+		        	$this->schoolstatisticform->removeElement('girls_7');	
+		        	$this->schoolstatisticform->removeElement('girls_6');	
+		        	$this->schoolstatisticform->removeElement('girls_5');	
+		        }
+	        	else if($school->level == 'Middle School')
+	        	{
+	        		$this->schoolstatisticform->removeElement('boys_1');
+	        		$this->schoolstatisticform->removeElement('boys_2');
+	        		$this->schoolstatisticform->removeElement('boys_3');
+	        		$this->schoolstatisticform->removeElement('boys_4');
+	        		$this->schoolstatisticform->removeElement('girls_1');
+	        		$this->schoolstatisticform->removeElement('girls_2');
+	        		$this->schoolstatisticform->removeElement('girls_3');
+	        		$this->schoolstatisticform->removeElement('girls_4');
+	        	}
+
+				if($this->_request->isPost())
+		        {
+		        	if($this->schoolstatisticform->isValid($_POST))
+		        	{
+		        		$form_data = $this->_request->getPost();
+		        		$form_data['id'] = $id;
+		        		
+		        		if($school->level == 'Primary School')
+			            	$result = $this->schoolstatisticmodel->edit($form_data, 'Primary School');
+			        	else if($school->level == 'Middle School')
+			            	$result = $this->schoolstatisticmodel->edit($form_data, 'Middle School');
+			            
+			            if($result)
+			            {
+			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> Statistic updated for "'.$school->name.'".', "status"=>"success"));
+			                $this->_redirect("/school/statistics/id/".$school->id);
+			            }
+		        	}
+		        }
+
+		        $this->schoolstatisticform->populate($schoolstatistic->toArray());
+		        $this->schoolstatisticform->cancel->setAttrib('onclick', 'window.location = "/school/statistics/id/'.$school->id.'"');
+		    	$this->view->form = $this->schoolstatisticform;
+		    	$this->view->school = $school;
+		    }
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid school ID.', "status"=>"error"));
+				$this->_redirect('/school/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect school ID.', "status"=>"error"));
+			$this->_redirect('/school/');
+		}
+	}
+
+	public function removeStatisticAction()
+	{
+		$id = $this->_request->getParam('id');
+
+		if($id)
+		{
+			$schoolstatistic = $this->schoolstatisticmodel->find($id)->current();
+			$school = $this->schoolmodel->find($schoolstatistic->school_id)->current();
+
+			if($schoolstatistic)
+			{
+				$schoolname = $school->name;
+				$schoolstatistic->delete();
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-trash"></i> School statistic for "'.$schoolname.'" deleted.', "status"=>"success"));
+				$this->_redirect('/school/statistics/id/'.$school->id);
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect statistic ID.', "status"=>"error"));
+			$this->_redirect('/school/');
+		}
+	}
+
 }
 

@@ -1,5 +1,5 @@
 <?php
-class Form_SchoolStatisticToolbar extends Twitter_Bootstrap_Form_Inline
+class Form_StatisticToolbar extends Twitter_Bootstrap_Form_Inline
 {
     public function init()
     {
@@ -13,13 +13,36 @@ class Form_SchoolStatisticToolbar extends Twitter_Bootstrap_Form_Inline
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
+        $this->addElement('select', 'type', array(
+            'label'             => 'Type',
+            'class'             => 'input-medium',
+            'multiOptions'      => array(''=>'Type - All','Govt'=>'Govt','Deficit'=>'Deficit','Adhoc'=>'Adhoc','Aided'=>'Aided','Private'=>'Private')
+        ));
+
+        $this->addElement('select', 'level', array(
+            'label'             => 'Level',
+            'class'             => 'input-medium',
+            'multiOptions'      => array(
+                ''=>'Level - All',
+                'Primary School'=>'Primary School',
+                'Middle School'=>'Middle School'
+                )
+        ));        
+
         $this->addElement('text', 'year', array(
             'label'             => 'Year',
             'placeholder'       => 'Year',
-            'class'             => 'input-medium',
+            'class'             => 'input-mini',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 		
+        $this->addElement('text', 'name', array(
+            'label'             => 'Name',
+            'class'             => 'input-medium',
+            'placeholder'       => 'Name of School',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
         $this->addElement('button', 'new', array(
             'label'         => 'New Statistic',
             'type'          => 'button',
