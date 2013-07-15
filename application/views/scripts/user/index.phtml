@@ -28,11 +28,11 @@
 				<td><?php echo $row->username;?></td>
 				<td><?php echo ucwords($row->role);?></td>
 				<td>
-					<a class="btn btn-mini btn-primary action-tooltip" data-target="#view_user_<?php echo $row->id;?>" data-toggle="modal" href="/user/view/id/<?php echo $row->id;?>/" title="View User"><i class="icon-eye-open"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" data-target="#view_user_<?php echo $row->id;?>" data-toggle="modal" href="/user/view/id/<?php echo $row->id;?>/" title="View User"><i class="icon-eye-open"></i></a>
 					
-					<a class="btn btn-mini btn-primary action-tooltip" href="/user/edit/id/<?php echo $row->id;?>" title="Edit User"><i class="icon-pencil"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" href="/user/edit/id/<?php echo $row->id;?>" title="Edit User"><i class="icon-pencil"></i></a>
 					
-					<a class="btn btn-mini btn-primary action-tooltip" href="/user/reset-password/id/<?php echo $row->id;?>" title="Reset User Password"><i class="icon-refresh"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" href="/user/reset-password/id/<?php echo $row->id;?>" title="Reset User Password"><i class="icon-refresh"></i></a>
 
 					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete user \'<?php echo $row->username;?>\'?')" href="/user/remove/id/<?php echo $row->id;?>" title="Delete User"><i class="icon-remove"></i></a>
 

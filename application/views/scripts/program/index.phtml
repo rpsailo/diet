@@ -28,11 +28,11 @@
 				<td><?php echo $row->duration;?> days</td>
 				<td><?php echo $row->target;?></td>
 				<td>					
-					<a class="btn btn-mini btn-primary action-tooltip" data-target="#view_programme_<?php echo $row->id;?>" data-toggle="modal" href="/program/view/id/<?php echo $row->id;?>" title="View Programme"><i class="icon-eye-open"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" data-target="#view_programme_<?php echo $row->id;?>" data-toggle="modal" href="/program/view/id/<?php echo $row->id;?>" title="View Programme"><i class="icon-eye-open"></i></a>
 
-					<a class="btn btn-mini btn-primary action-tooltip" href="/program/edit/id/<?php echo $row->id;?>" title="Edit Programme"><i class="icon-pencil"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" href="/program/edit/id/<?php echo $row->id;?>" title="Edit Programme"><i class="icon-pencil"></i></a>
 
-					<a class="btn btn-mini btn-primary action-tooltip" href="/program/trainee/id/<?php echo $row->id;?>" title="Manage Trainees"><i class="icon-cog"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" href="/program/trainee/id/<?php echo $row->id;?>" title="Manage Trainees"><i class="icon-cog"></i></a>
 					
 					<?php if($this->user->role == 'administrator'):?>
 					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete programme \'<?php echo $row->name;?>\'?')" href="/program/remove/id/<?php echo $row->id;?>" title="Delete Programme"><i class="icon-remove"></i></a>

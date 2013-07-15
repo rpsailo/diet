@@ -58,6 +58,7 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:school-statistic:add"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school-statistic:edit"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school-statistic:remove"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school-statistic:view"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:add"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:index"), "default");

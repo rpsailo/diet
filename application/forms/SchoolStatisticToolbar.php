@@ -32,7 +32,7 @@ class Form_SchoolStatisticToolbar extends Twitter_Bootstrap_Form_Inline
         $this->addElement('button', 'submit', array(
             'label'         => 'Search',
             'type'          => 'submit',
-            'buttonType'    => 'primary',
+            'buttonType'    => 'success',
             'icon'          => 'search',
             'escape'        => false
         ));

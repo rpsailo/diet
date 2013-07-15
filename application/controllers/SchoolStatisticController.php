@@ -176,5 +176,32 @@ class SchoolStatisticController extends Zend_Controller_Action
 		}
 	}
 
+	public function viewAction()
+	{
+		$id = $this->_request->getParam('id');
+
+		if($id)
+		{
+			$schoolstatistic = $this->schoolstatisticmodel->find($id)->current();
+			$school = $this->schoolmodel->find($schoolstatistic->school_id)->current();
+			
+			if($schoolstatistic)
+			{
+		    	$this->view->statistic = $schoolstatistic;
+		    	$this->view->school = $school;
+		    }
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid statistic ID.', "status"=>"error"));
+				$this->_redirect('/school-statistic/');
+			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect statistic ID.', "status"=>"error"));
+			$this->_redirect('/school-statistic/');
+		}
+	}
+
 }
 

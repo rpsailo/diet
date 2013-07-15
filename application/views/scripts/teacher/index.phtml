@@ -29,11 +29,11 @@
 				<td><?php echo $row->educational_qualification;?></td>
 				<td><?php echo $row->status;?></td>
 				<td>					
-					<a class="btn btn-mini btn-primary action-tooltip" data-target="#view_teacher_<?php echo $row->id;?>" data-toggle="modal" href="/teacher/view/id/<?php echo $row->id;?>/" title="View Teacher"><i class="icon-eye-open"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" data-target="#view_teacher_<?php echo $row->id;?>" data-toggle="modal" href="/teacher/view/id/<?php echo $row->id;?>/" title="View Teacher"><i class="icon-eye-open"></i></a>
 
-					<a class="btn btn-mini btn-primary action-tooltip" href="/teacher/edit/id/<?php echo $row->id;?>" title="Edit Teacher"><i class="icon-pencil"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" href="/teacher/edit/id/<?php echo $row->id;?>" title="Edit Teacher"><i class="icon-pencil"></i></a>
 
-					<a class="btn btn-mini btn-primary action-tooltip" href="/teacher/training/id/<?php echo $row->id;?>" title="Manage Training"><i class="icon-cog"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" href="/teacher/training/id/<?php echo $row->id;?>" title="Manage Training"><i class="icon-cog"></i></a>
 					
 					<?php if($this->user->role == 'administrator'):?>
 					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete teacher \'<?php echo $row->name;?>\'?')" href="/teacher/remove/id/<?php echo $row->id;?>" title="Delete Teacher"><i class="icon-remove"></i></a>
@@ -45,6 +45,7 @@
 							<h3 id="view_teacher_<?php echo $row->id;?>_label">Teacher: <?php echo $row->name;?></h3>
 						</div>
 						<div class="modal-body">
+							<img src="/templates/default/default/images/loader-velocity.gif" alt="" />
 						</div>
 						<div class="modal-footer">
 							<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

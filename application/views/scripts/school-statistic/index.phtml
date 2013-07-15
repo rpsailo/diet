@@ -44,11 +44,25 @@
 				<td><?php echo $row->boys_8;?></td>
 				<td><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->boys_5 + $row->boys_6 + $row->boys_7 + $row->boys_8;?></td>
 				<td rowspan="3">
-					<a class="btn btn-mini btn-primary action-tooltip" href="/school-statistic/edit/id/<?php echo $row->id;?>" title="Edit Statistic"><i class="icon-pencil"></i></a>
+					<a class="btn btn-mini btn-info action-tooltip" data-target="#view_statistic_<?php echo $row->id;?>" data-toggle="modal" href="/school-statistic/view/id/<?php echo $row->id;?>/" title="View Statistic"><i class="icon-eye-open"></i></a>
+
+					<a class="btn btn-mini btn-info action-tooltip" href="/school-statistic/edit/id/<?php echo $row->id;?>" title="Edit Statistic"><i class="icon-pencil"></i></a>
 					
 					<?php if($this->user->role == 'administrator'):?>
 					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete <?php echo $row->year;?> statistic for <?php echo $row->name;?>?')" href="/school-statistic/remove/id/<?php echo $row->id;?>" title="Delete Statistic"><i class="icon-remove"></i></a>
 					<?php endif;?>
+
+					<div id="view_statistic_<?php echo $row->id;?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="view_statistic_<?php echo $row->id;?>_label" aria-hidden="true">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+							<h3 id="view_statistic_<?php echo $row->id;?>_label"><?php echo $row->name;?><br> <?php echo $row->year;?> Statistic</h3>
+						</div>
+						<div class="modal-body">
+						</div>
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						</div>
+					</div>
 				</td>
 			</tr>
 			<tr>
