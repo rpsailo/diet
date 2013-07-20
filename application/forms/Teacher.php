@@ -95,6 +95,7 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
                 'Master'=>'Master',
                 'Bachelor'=>'Bachelor',
                 'Diploma'=>'Diploma',
+				'Ongoing'=>'Ongoing',
                 'Nil'=>'Nil'
                 )
         ));

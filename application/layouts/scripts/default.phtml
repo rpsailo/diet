@@ -48,19 +48,19 @@
 			<div class="span2 print-remove well sidebar-nav">
 				<ul class="nav nav-list">
 					<li<?php echo ($this->controllerName == 'report' && $this->actionName == 'index')?' class="active"':'';?>><a href="/report/"><i class="icon-list-ul"></i> Report</a></li>
-
-					<li class="nav-header">Teachers</li>
-					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'add')?' class="active"':'';?>><a href="/teacher/add/"><i class="icon-plus"></i> Add Teacher</a></li>
-					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'index')?' class="active"':'';?>><a href="/teacher/"><i class="icon-list-ul"></i> List Teachers</a></li>
-
-					<li class="nav-header">Programs</li>
-					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'add')?' class="active"':'';?>><a href="/program/add/"><i class="icon-plus"></i> Add Program</a></li>
-					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'index')?' class="active"':'';?>><a href="/program/"><i class="icon-list-ul"></i> List Programs</a></li>
-
+					
 					<li class="nav-header">School</li>
 					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'add')?' class="active"':'';?>><a href="/school/add/"><i class="icon-plus"></i> Add School</a></li>
 					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school/"><i class="icon-list-ul"></i> List Schools</a></li>
 					<li<?php echo ($this->controllerName == 'school-statistic' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school-statistic/"><i class="icon-bar-chart"></i> School Statistics</a></li>
+					
+					<li class="nav-header">Programs</li>
+					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'add')?' class="active"':'';?>><a href="/program/add/"><i class="icon-plus"></i> Add Program</a></li>
+					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'index')?' class="active"':'';?>><a href="/program/"><i class="icon-list-ul"></i> List Programs</a></li>
+					
+					<li class="nav-header">Teachers</li>
+					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'add')?' class="active"':'';?>><a href="/teacher/add/"><i class="icon-plus"></i> Add Teacher</a></li>
+					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'index')?' class="active"':'';?>><a href="/teacher/"><i class="icon-list-ul"></i> List Teachers</a></li>
 
 					<?php if($this->user->role == 'administrator'): ?>
 					<li class="nav-header">Users</li>

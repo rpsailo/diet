@@ -58,9 +58,9 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
         ));
         $usermodel = new Model_User();
         $faculties = $usermodel->faculties();
-        $faculty_data = array();
+		$faculty_data = array();
         foreach ($faculties as $key => $f)
-            $faculty_data[$f->id] = $f->name." - ".$f->educational_qualification." (".$f->specialization.")";
+			$faculty_data[$f->id] = $f->name." - ".$f->educational_qualification;
         $this->faculties->setMultiOptions($faculty_data);
         	
         $this->addElement('button', 'add', array(
