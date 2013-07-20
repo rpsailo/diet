@@ -30,6 +30,8 @@ class SchoolController extends Zend_Controller_Action
     	$year_of_establishment = $this->_request->getParam('year_of_establishment', null);
     	$type = $this->_request->getParam('type', null);
     	$level = $this->_request->getParam('level', null);
+    	$district = $this->_request->getParam('district', null);
+    	$sub_division = $this->_request->getParam('sub_division', null);
     	$limit = $this->_request->getParam('limit', 20);
     	$page = $this->_request->getParam('page', 1);
 
@@ -65,6 +67,18 @@ class SchoolController extends Zend_Controller_Action
     		$url_params .= '/level/'.$level;
     		$params['condition'][] = "`level` = '".$level."'";
     		$this->schooltoolbarform->level->setValue($level);
+    	}
+    	if($district != null)
+    	{
+    		$url_params .= '/district/'.$district;
+    		$params['condition'][] = "`district` = '".$district."'";
+    		$this->schooltoolbarform->district->setValue($district);
+    	}
+    	if($sub_division != null)
+    	{
+    		$url_params .= '/sub_division/'.$sub_division;
+    		$params['condition'][] = "`sub_division` = '".$sub_division."'";
+    		$this->schooltoolbarform->sub_division->setValue($sub_division);
     	}
 
 		if($this->_request->isPost())
@@ -146,6 +160,30 @@ class SchoolController extends Zend_Controller_Action
 				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid school ID.', "status"=>"error"));
 				$this->_redirect('/school/');
 			}
+		}
+		else
+		{
+			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect school ID.', "status"=>"error"));
+			$this->_redirect('/school/');
+		}
+	}
+
+	public function viewAction()
+	{
+		$id = $this->_request->getParam('id');
+
+		if($id)
+		{
+			$school = $this->schoolmodel->find($id)->current();
+			if($school)
+			{
+				$this->view->school = $school;
+			}
+			else
+			{
+				$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Invalid school ID.', "status"=>"error"));
+				$this->_redirect('/school/');
+			}	
 		}
 		else
 		{

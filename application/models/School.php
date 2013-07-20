@@ -10,6 +10,7 @@ class Model_School extends System_DbTable
         $new_row = $this->createRow();
         $new_row->name = $data['name'];
         $new_row->address = $data['address'];
+        $new_row->district = $data['district'];
         $new_row->sub_division = $data['sub_division'];
         $new_row->phone = $data['phone'];
         $new_row->year_of_establishment = $data['year_of_establishment'];
@@ -32,6 +33,7 @@ class Model_School extends System_DbTable
             $row = $this->find($id)->current();
             $row->name = $data['name'];
             $row->address = $data['address'];
+            $row->district = $data['district'];
             $row->sub_division = $data['sub_division'];
             $row->phone = $data['phone'];
             $row->year_of_establishment = $data['year_of_establishment'];

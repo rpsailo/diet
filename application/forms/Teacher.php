@@ -65,12 +65,23 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('text', 'sub_division', array(
+        $this->addElement('select', 'district', array(
+            'label'             => 'District',
+            'class'             => 'input-large',
+            'required'          => true,
+            'onchange'           => 'getByDistrict(this.value);'
+        ));
+        $subdivisionmodel = new Model_SubDivisionBlock();
+        $this->district->addMultiOptions($subdivisionmodel->districts());
+
+        $this->addElement('select', 'sub_division', array(
             'label'             => 'Sub Division',
-            'class'             => 'input-xlarge',
+            'class'             => 'input-large',
             'required'          => true
         ));
-
+        foreach($subdivisionmodel->all() as $s)
+            $this->sub_division->addMultiOption($s->name, $s->name);
+        
         $this->addElement('text', 'date_of_joining', array(
             'label'             => 'Date of Joining',
             // 'class'             => 'pickadate input-medium',

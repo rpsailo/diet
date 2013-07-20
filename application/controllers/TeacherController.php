@@ -35,6 +35,8 @@ class TeacherController extends Zend_Controller_Action
     	$tet = $this->_request->getParam('tet', null);
     	$main_subject_taught = $this->_request->getParam('main_subject_taught', null);
     	$date_of_joining = $this->_request->getParam('date_of_joining', null);
+    	$district = $this->_request->getParam('district', null);
+    	$sub_division = $this->_request->getParam('sub_division', null);
 
     	$limit = $this->_request->getParam('limit', 20);
     	$page = $this->_request->getParam('page', 1);
@@ -101,6 +103,18 @@ class TeacherController extends Zend_Controller_Action
     		$url_params .= '/date_of_joining/'.$date_of_joining;
     		$params['condition'][] = "`date_of_joining` = '".$date_of_joining."'";
     		$this->teachertoolbarform->date_of_joining->setValue($date_of_joining);
+    	}
+    	if($district != null)
+    	{
+    		$url_params .= '/district/'.$district;
+    		$params['condition'][] = "`district` = '".$district."'";
+    		$this->teachertoolbarform->district->setValue($district);
+    	}
+    	if($sub_division != null)
+    	{
+    		$url_params .= '/sub_division/'.$sub_division;
+    		$params['condition'][] = "`sub_division` = '".$sub_division."'";
+    		$this->teachertoolbarform->sub_division->setValue($sub_division);
     	}
 
 		if($this->_request->isPost())

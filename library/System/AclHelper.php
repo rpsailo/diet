@@ -11,7 +11,7 @@ class System_AclHelper
 	public function setRoles()
 	{
 		$this->acl->addRole(new Zend_Acl_Role('public'));
-		$this->acl->addRole(new Zend_Acl_Role('user'));
+		$this->acl->addRole(new Zend_Acl_Role('faculty'));
 		$this->acl->addRole(new Zend_Acl_Role('administrator'));
 	}
 	
@@ -48,6 +48,7 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:index"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:edit"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:remove"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:school:view"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:fetch-by-level"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:new-statistic"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:remove-statistic"), "default");
@@ -71,6 +72,8 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:change-training-status"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:change-training-date"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:typeahead"), "default");
+
+		$this->acl->addResource(new Zend_Acl_Resource("default:sub-division:fetch-by-district"), "default");
 		
 	}
 	
@@ -78,11 +81,11 @@ class System_AclHelper
 	{
 		$this->acl->deny(array(
 			'public',
-			'user',
+			'faculty',
 			'administrator'
 			), null);
 
-		$this->acl->allow('user', array(
+		$this->acl->allow('faculty', array(
 			"default:index:index",
 			"default:change-password:index",
 			"default:error:error",
@@ -101,6 +104,7 @@ class System_AclHelper
 			"default:school:add",
 			"default:school:index",
 			"default:school:edit",
+			"default:school:view",
 			"default:school:fetch-by-level",
 			"default:teacher:add",
 			"default:teacher:index",
@@ -110,7 +114,8 @@ class System_AclHelper
 			"default:teacher:add-training",
 			"default:teacher:change-training-status",
 			"default:teacher:change-training-date",
-			"default:teacher:typeahead"
+			"default:teacher:typeahead",
+			"default:sub-division:fetch-by-district"
 			));
 		$this->acl->allow('administrator', null);
 		$this->acl->allow(null, array(

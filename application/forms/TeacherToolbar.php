@@ -17,11 +17,24 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        // $this->addElement('select', 'training_status', array(
-        //     'label'             => 'Training Status',
-        //     'class'             => 'input-medium',
-        //     'multiOptions'      => array(''=>'Type - All', 'Trained'=>'Trained', 'Un-Trained'=>'Un-Trained')
-        // ));
+        $subdivisionmodel = new Model_SubDivisionBlock();
+        $this->addElement('select', 'district', array(
+            'label'             => 'District',
+            'title'             => 'District',
+            'class'             => 'input-medium action-tooltip',
+            'multiOptions'      => array(''=>'All District'),
+            'onchange'           => 'getByDistrict(this.value);'
+        ));
+        $this->district->addMultiOptions($subdivisionmodel->districts());
+
+        $this->addElement('select', 'sub_division', array(
+            'title'             => 'Sub Division / Block',
+            'label'             => 'Sub Division / Block',
+            'class'             => 'input-medium action-tooltip',
+            'multiOptions'      => array(''=>'All Sub Division / Block')
+        ));
+        foreach($subdivisionmodel->all() as $s)
+            $this->sub_division->addMultiOption($s->name, $s->name);
 
         $this->addElement('select', 'professional_qualification', array(
             'label'             => 'Professional Qualification',

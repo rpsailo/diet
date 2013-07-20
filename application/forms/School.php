@@ -19,42 +19,34 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
             'rows'              => 2,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
-		 $this->addElement('select', 'sub_division', array(
-            'label'             => 'Sub Division',
+		
+        $this->addElement('select', 'district', array(
+            'label'             => 'District',
             'class'             => 'input-large',
             'required'          => true,
-            'multioptions'      => array(
-                ''=>'---Select Sub Division---',
-                'Aizawl East Sub Division'=>'Aizawl East Sub Division',
-                'Aizawl West Sub Division'=>'Aizawl West Sub Division',
-                'Aizawl South Sub Division'=>'Aizawl South Sub Division',
-                'Darlawn Sub Division'=>'Darlawn Sub Division',
-				'Saitual Sub Division'=>'Saitual Sub Division',
-				'Lunglei North Sub Division'=>'Lunglei North Sub Division',
-				'Lunglei South Sub Division'=>'Lunglei South Sub Division',
-				'Lungsen Sub Division'=>'Lungsen Sub Division',
-				'Hnahthial Sub Division'=>'Hnahthial Sub Division',
-				'Serchhip Sub Division'=>'Serchhip Sub Division',
-				'North Vanlaiphai Sub Division'=>'North Vanlaiphai Sub Division',
-				'Thenzawl Sub Division'=>'Thenzawl Sub Division',
-				'Saiha Block'=>'Saiha Block',
-				'Tuipang Block'=>'Tuipang Block',
-				'Bungtlang South Block'=>'Bungtlang South Block',
-				'Sangau Block'=>'Sangau Block',
-				'Chawngte Block'=>'chawngte Block',
-				'Bualpui N Block'=>'Bualpui N Block',
-				'Lawngtlai Block'=>'Lawngtlai Block',
-				'Champhai Block'=>'Champhai Block',
-				'Khawbung Block'=>'Khawbung Block',
-				'Khawzawl Block'=>'Khawzawl Block',
-				'Ngopa Block'=>'Ngopa Block',
-				'Mamit Sub Division'=>'Mamit Sub Division',
-				'Kawrthah Sub Division'=>'Kawrthah Sub Division',
-				'West Phaileng Sub Division'=>'West Phaileng Sub Division',
-				'Kolasib Block'=>'Kolasib Block',
-				'Kawnpui Block'=>'Kawnpui Block'
-                )
+            'onchange'           => 'getByDistrict(this.value);'
         ));
+        $subdivisionmodel = new Model_SubDivisionBlock();
+        $i = 0;
+        foreach($subdivisionmodel->districts() as $d)
+        {
+            if($i == 0)
+            {
+                $this->district->setValue($d);
+                $i = 1;
+            }
+            $this->district->addMultiOption($d, $d);
+        }
+
+        $this->addElement('select', 'sub_division', array(
+            'label'             => 'Sub Division',
+            'class'             => 'input-large',
+            'required'          => true
+        ));
+        foreach($subdivisionmodel->all() as $s)
+        {
+            $this->sub_division->addMultiOption($s->name, $s->name);
+        }
         
         $this->addElement('text', 'phone', array(
             'label'             => 'Contact Number',

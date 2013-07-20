@@ -66,3 +66,27 @@
 		<?php echo $this->data; ?>
 	</div>
 </fieldset>
+
+<script>
+$(function(){
+	if($("#district").val() != '')
+		getByDistrict($("#district").val());
+});
+
+function getByDistrict(district)
+{
+	$.ajax({
+		url: '/sub-division/fetch-by-district/district/'+district
+	})
+	.done(function(result){
+		var current = $('#sub_division').val();
+		var opts = '<option value="">All Sub Division / Block</option>';
+		$(result).each(function(k,data){
+			opts += '<option value="'+data.name+'">'+data.name+'</option>';
+		});
+
+		$('#sub_division').html(opts);
+		$('#sub_division').val(current);
+	});
+}
+</script>

@@ -15,6 +15,7 @@ class Model_Teacher extends System_DbTable
         $new_row->dob = $data['dob'];
         $new_row->present_address = $data['present_address'];
         $new_row->permanent_address = $data['permanent_address'];
+        $new_row->district = $data['district'];
         $new_row->sub_division = $data['sub_division'];
         $new_row->date_of_joining = $data['date_of_joining'];
         $new_row->educational_qualification = $data['educational_qualification'];
@@ -47,6 +48,7 @@ class Model_Teacher extends System_DbTable
         $row->dob = $data['dob'];
         $row->present_address = $data['present_address'];
         $row->permanent_address = $data['permanent_address'];
+        $row->district = $data['district'];
         $row->sub_division = $data['sub_division'];
         $row->date_of_joining = $data['date_of_joining'];
         $row->educational_qualification = $data['educational_qualification'];
