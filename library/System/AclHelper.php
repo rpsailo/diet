@@ -74,6 +74,8 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:teacher:typeahead"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:sub-division:fetch-by-district"), "default");
+
+		$this->acl->addResource(new Zend_Acl_Resource("default:report:index"), "default");
 		
 	}
 	
@@ -115,7 +117,8 @@ class System_AclHelper
 			"default:teacher:change-training-status",
 			"default:teacher:change-training-date",
 			"default:teacher:typeahead",
-			"default:sub-division:fetch-by-district"
+			"default:sub-division:fetch-by-district",
+			"default:report:index"
 			));
 		$this->acl->allow('administrator', null);
 		$this->acl->allow(null, array(

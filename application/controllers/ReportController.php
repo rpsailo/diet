@@ -24,33 +24,6 @@ class ReportController extends Zend_Controller_Action
 
 	public function indexAction()
     {
-		$url_params = '';
-
-    	$search = $this->_request->getParam('search', null);
-    	$limit = $this->_request->getParam('limit', 20);
-    	$page = $this->_request->getParam('page', 1);
-
-    	$params = array(
-    		'limit' 	=> $limit,
-    		'page'		=> $page,
-    		'order'		=> 'name asc',
-    		'condition'	=> array()
-		);
-
-		$this->programtoolbarform->limit->setValue($limit);
-
-    	if($search != null)
-    	{
-    		$url_params .= '/search/'.$search;
-    		$params['condition'][] = "`name` LIKE '%".$search."%'";
-    		$this->programtoolbarform->search->setValue($search);
-    	}
-
-		if($this->_request->isPost())
-    		$this->_redirect('/program/index'.$url_params.'/page/'.$page.'/limit/'.$limit);
-
-    	$this->view->data = $this->programmodel->paginate($params);
-    	$this->view->form = $this->programtoolbarform;
 	}
 }
 
