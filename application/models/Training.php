@@ -33,6 +33,7 @@ class Model_Training extends System_DbTable
     {
         $select = $this->select();
         $select->where('`teacher_id` = ?', $teacher_id);
-        return $this->fetchAll($select)->count();
+        $trainings = $this->fetchAll($select);
+        return sizeof($trainings->toArray());
     }
 }

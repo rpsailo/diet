@@ -21,7 +21,7 @@ class Model_Teacher extends System_DbTable
         $new_row->educational_qualification = $data['educational_qualification'];
         $new_row->professional_qualification = $data['professional_qualification'];
         $new_row->other_qualification = $data['other_qualification'];
-        $new_row->year_of_retirement = $data['year_of_retirement'];
+        $new_row->year_of_retirement = new Zend_Db_Expr("YEAR(DATE_ADD('".$data['dob']."', INTERVAL 60 YEAR))");
         $new_row->tet = $data['tet'];
         $new_row->main_subject_taught = $data['main_subject_taught'];
         $new_row->status = $data['status'];
@@ -54,7 +54,7 @@ class Model_Teacher extends System_DbTable
         $row->educational_qualification = $data['educational_qualification'];
         $row->professional_qualification = $data['professional_qualification'];
         $row->other_qualification = $data['other_qualification'];
-        $row->year_of_retirement = $data['year_of_retirement'];
+        $row->year_of_retirement = new Zend_Db_Expr("YEAR(DATE_ADD('".$data['dob']."', INTERVAL 60 YEAR))");
         $row->tet = $data['tet'];
         $row->main_subject_taught = $data['main_subject_taught'];
         $row->status = $data['status'];

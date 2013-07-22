@@ -134,6 +134,7 @@ class TeacherController extends Zend_Controller_Action
 			if($teacher)
 			{
 				$this->view->teacher = $teacher;
+				$this->view->trainingmodel = $this->trainingmodel;
 			}
 			else
 			{
