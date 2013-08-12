@@ -73,6 +73,13 @@ class Model_School extends System_DbTable
         return $this->fetchAll($select);
     }
 
+    public function divisions()
+    {
+        $select = $this->select();
+        $select->from($this->_name, array('sub_division'=> new Zend_Db_Expr('DISTINCT(`sub_division`)')));
+        return $this->fetchAll($select);
+    }
+
     public function stats()
     {
         return $this->all()->count();
