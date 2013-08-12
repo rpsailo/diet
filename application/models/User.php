@@ -80,7 +80,7 @@ class Model_User extends System_DbTable
         }
         else if($ids != '')
         {
-            //$select->where('id in ('.$ids.')');
+            $select->where('id in ('.$ids.')');
         }
 
         $select->where('role = "faculty"');

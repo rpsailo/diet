@@ -98,7 +98,7 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
             'label'             => 'Role',
             'class'             => 'input-xlarge',
             'required'          => true,
-            'multiOptions'      => array('administrator'=>'Administrator', 'faculty'=>'Faculty')
+            'multiOptions'      => array('administrator'=>'Administrator', 'faculty'=>'Faculty', 'user'=>'User')
             ));
 
         $this->repeat_password->addValidator("identical", false, array("token" => "password", "messages" => "The two passwords should be identical"));

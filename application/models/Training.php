@@ -36,4 +36,15 @@ class Model_Training extends System_DbTable
         $trainings = $this->fetchAll($select);
         return sizeof($trainings->toArray());
     }
+
+    public function trainingCount($teacher_id)
+    {
+        $trainings = $this->training($teacher_id);
+        if($trainings->count())
+        {
+           return $trainings->count(); 
+        }
+        else
+            return 0;
+    }
 }

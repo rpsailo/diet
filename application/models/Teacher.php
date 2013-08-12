@@ -26,6 +26,7 @@ class Model_Teacher extends System_DbTable
         $new_row->main_subject_taught = $data['main_subject_taught'];
         $new_row->status = $data['status'];
         $new_row->achievement = $data['achievement'];
+        $new_row->no_of_training = 0;
         
         $new_row->user_id = $loggedin_user->id;
         $new_row->created_at = new Zend_Db_Expr('NOW()');
@@ -59,6 +60,9 @@ class Model_Teacher extends System_DbTable
         $row->main_subject_taught = $data['main_subject_taught'];
         $row->status = $data['status'];
         $row->achievement = $data['achievement'];
+
+        $trainingmodel = new Model_Training();
+        $row->no_of_training = $trainingmodel->trainingCount($id);
         
         $row->user_id = $loggedin_user->id;
         $row->updated_at = new Zend_Db_Expr('NOW()');

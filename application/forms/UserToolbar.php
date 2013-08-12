@@ -17,7 +17,7 @@ class Form_UserToolbar extends Twitter_Bootstrap_Form_Inline
         $this->addElement('select', 'role', array(
             'label'             => 'Role',
             'class'             => 'input-medium',
-            'multiOptions'      => array(''=>'Role - All','administrator'=>'Administrator', 'faculty'=>'Faculty'),
+            'multiOptions'      => array(''=>'Role - All','administrator'=>'Administrator', 'faculty'=>'Faculty', 'user'=>'User'),
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 

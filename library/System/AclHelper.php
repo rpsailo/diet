@@ -11,6 +11,7 @@ class System_AclHelper
 	public function setRoles()
 	{
 		$this->acl->addRole(new Zend_Acl_Role('public'));
+		$this->acl->addRole(new Zend_Acl_Role('user'));
 		$this->acl->addRole(new Zend_Acl_Role('faculty'));
 		$this->acl->addRole(new Zend_Acl_Role('administrator'));
 	}
@@ -76,6 +77,12 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:sub-division:fetch-by-district"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:report:index"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:report:school"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:report:teacher"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:report:programme"), "default");
+
+		$this->acl->addResource(new Zend_Acl_Resource("default:backup:index"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:backup:remove"), "default");
 		
 	}
 	
@@ -84,10 +91,11 @@ class System_AclHelper
 		$this->acl->deny(array(
 			'public',
 			'faculty',
+			'user',
 			'administrator'
 			), null);
 
-		$this->acl->allow('faculty', array(
+		$this->acl->allow(array('faculty', 'user'), array(
 			"default:index:index",
 			"default:change-password:index",
 			"default:error:error",

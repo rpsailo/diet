@@ -36,19 +36,6 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
         foreach($subdivisionmodel->all() as $s)
             $this->sub_division->addMultiOption($s->name, $s->name);
 
-        $this->addElement('select', 'professional_qualification', array(
-            'label'             => 'Professional Qualification',
-            'title'             => 'Professional Qualification',
-            'class'             => 'input-medium action-tooltip',
-            'multiOptions'      => array(
-                ''=>'All Professional Qualification', 
-                'Master'=>'Master',
-                'Bachelor'=>'Bachelor',
-                'Diploma'=>'Diploma',
-                'Nil'=>'Nil'
-                )
-        ));
-
         $this->addElement('select', 'school', array(
             'label'             => 'School',
             'class'             => 'input-large action-tooltip',
@@ -66,6 +53,19 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
             'class'             => 'input-small action-tooltip',
             'title'             => 'Sex',
             'multiOptions'      => array(''=>'All Sex', 'male'=>'Male', 'female'=>'Female')
+        ));
+
+        $this->addElement('select', 'professional_qualification', array(
+            'label'             => 'Professional Qualification',
+            'title'             => 'Professional Qualification',
+            'class'             => 'input-medium action-tooltip',
+            'multiOptions'      => array(
+                ''=>'All Professional Qualification', 
+                'Master'=>'Master',
+                'Bachelor'=>'Bachelor',
+                'Diploma'=>'Diploma',
+                'Nil'=>'Nil'
+                )
         ));
 
         $this->addElement('select', 'tet', array(
@@ -116,7 +116,17 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
             'placeholder'       => 'Year of Retirement',
             'title'             => 'Year of Retirement',
             'class'             => 'input-medium action-tooltip',
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'validators'        => array(new Zend_Validate_Digits())
+        ));
+
+        $this->addElement('text', 'no_of_training', array(
+            'label'             => 'Number of Training Attended',
+            'placeholder'       => 'No. of Training',
+            'title'             => 'Number of Training Attended',
+            'class'             => 'input-medium action-tooltip',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'validators'        => array(new Zend_Validate_Digits())
         ));
 
         $this->addElement('text', 'search', array(
@@ -126,7 +136,20 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
             'title'             => 'Enter Name of Teacher',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
+
+        $this->addElement('hidden', 'as', array(
+            'value'         => 0
+        ));
 		
+        $this->addElement('button', 'advanced', array(
+            'label'         => 'Show More Filter',
+            'type'          => 'button',
+            'buttonType'    => 'primary',
+            // 'icon'          => 'search',
+            'class'         => 'btn-medium',
+            'escape'        => false
+        ));
+
         $this->addElement('button', 'submit', array(
             'label'         => 'Search',
             'type'          => 'submit',

@@ -50,6 +50,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	{
 		require APPLICATION_PATH. "/configs/db.php";
 		$config = new Zend_Config($configuration);
+		Zend_Registry::set('config', $config);
 		return $config;
 	}
 	

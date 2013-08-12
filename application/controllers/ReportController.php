@@ -25,6 +25,51 @@ class ReportController extends Zend_Controller_Action
 	public function indexAction()
     {
 	}
+
+	public function schoolAction()
+	{
+		if($this->_request->isPost())
+		{
+			$export = $this->_request->getParam('export', 0);
+			
+			if($export != 0)
+			{
+				switch ($export) {
+					case 1:
+						// Number of school in sub division and block
+						break;
+
+					case 2:
+						// Number of student in primary school
+						break;
+					
+					case 3:
+						// Number of student in primary school
+						break;
+					
+					case 4:
+						// Number of student in primary school
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+			}
+			else
+				exit('Invalid action');
+		}
+	}
+
+	public function teacherAction()
+	{
+		# code...
+	}
+
+	public function programmeAction()
+	{
+		# code...
+	}
 }
 
 

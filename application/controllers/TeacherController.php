@@ -37,6 +37,8 @@ class TeacherController extends Zend_Controller_Action
     	$date_of_joining = $this->_request->getParam('date_of_joining', null);
     	$district = $this->_request->getParam('district', null);
     	$sub_division = $this->_request->getParam('sub_division', null);
+    	$no_of_training = $this->_request->getParam('no_of_training', null);
+    	$advanced_search = $this->_request->getParam('as', null);
 
     	$limit = $this->_request->getParam('limit', 20);
     	$page = $this->_request->getParam('page', 1);
@@ -116,12 +118,27 @@ class TeacherController extends Zend_Controller_Action
     		$params['condition'][] = "`sub_division` = '".$sub_division."'";
     		$this->teachertoolbarform->sub_division->setValue($sub_division);
     	}
+    	if($no_of_training != null)
+    	{
+    		$url_params .= '/no_of_training/'.$no_of_training;
+    		$params['condition'][] = "`no_of_training` = ".$no_of_training;
+    		$this->teachertoolbarform->no_of_training->setValue($no_of_training);
+    	}
+
+    	if($advanced_search != 0)
+    	{
+    		$url_params .= '/as/'.$advanced_search;
+    		$this->teachertoolbarform->as->setValue($advanced_search);
+    		$this->teachertoolbarform->advanced->setLabel('Show Less Filter');
+    	}
+
 
 		if($this->_request->isPost())
     		$this->_redirect('/teacher/index'.$url_params.'/page/'.$page.'/limit/'.$limit);
 
     	$this->view->data = $this->teachermodel->paginate($params);
     	$this->view->form = $this->teachertoolbarform;
+    	$this->view->trainingmodel = $this->trainingmodel;
 	}
 
 	public function viewAction()
