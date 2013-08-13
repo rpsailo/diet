@@ -3,9 +3,9 @@ class Form_UserToolbar extends Twitter_Bootstrap_Form_Inline
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-inline well');
+        $this->setMethod('post')->setAttrib('class','form form-inline form-toolbar');
         $this->setAction('/user/');
-        $this->_addClassNames('well');
+        // $this->_addClassNames('well');
         
         $this->addElement('select', 'limit', array(
             'label'             => 'Limit',

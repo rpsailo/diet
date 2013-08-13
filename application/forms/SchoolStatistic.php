@@ -3,8 +3,8 @@ class Form_SchoolStatistic extends Twitter_Bootstrap_Form_Horizontal
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-horizontal well');
-        $this->_addClassNames('well');
+        $this->setMethod('post')->setAttrib('class','form form-horizontal');
+        // $this->_addClassNames('well');
       
         $this->addElement('select', 'school_level', array(
             'label'             => 'Level',
@@ -38,105 +38,105 @@ class Form_SchoolStatistic extends Twitter_Bootstrap_Form_Horizontal
 
         $this->addElement('text', 'boys_1', array(
             'class'             => 'input-mini boys',
-            'append'            => 'Boys',
+            'label'            => 'Class I: Boys',
             'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'girls_1', array(
-            'label'             => 'Class I',
+            'label'             => 'Girls',
             'class'             => 'input-mini girls',
-            'append'            => 'Girls',
+            // 'append'            => 'Girls',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'boys_2', array(
             'class'             => 'input-mini boys',
-            'append'            => 'Boys',
+            'label'            => 'Class II: Boys',
             'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'girls_2', array(
-            'label'             => 'Class II',
+            'label'             => 'Girls',
             'class'             => 'input-mini girls',
-            'append'            => 'Girls',
+            // 'append'            => 'Girls',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'boys_3', array(
             'class'             => 'input-mini boys',
-            'append'            => 'Boys',
+            'label'            => 'Class III: Boys',
             'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'girls_3', array(
-            'label'             => 'Class III',
+            'label'             => 'Girls',
             'class'             => 'input-mini girls',
-            'append'            => 'Girls',
+            // 'append'            => 'Girls',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'boys_4', array(
             'class'             => 'input-mini boys',
-            'append'            => 'Boys',
+            'label'            => 'Class IV: Boys',
             'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'girls_4', array(
-            'label'             => 'Class IV',
+            'label'             => 'Girls',
             'class'             => 'input-mini girls',
-            'append'            => 'Girls',
+            // 'append'            => 'Girls',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'boys_5', array(
             'class'             => 'input-mini boys',
-            'append'            => 'Boys',
+            'label'            => 'Class V: Boys',
             'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'girls_5', array(
-            'label'             => 'Class V',
+            'label'             => 'Girls',
             'class'             => 'input-mini girls',
-            'append'            => 'Girls',
+            // 'append'            => 'Girls',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'boys_6', array(
             'class'             => 'input-mini boys',
-            'append'            => 'Boys',
+            'label'            => 'Class VI: Boys',
             'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'girls_6', array(
-            'label'             => 'Class VI',
+            'label'             => 'Girls',
             'class'             => 'input-mini girls',
-            'append'            => 'Girls',
+            // 'append'            => 'Girls',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'boys_7', array(
             'class'             => 'input-mini boys',
-            'append'            => 'Boys',
+            'label'            => 'Class VII: Boys',
             'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'girls_7', array(
-            'label'             => 'Class VII',
+            'label'             => 'Girls',
             'class'             => 'input-mini girls',
-            'append'            => 'Girls',
+            // 'append'            => 'Girls',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'boys_8', array(
             'class'             => 'input-mini boys',
-            'append'            => 'Boys',
+            'label'            => 'Class VIII: Boys',
             'filters'           => array(new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'girls_8', array(
-            'label'             => 'Class VIII',
+            'label'             => 'Girls',
             'class'             => 'input-mini girls',
-            'append'            => 'Girls',
+            // 'append'            => 'Girls',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 

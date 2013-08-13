@@ -83,7 +83,11 @@ abstract class Twitter_Bootstrap_Form extends Zend_Form
      */
     public function createElement($type, $name, $options = null)
     {
+        if($type != 'button' && $type != 'file')
+            $options['class'] = $options['class'] . " form-control";
+
         // If we haven't specified our own decorators, add the default ones in.
+        
         if (is_array($this->_elementDecorators)) {
             if (null === $options) {
                 $options = array('decorators' => $this->_elementDecorators);

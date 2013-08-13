@@ -77,9 +77,7 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:sub-division:fetch-by-district"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:report:index"), "default");
-		$this->acl->addResource(new Zend_Acl_Resource("default:report:school"), "default");
-		$this->acl->addResource(new Zend_Acl_Resource("default:report:teacher"), "default");
-		$this->acl->addResource(new Zend_Acl_Resource("default:report:programme"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:report:generate"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:backup:index"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:backup:remove"), "default");
@@ -132,7 +130,8 @@ class System_AclHelper
 			"default:teacher:change-training-date",
 			"default:teacher:typeahead",
 			"default:sub-division:fetch-by-district",
-			"default:report:index"
+			"default:report:index",
+			"default:report:generate"
 			));
 		$this->acl->allow('administrator', null);
 		$this->acl->allow(null, array(

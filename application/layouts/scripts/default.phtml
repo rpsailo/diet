@@ -11,89 +11,101 @@
 	<?php echo $this->headStyle(); ?>
 </head>
 <body class="<?php echo $this->actionName; ?> <?php echo $this->controllerName; ?> fl full">
-	<div class="navbar navbar-inverse navbar-fixed-top print-remove">
-		<div class="navbar-inner">
-			<div class="container-fluid">
-				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				
-				<a class="brand" href="/"><i class="icon-globe"></i> DIET Serchhip Training Management System </a>
-				
-				<div class="nav-collapse collapse">
-					<?php if($this->authenticate):?>
-					<p class="navbar-text pull-right">
-						Logged in as <a href="/user/view/id/<?php echo $this->user->id;?>" class="navbar-link"><?php echo ucwords($this->user->username);?></a>
-					</p>
+	<div class="navbar navbar-fixed-top hidden-print diet-navbar">
+		<div class="container-fluid">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<a class="navbar-brand" href="/"><i class="icon-desktop"></i> DIET <?php echo $this->diet_district;?> <span>Training Management System</span></a>
+			
+			<div class="nav-collapse collapse">
+				<?php if($this->authenticate):?>
+				<ul class="nav navbar-nav">
+					<li<?php echo ($this->controllerName == 'index' && $this->actionName == 'index')?' class="active"':'';?>><a href="/">Home</a></li>
+
+					<li class="dropdown<?php echo ($this->controllerName == 'report')?' active':'';?>">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Report <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="/report#schoolReport">School</a></li>
+							<li><a href="/report#teacherReport">Teacher</a></li>
+							<li><a href="/report#programmeReport">Programme</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown<?php echo ($this->controllerName == 'school')?' active':'';?>">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">School <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'add')?' class="active"':'';?>><a href="/school/add/">Add School</a></li>
+							<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school/">List Schools</a></li>
+							<li<?php echo ($this->controllerName == 'school-statistic' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school-statistic/">School Statistics</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown<?php echo ($this->controllerName == 'program')?' active':'';?>">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Programme <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'add')?' class="active"':'';?>><a href="/program/add/">Add Program</a></li>
+							<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'index')?' class="active"':'';?>><a href="/program/">List Programs</a></li>
+						</ul>
+					</li>
+
+					<li class="dropdown<?php echo ($this->controllerName == 'teacher')?' active':'';?>">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Teacher <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'add')?' class="active"':'';?>><a href="/teacher/add/">Add Teacher</a></li>
+							<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'index')?' class="active"':'';?>><a href="/teacher/">List Teachers</a></li>
+						</ul>
+					</li>
+
+					<?php if($this->user->role == 'administrator'): ?>
+					<li class="dropdown<?php echo ($this->controllerName == 'user')?' active':'';?>">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">User <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'add')?' class="active"':'';?>><a href="/user/add/">Add User</a></li>
+							<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'index')?' class="active"':'';?>><a href="/user/">List Users</a></li>					
+						</ul>
+					</li>
+
+					<li<?php echo ($this->controllerName == 'backup' && $this->actionName == 'index')?' class="active"':'';?>><a href="/backup/index/">Backup</a></li>
 					<?php endif;?>
-					
-					<ul class="nav">
-						<?php if($this->authenticate):?>
-						<li<?php echo ($this->controllerName == 'index' && $this->actionName == 'index')?' class="active"':'';?>><a href="/">Home</a></li>
-						<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'view')?' class="active"':'';?>><a href="/user/view/id/<?php echo $this->user->id;?>">Profile</a></li>
-						<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'reset-password')?' class="active"':'';?>><a href="/user/reset-password/id/<?php echo $this->user->id;?>">Change Password</a></li>
-						<li><a href="/auth/logout">Logout</a></li>
-						<?php endif;?>
-					</ul>
-				</div>
+
+				</ul>
+				<?php endif;?>
+
+				<?php if($this->authenticate):?>
+				<ul class="nav navbar-nav pull-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo ucwords($this->user->username);?> <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'view')?' class="active"':'';?>><a href="/user/view/id/<?php echo $this->user->id;?>"><i class="icon-user"></i> Profile</a></li>
+							<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'reset-password')?' class="active"':'';?>><a href="/user/reset-password/id/<?php echo $this->user->id;?>"><i class="icon-pencil"></i> Change Password</a></li>
+							<li class="divider"></li>
+							<li><a href="/auth/logout"><i class="icon-signout"></i> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+				<?php endif;?>
 			</div>
-		</div>
-    </div>	
+		</div><!-- container-fluid -->
+    </div><!-- diet-navbar -->
 
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<?php if($this->authenticate):?>
-			<div class="span2 print-remove well sidebar-nav">
-				<ul class="nav nav-list">
-					<li class="nav-header">Reports</li>
-					<li<?php echo ($this->controllerName == 'report' && $this->actionName == 'school')?' class="active"':'';?>><a href="/report/school/"><i class="icon-bar-chart"></i> School</a></li>
-					<li<?php echo ($this->controllerName == 'report' && $this->actionName == 'teacher')?' class="active"':'';?>><a href="/report/teacher/"><i class="icon-bar-chart"></i> Teacher</a></li>
-					<li<?php echo ($this->controllerName == 'report' && $this->actionName == 'programme')?' class="active"':'';?>><a href="/report/programme/"><i class="icon-bar-chart"></i> Programme</a></li>
-					
-					<li class="nav-header">School</li>
-					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'add')?' class="active"':'';?>><a href="/school/add/"><i class="icon-plus"></i> Add School</a></li>
-					<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school/"><i class="icon-list-ul"></i> List Schools</a></li>
-					<li<?php echo ($this->controllerName == 'school-statistic' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school-statistic/"><i class="icon-bar-chart"></i> School Statistics</a></li>
-					
-					<li class="nav-header">Programs</li>
-					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'add')?' class="active"':'';?>><a href="/program/add/"><i class="icon-plus"></i> Add Program</a></li>
-					<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'index')?' class="active"':'';?>><a href="/program/"><i class="icon-list-ul"></i> List Programs</a></li>
-					
-					<li class="nav-header">Teachers</li>
-					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'add')?' class="active"':'';?>><a href="/teacher/add/"><i class="icon-plus"></i> Add Teacher</a></li>
-					<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'index')?' class="active"':'';?>><a href="/teacher/"><i class="icon-list-ul"></i> List Teachers</a></li>
-
-					<?php if($this->user->role == 'administrator'): ?>
-					<li class="nav-header">Users</li>
-					<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'add')?' class="active"':'';?>><a href="/user/add/"><i class="icon-list-ul"></i> Add User</a></li>
-					<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'index')?' class="active"':'';?>><a href="/user/"><i class="icon-list-ul"></i> List Users</a></li>					
-					<?php endif;?>
-					<?php if($this->user->role == 'administrator'): ?>
-					<li class="nav-header">Backup</li>
-					<li<?php echo ($this->controllerName == 'backup' && $this->actionName == 'index')?' class="active"':'';?>><a href="/backup/index/"><i class="icon-save"></i> Database Backup</a></li>
-					<?php endif;?>
-				</ul>
-			</div>
-			<?php endif;?>
-
-			<?php if($this->authenticate):?>
-			<div class="span10">
-			<?php else: ?>
-			<div class="span5"></div>
-			<div class="span3">
-			<?php endif;?>
+			<div class="col-lg-12">
 				<?php echo $this->Alert();?>
 				<?php echo $this->layout()->content; ?>
 			</div>
-			<?php if(!$this->authenticate):?>
-			<div class="span5"></div>
-			<?php endif;?>
 		</div>
 	</div>
-    <div class="container-fluid">
-      <p class="muted credit text-center">&copy; Copyright Reserved. DIET Traning Management System.</p>
-    </div>    
+
+	<div id="footer">
+	 	<div class="container">
+	    	<p class="text-muted credit">&copy; Copyright reserved. DIET <?php echo $this->diet_district;?> Training Manangement System.</p>
+	  	</div>
+	</div>
+
 </body>
 </html>

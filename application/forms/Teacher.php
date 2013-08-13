@@ -3,8 +3,8 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-horizontal well');
-        $this->_addClassNames('well');
+        $this->setMethod('post')->setAttrib('class','form form-horizontal');
+        // $this->_addClassNames('well');
 
         $this->addElement('select', 'school_level', array(
             'label'             => 'Level',
@@ -45,7 +45,7 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
         $this->addElement('text', 'dob', array(
             'label'             => 'Date of Birth',
             // 'class'             => 'pickadate input-medium',
-            'class'             => 'datepicker input-medium',
+            'class'             => 'datepicker',
             'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
@@ -53,21 +53,21 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
 
         $this->addElement('textarea', 'present_address', array(
             'label'             => 'Present Address',
-            'class'             => 'input-xlarge',
+            'class'             => 'input-lg',
             'rows'              => 2,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('textarea', 'permanent_address', array(
             'label'             => 'Permanent Address',
-            'class'             => 'input-xlarge',
+            'class'             => '',
             'rows'              => 2,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('select', 'district', array(
             'label'             => 'District',
-            'class'             => 'input-large',
+            'class'             => '',
             'required'          => true,
             'onchange'           => 'getByDistrict(this.value);'
         ));

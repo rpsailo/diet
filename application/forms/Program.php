@@ -6,7 +6,7 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
         $this->setMethod('post');
         $this->_addClassNames('form');
         $this->_addClassNames('form-horizontal');
-        $this->_addClassNames('well');
+        // $this->_addClassNames('well');
       
         $this->addElement('text', 'name', array(
             'label'             => 'Program Name',
@@ -18,7 +18,7 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
         $this->addElement('text', 'duration', array(
             'label'             => 'Duration',
             'class'             => 'input-large',
-            'append'            => 'Days',
+            // 'append'            => 'Days',
             'description'       => 'Enter the number of days.',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),

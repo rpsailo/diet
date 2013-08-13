@@ -3,8 +3,8 @@ class Form_SchoolStatisticToolbar extends Twitter_Bootstrap_Form_Inline
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-inline well');
-        $this->_addClassNames('well');
+        $this->setMethod('post')->setAttrib('class','form form-inline form-toolbar');
+        // $this->_addClassNames('well');
         
         $this->addElement('select', 'limit', array(
             'label'             => 'Limit',

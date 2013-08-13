@@ -1,5 +1,5 @@
 <ul class="breadcrumb">
-  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li><a href="/">Home</a></li>
   <li class="active">Users</li>
 </ul>
 
@@ -9,43 +9,49 @@
 
 		<?php echo $this->form;?>
 
-		<table class="table table-striped table-bordered table-hover">
+		<table class="table table-striped table-condensed table-hover">
 			<thead>
 				<tr>
+					<th>#</th>
 					<th>Display Name</th>
 					<th>Username</th>
 					<th>Role</th>
-					<th>Action</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 
-		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>4)); ?>
+		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>5)); ?>
 
-		<?php foreach($this->data as $row): ?>
+		<?php foreach($this->data as $key=>$row): ?>
 			<tr>
+				<td><?php echo ($key+1) + ($this->data->getItemCountPerPage()*($this->data->getCurrentPageNumber() - 1));?></td>
 				<td><?php echo $row->name;?></td>
 				<td><?php echo $row->username;?></td>
 				<td><?php echo ucwords($row->role);?></td>
 				<td>
-					<a class="btn btn-mini btn-info action-tooltip" data-target="#view_user_<?php echo $row->id;?>" data-toggle="modal" href="/user/view/id/<?php echo $row->id;?>/" title="View User"><i class="icon-eye-open"></i></a>
+					<a class="btn btn-xs btn-info action-tooltip" data-target="#view_user_<?php echo $row->id;?>" data-toggle="modal" href="/user/view/id/<?php echo $row->id;?>/" title="View User"><i class="icon-eye-open"></i></a>
 					
-					<a class="btn btn-mini btn-info action-tooltip" href="/user/edit/id/<?php echo $row->id;?>" title="Edit User"><i class="icon-pencil"></i></a>
+					<a class="btn btn-xs btn-info action-tooltip" href="/user/edit/id/<?php echo $row->id;?>" title="Edit User"><i class="icon-pencil"></i></a>
 					
-					<a class="btn btn-mini btn-info action-tooltip" href="/user/reset-password/id/<?php echo $row->id;?>" title="Reset User Password"><i class="icon-refresh"></i></a>
+					<a class="btn btn-xs btn-info action-tooltip" href="/user/reset-password/id/<?php echo $row->id;?>" title="Reset User Password"><i class="icon-refresh"></i></a>
 
-					<a class="btn btn-mini btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete user \'<?php echo $row->username;?>\'?')" href="/user/remove/id/<?php echo $row->id;?>" title="Delete User"><i class="icon-remove"></i></a>
+					<a class="btn btn-xs btn-danger action-tooltip" onclick="return confirm('Are you sure you want to delete user \'<?php echo $row->username;?>\'?')" href="/user/remove/id/<?php echo $row->id;?>" title="Delete User"><i class="icon-trash"></i></a>
 
-					<div id="view_user_<?php echo $row->id;?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="view_user_<?php echo $row->id;?>_label" aria-hidden="true">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-							<h3 id="view_user_<?php echo $row->id;?>_label"><?php echo ucwords($row->role).' "'.$row->username.
-						'"';?></h3>
-						</div>
-						<div class="modal-body">
-						</div>
-						<div class="modal-footer">
-							<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+					<div id="view_user_<?php echo $row->id;?>" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+									<h3 id="view_user_<?php echo $row->id;?>_label"><?php echo ucwords($row->role).' "'.$row->username.
+								'"';?></h3>
+								</div>
+								<div class="modal-body">
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-info btn-sm" data-dismiss="modal" aria-hidden="true">Close</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</td>
@@ -54,7 +60,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="4" class="text-right"><span>Total Users: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+					<th colspan="5" class="text-right"><span class="text-info">Total Users: <?php echo $this->data->getTotalItemCount(); ?></span></th>
 				</tr>
 			</tfoot>
 		</table>

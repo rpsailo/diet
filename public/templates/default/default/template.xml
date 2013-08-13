@@ -2,13 +2,13 @@
 <template>
 	<globalstyles>
 		<stylesheet>
-			<file>/library/bootstrap/css/bootstrap.min.css</file>
+			<file>/library/bootstrap-v3/css/bootstrap.min.css</file>
 			<media>screen, projection</media>
 		</stylesheet>
-		<stylesheet>
+		<!-- <stylesheet>
 			<file>/library/bootstrap/css/bootstrap-responsive.min.css</file>
 			<media>screen, projection</media>
-		</stylesheet>
+		</stylesheet> -->
 		<stylesheet>
 			<file>/library/bootstrap/css/font-awesome.min.css</file>
 			<media>screen, projection</media>
@@ -49,7 +49,8 @@
 	<globalscripts>
 		<script>/library/jquery/jquery-1.9.1.min.js</script>
 		<!-- <script>/library/jquery/jquery-1.8.3.min.js</script> -->
-		<script>/library/bootstrap/js/bootstrap.min.js</script>
+		<script>/library/bootstrap-v3/js/bootstrap.js</script>
+		<script>/library/bootstrap-v3/js/respond.min.js</script>
 		<!-- <script>/library/datepicker/js/bootstrap-datepicker.js</script> -->
 		<script>/library/bootstrap-datetimepicker-0.0.10/js/bootstrap-datetimepicker.min.js</script>
 		<script>/library/pickadate/legacy.js</script>

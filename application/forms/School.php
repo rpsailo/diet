@@ -3,8 +3,7 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-horizontal well');
-        $this->_addClassNames('well');
+        $this->setMethod('post')->setAttrib('class','form form-horizontal');
       
         $this->addElement('text', 'name', array(
             'label'             => 'School Name',
@@ -51,7 +50,7 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
         $this->addElement('text', 'phone', array(
             'label'             => 'Contact Number',
             'class'             => 'input-medium',
-            'prepend'           => '+91',
+            // 'prepend'           => '+91',
             'description'       => 'Ex: 943XXXXXXX, 372XXXXXXX, 389XXXXXXX',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
@@ -112,6 +111,7 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
             'type'          => 'reset',
             'buttonType'    => 'danger',
             'icon'          => 'danger',
+            'onclick'       => 'window.location="/school"',
             'escape'        => false
         ));
 

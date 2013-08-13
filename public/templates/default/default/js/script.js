@@ -31,4 +31,8 @@ jQuery(function(){
 	$('.action-tooltip').tooltip({
 		'trigger': 'hover'
 	});
+
+	$(".form-toolbar.form-inline select").on("change", function(){
+		$(this).closest('form').find("#submit").trigger("click");
+	});
 });

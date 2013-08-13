@@ -3,7 +3,7 @@ class Form_Login extends Twitter_Bootstrap_Form_Inline
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-inline');
+        $this->setMethod('post')->setAttrib('class','form form-inline')->setAttrib('autocomplete', 'off');
         
         $this->addElement('text', 'user_login', array(
             'placeholder'       => 'Username',
@@ -21,8 +21,8 @@ class Form_Login extends Twitter_Bootstrap_Form_Inline
 
         $this->addElement('button', 'login', array(
             'type'          => 'submit',
-            'label'          => 'Sign In',
-            'class'          => 'btn-primary btn-large',
+            'label'         => 'Sign In',
+            'class'         => 'btn-primary btn-lg btn-block',
             'buttonType'    => 'default',
             'escape'        => false
         ));

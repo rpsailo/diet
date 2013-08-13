@@ -3,14 +3,15 @@ class Form_Backup extends Twitter_Bootstrap_Form_Inline
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-inline');
+        $this->setMethod('post')->setAttrib('class','form form-inline form-toolbar');
         $this->setAction('/backup/');
         		
         $this->addElement('button', 'submit', array(
-            'label'         => 'Create Backup',
+            'label'         => 'Backup Now',
             'type'          => 'submit',
-            'buttonType'    => 'primary',
-            'icon'          => 'save',
+            'buttonType'    => 'success',
+            'icon'          => 'download-alt',
+            'class'          => 'btn-lg pull-right',
             'escape'        => false
         ));
 

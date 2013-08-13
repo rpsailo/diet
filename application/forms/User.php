@@ -4,7 +4,7 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
     public function init()
     {
         $this->setMethod('post')->setAttrib('class','form form-horizontal');
-        $this->_addClassNames('well');
+        // $this->_addClassNames('well');
       
         $this->addElement('text', 'name', array(
             'label'             => 'Display Name',
@@ -56,7 +56,7 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
         $this->addElement('text', 'phone', array(
             'label'             => 'Mobile Phone',
             'class'             => 'input-medium',
-            'prepend'           => '+91',
+            // 'prepend'           => '+91',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));

@@ -3,9 +3,9 @@ class Form_SchoolToolbar extends Twitter_Bootstrap_Form_Inline
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-inline well');
+        $this->setMethod('post')->setAttrib('class','form-toolbar form form-inline');
         $this->setAction('/school/');
-        $this->_addClassNames('well');
+        // $this->_addClassNames('well');
         
         $this->addElement('select', 'limit', array(
             'label'             => 'Limit',
@@ -35,13 +35,15 @@ class Form_SchoolToolbar extends Twitter_Bootstrap_Form_Inline
         
         $this->addElement('select', 'type', array(
             'label'             => 'Type',
-            'class'             => 'input-medium',
+            'title'             => 'Type',
+            'class'             => 'input-medium action-tooltip',
             'multiOptions'      => array(''=>'Type - All','Govt'=>'Govt','Deficit'=>'Deficit','Adhoc'=>'Adhoc','Aided'=>'Aided','Private'=>'Private')
         ));
 
         $this->addElement('select', 'level', array(
             'label'             => 'Level',
-            'class'             => 'input-medium',
+            'title'             => 'Level',
+            'class'             => 'input-medium action-tooltip',
             'multiOptions'      => array(
                 ''=>'Level - All',
                 'Primary School'=>'Primary School',
@@ -52,14 +54,16 @@ class Form_SchoolToolbar extends Twitter_Bootstrap_Form_Inline
         $this->addElement('text', 'year_of_establishment', array(
             'label'             => 'Year of Establishment',
             'placeholder'             => 'Year of Establishment',
-            'class'             => 'input-medium',
+            'title'             => 'Year of Establishment',
+            'class'             => 'input-medium action-tooltip',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'search', array(
             'label'             => 'Name',
-            'class'             => 'input-medium',
+            'class'             => 'input-medium action-tooltip',
             'placeholder'       => 'Name of School',
+            'title'       => 'Name of School',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 		

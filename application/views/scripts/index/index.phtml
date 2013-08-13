@@ -1,37 +1,46 @@
-<fieldset>
-	<legend>Home</legend>
-	<div class="row-fluid">
-		<h4>Overview</h4>
-		<div class="span12">
-			<div class="row">
-				<div class="span6">
-					<div class="btn-group span11">
-					  <button class="btn disabled span8 btn-normal btn-large">Total Number of Programmes</button>
-					  <button class="btn span3 btn-success btn-large" onclick="window.location='/program/'"><?php echo $this->programmodel->stats();?></button>
-					</div>					
-				</div>		
-				<div class="span6">
-					<div class="btn-group span11">
-					  <button class="btn disabled span8 btn-normal btn-large">Total Number of Teachers</button>
-					  <button class="btn span3 btn-danger btn-large" onclick="window.location='/teacher/'"><?php echo $this->teachermodel->stats();?></button>
-					</div>
-				</div>
+ <fieldset>
+	<legend>Overview</legend>
+	<div class="overview col-lg-12">
+		<div class="row-fluid">
+			<div class="col-lg-3 item">
+				<a class="text-center" href="/school/">
+					( <?php echo $this->schoolmodel->stats();?> )
+					<span class="name">Schools</span>
+					<i class="icon-angle-up"></i>
+				</a>
 			</div>
+			<div class="col-lg-3 item">
+				<a class="text-center" href="/program/">
+					( <?php echo $this->programmodel->stats();?> )
+					<span class="name">Programmes</span>
+					<i class="icon-angle-up"></i>
+				</a>
+			</div>
+			<div class="col-lg-3 item">
+				<a class="text-center" href="/teacher/">
+					( <?php echo $this->teachermodel->stats();?> )
+					<span class="name">Teachers</span>
+					<i class="icon-angle-up"></i>
+				</a>
+			</div>
+			<div class="col-lg-3 item">
+				<a class="text-center" href="/user/">
+					( <?php echo $this->usermodel->stats();?> )
+					<span class="name">Users</span>
+					<i class="icon-angle-up"></i>
+				</a>
+			</div>
+		</div>
+	</div>
 
-			<div class="row" style="margin-top:20px;">
-				<div class="span6">
-					<div class="btn-group span11">
-					  <button class="btn disabled span8 btn-normal btn-large">Total Number of Schools</button>
-					  <button class="btn span3 btn-info btn-large" onclick="window.location='/school/'"><?php echo $this->schoolmodel->stats();?></button>
-					</div>
-				</div>		
-				<div class="span6">
-					<div class="btn-group span11">
-					  <button class="btn disabled span8 btn-normal btn-large">Total Number of Users</button>
-					  <button class="btn span3 btn-primary btn-large" onclick="window.location='/user/'"><?php echo $this->usermodel->stats();?></button>
-					</div>
-				</div>
+	<div class="overview col-lg-12">
+		<div class="row-fluid">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-6 item">
+				<h2 class="text-center">Teacher : Pupils <i class="icon-angle-right"></i> <span class="label label-danger"><?php echo $this->Ratio();?></span></h2>
+				<p class="text-muted text-center">Teacher pupils ratio of <em><?php echo $this->diet_district;?></em> district in <?php echo date('Y');?></p>
 			</div>
+			<div class="col-lg-3"></div>
 		</div>
 	</div>
 </fieldset>

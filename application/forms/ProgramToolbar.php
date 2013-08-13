@@ -7,7 +7,8 @@ class Form_ProgramToolbar extends Twitter_Bootstrap_Form_Inline
         $this->setAction('/program/');
         $this->_addClassNames('form');
         $this->_addClassNames('form-inline');
-        $this->_addClassNames('well');
+        $this->_addClassNames('form-toolbar');
+        // $this->_addClassNames('well');
         
         $this->addElement('select', 'limit', array(
             'label'             => 'Limit',
@@ -18,8 +19,9 @@ class Form_ProgramToolbar extends Twitter_Bootstrap_Form_Inline
 
         $this->addElement('text', 'search', array(
             'label'             => 'Name',
-            'class'             => 'input-medium',
+            'class'             => 'input-medium action-tooltip',
             'placeholder'       => 'Name of Programme',
+            'title'       => 'Name of Programme',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 		

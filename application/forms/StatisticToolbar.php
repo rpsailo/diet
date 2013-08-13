@@ -3,8 +3,8 @@ class Form_StatisticToolbar extends Twitter_Bootstrap_Form_Inline
 {
     public function init()
     {
-        $this->setMethod('post')->setAttrib('class','form form-inline well');
-        $this->_addClassNames('well');
+        $this->setMethod('post')->setAttrib('class','form form-inline form-toolbar');
+        // $this->_addClassNames('well');
         
         $this->addElement('select', 'limit', array(
             'label'             => 'Limit',
@@ -32,14 +32,16 @@ class Form_StatisticToolbar extends Twitter_Bootstrap_Form_Inline
         $this->addElement('text', 'year', array(
             'label'             => 'Year',
             'placeholder'       => 'Year',
-            'class'             => 'input-mini',
+            'title'       => 'Year',
+            'class'             => 'input-mini action-tooltip',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 		
         $this->addElement('text', 'name', array(
             'label'             => 'Name',
-            'class'             => 'input-medium',
+            'class'             => 'input-medium action-tooltip',
             'placeholder'       => 'Name of School',
+            'title'       => 'Name of School',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 

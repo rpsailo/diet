@@ -6,7 +6,7 @@ class Form_Trainee extends Twitter_Bootstrap_Form_Horizontal
         $this->setMethod('post');
         $this->_addClassNames('form');
         $this->_addClassNames('form-horizontal');
-        $this->_addClassNames('well');
+        // $this->_addClassNames('well');
       
         $this->addElement('text', 'teacher', array(
             'label'             => 'Teacher',

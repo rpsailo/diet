@@ -44,6 +44,6 @@ class Twitter_Bootstrap_Form_Decorator_Actions extends Zend_Form_Decorator_Abstr
      */
     public function render($content)
     {
-        return '<div class="form-actions">' . $this->buildButtons() . '</div>';
+        return '<div class="form-group"><div class="col-lg-offset-3 col-lg-9">' . $this->buildButtons() . '</div></div>';
     }
 }
