@@ -121,7 +121,11 @@ class TeacherController extends Zend_Controller_Action
     	if($no_of_training != null)
     	{
     		$url_params .= '/no_of_training/'.$no_of_training;
-    		$params['condition'][] = "`no_of_training` = ".$no_of_training;
+    		if(in_array(substr($no_of_training, 0, 1), array('=','>','<', 'b')))
+	    		$params['condition'][] = "`no_of_training` ".$no_of_training;
+    		else
+    			$params['condition'][] = "`no_of_training` = ".$no_of_training;
+
     		$this->teachertoolbarform->no_of_training->setValue($no_of_training);
     	}
 

@@ -118,16 +118,15 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
             'placeholder'       => 'Year of Retirement',
             'title'             => 'Year of Retirement',
             'class'             => 'input-medium action-tooltip pull-left',
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
-            'validators'        => array(new Zend_Validate_Digits())
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
         $this->addElement('text', 'no_of_training', array(
             'label'             => 'Number of Training Attended',
             'placeholder'       => 'No. of Training',
-            'title'             => 'Number of Training Attended',
+            'title'             => 'Number of Training Attended. Try < 2, > 2, >= 2, <= 2, between 2 and 4',
             'class'             => 'input-medium action-tooltip pull-left',
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'filters'           => array( new Zend_Filter_StringTrim()),
             'validators'        => array(new Zend_Validate_Digits())
         ));
 
