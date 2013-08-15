@@ -89,15 +89,6 @@ class Form_School extends Twitter_Bootstrap_Form_Horizontal
                 )
         ));
 
-        $this->addElement('text', 'no_of_teachers', array(
-            'label'             => 'No of Teachers',
-            'class'             => 'input-large',
-            'required'          => true,
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
-            'validators'        => array(new Zend_Validate_Digits())
-        ));
-
-            
         $this->addElement('button', 'add', array(
             'label'         => 'Save',
             'type'          => 'submit',

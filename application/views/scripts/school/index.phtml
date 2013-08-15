@@ -12,13 +12,12 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Name</th>
+					<th>Name <i class="icon-caret-down"></i></th>
 					<th>Level</th>
 					<th>Type</th>
 					<th>Established</th>
 					<th>Phone</th>
 					<th>Address</th>
-					<th>No of Teachers</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -35,7 +34,6 @@
 				<td><?php echo $row->year_of_establishment;?></td>
 				<td><?php echo $row->phone;?></td>
 				<td><?php echo $row->address;?></td>
-				<td><?php echo $row->no_of_teachers;?></td>
 				<td>					
 					<a class="btn btn-xs btn-info action-tooltip" data-target="#view_school_<?php echo $row->id;?>" data-toggle="modal" href="/school/view/id/<?php echo $row->id;?>" title="View School"><i class="icon-eye-open"></i></a>
 

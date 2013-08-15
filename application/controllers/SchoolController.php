@@ -86,6 +86,7 @@ class SchoolController extends Zend_Controller_Action
 
     	$this->view->data = $this->schoolmodel->paginate($params);
     	$this->view->form = $this->schooltoolbarform;
+    	$this->view->schoolstatisticmodel = $this->schoolstatisticmodel;
 	}
 
 	public function addAction()
@@ -178,6 +179,7 @@ class SchoolController extends Zend_Controller_Action
 			if($school)
 			{
 				$this->view->school = $school;
+				$this->view->schoolstatisticmodel = $this->schoolstatisticmodel;
 			}
 			else
 			{
@@ -339,6 +341,8 @@ class SchoolController extends Zend_Controller_Action
 		{
 			$schoolstatistic = $this->schoolstatisticmodel->find($id)->current();
 			$school = $this->schoolmodel->find($schoolstatistic->school_id)->current();
+			$this->schoolstatisticform->removeElement('school_level');
+			$this->schoolstatisticform->removeElement('school_id');
 			
 			if($school)
 			{

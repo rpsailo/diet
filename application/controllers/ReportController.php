@@ -28,6 +28,8 @@ class ReportController extends Zend_Controller_Action
 
 	public function indexAction()
     {
+    	$this->view->schoolmodel = $this->schoolmodel;
+    	$this->view->schoolstatisticmodel = $this->schoolstatisticmodel;
 	}
 
 	public function generateAction()
@@ -41,30 +43,45 @@ class ReportController extends Zend_Controller_Action
 			if($export != 0)
 			{
 				switch ($export) {
-					case 1:
+					case 11:
 						$this->numberOfStudentInPrimarySchool($from, $to);
 						break;
 
-					case 2:
+					case 12:
 						$this->numberOfStudentInMiddleSchool($from, $to);
 						break;
 					
-					case 3:
+					case 13:
 						$this->numberOfSchoolInDivBlock();
 						break;
 					
-					case 4:
-						// Teacher pupils ratio school wise
+					case 14:
+						$this->schoolsInDivBlock();
+						break;
+
+					case 15:
+						$this->schoolStatistics();
+						break;
+
+					case 31:
+						$this->allProgrammeDetail();
 						break;
 					
 					default:
-						# code...
+		                $this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation"></i> Invalid action. Please try again.', "status"=>"error"));
+		                $this->_redirect("/report/");
 						break;
 				}
 			}
 			else
-				exit('Invalid action');
+			{
+                $this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation"></i> Invalid action. Please try again.', "status"=>"error"));
+                $this->_redirect("/report/");
+			}
 		}
+
+        $this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation"></i> Invalid action. Please try again.', "status"=>"error"));
+        $this->_redirect("/report/");
 	}
 
 	protected function numberOfStudentInPrimarySchool($from, $to)
@@ -122,18 +139,23 @@ class ReportController extends Zend_Controller_Action
 			$condition = $year_condition;
 			$condition[] = 'school_id = '.$ps->id;
 
-			$students = $this->schoolstatisticmodel->rows(array(
+			$statistics = $this->schoolstatisticmodel->rows(array(
 				'condition' => $condition,
 				'order'	=> 'year desc'
 				));
 
-			if($students->count())
+			if($statistics->count())
 			{
-				foreach($students as $s)
+				foreach($statistics as $s)
 				{
 					$total_boys = $s->boys_1 + $s->boys_2 + $s->boys_3 + $s->boys_4;
 					$total_girls = $s->girls_1 + $s->girls_2 + $s->girls_3 + $s->girls_4;
 					$total_students = $total_boys + $total_girls;
+
+					$ratio = 'n/a';
+					if($s->teachers > 0)
+						$ratio = "1 : ".round($total_students/$s->teachers, 2);
+
 					$row = array(
 						++$i,
 						$ps->name,
@@ -143,8 +165,9 @@ class ReportController extends Zend_Controller_Action
 						$ps->type,
 						$s->year,
 						$total_students." (".$total_boys." boys, ".$total_girls." girls)",
-						$ps->no_of_teachers,
-						"1 : ".round($total_students/$ps->no_of_teachers, 2),
+						// $ps->no_of_teachers,
+						$s->teachers,
+						$ratio,
 						);
 					fputcsv($output, $row);
 				}
@@ -160,7 +183,7 @@ class ReportController extends Zend_Controller_Action
 					$ps->type,
 					'n/a',
 					0,
-					$ps->no_of_teachers,
+					'n/a',
 					"n/a"
 					);
 				fputcsv($output, $row);
@@ -225,18 +248,23 @@ class ReportController extends Zend_Controller_Action
 			$condition = $year_condition;
 			$condition[] = 'school_id = '.$ps->id;
 
-			$students = $this->schoolstatisticmodel->rows(array(
+			$statistics = $this->schoolstatisticmodel->rows(array(
 				'condition' => $condition,
 				'order'	=> 'year desc'
 				));
 
-			if($students->count())
+			if($statistics->count())
 			{
 				foreach($students as $s)
 				{
 					$total_boys = $s->boys_5 + $s->boys_6 + $s->boys_7 + $s->boys_8;
 					$total_girls = $s->girls_5 + $s->girls_6 + $s->girls_7 + $s->girls_8;
 					$total_students = $total_boys + $total_girls;
+
+					$ratio = 'n/a';
+					if($s->teachers > 0)
+						$ratio = "1 : ".round($total_students/$s->teachers, 2);
+
 					$row = array(
 						++$i,
 						$ps->name,
@@ -246,8 +274,8 @@ class ReportController extends Zend_Controller_Action
 						$ps->type,
 						$s->year,
 						$total_students." (".$total_boys." boys, ".$total_girls." girls)",
-						$ps->no_of_teachers,
-						"1 : ".round($total_students/$ps->no_of_teachers, 2),
+						$s->teachers,
+						$ratio,
 						);
 					fputcsv($output, $row);
 				}
@@ -263,7 +291,7 @@ class ReportController extends Zend_Controller_Action
 					$ps->type,
 					'n/a',
 					0,
-					$ps->no_of_teachers,
+					'n/a',
 					"n/a"
 					);
 				fputcsv($output, $row);
@@ -418,6 +446,220 @@ class ReportController extends Zend_Controller_Action
 		fputcsv($output, $row);
 		exit;
 	}
+	
+	protected function schoolsInDivBlock()
+	{
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename=schools_in_division_and_block-'.date('dmy').'.csv');
+		
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+		
+		// output the column headings
+		fputcsv($output, array(
+			"Sl No",
+			"Name",
+			"Address",
+			"Sub Division",
+			"Phone",
+			"Year of Establishment",
+			"Type",
+			"Level",
+			"No of Teachers (Latest)",
+			"Number of Students (Latest)",
+			"Teacher : Pupils (Latest)"
+		));
+
+		// Add one blank line after headings
+		fputcsv($output, array(
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		""
+		));
+
+		$schools = $this->schoolmodel->all();
+
+		$i = 0;
+		foreach($schools as $s)
+		{
+			$statistic = $this->schoolstatisticmodel->currentStatistic($s->id);
+
+			$ratio = "n/a";
+			if($statistic->teachers > 0)
+				$ratio = "1 : ".round($statistic->students/$statistic->teachers, 2);
+
+			$row = array(
+				++$i,
+				$s->name,
+				$s->address,
+				$s->sub_division,
+				$s->phone,
+				$s->year_of_establishment,
+				$s->type,
+				$s->level,
+				$statistic->teachers,
+				$statistic->students,
+				$ratio
+				);
+			fputcsv($output, $row);
+		}
+
+		exit;
+	}
+
+	public function schoolStatistics($school_id)
+	{
+		$school = $this->schoolmodel->find($school_id)->current();
+		$filename = str_replace(' ','_',strtolower($school->name."_".$school->level));
+		$filename = str_replace("'","",$filename);
+
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename='.$filename.'-'.date('dmy').'.csv');
+		
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+
+		fputcsv($output, array("NAME OF SCHOOL: ", strtoupper($school->name)));
+		fputcsv($output, array("LEVEL: ", $school->level));
+		fputcsv($output, array("ADDRESS: ", $school->address));
+		fputcsv($output, array("SUB DIVISION/BLOCK: ", $school->sub_division));
+		fputcsv($output, array("PHONE: ", $school->phone));
+		fputcsv($output, array("YEAR OF ESTABLISHMENT: ", $school->year_of_establishment));
+		fputcsv($output, array("TYPE: ", $school->type));
+		
+		fputcsv($output, array("","","","","","", "", "", "", "", "", "", ""));
+		fputcsv($output, array("","","","","","", "", "", "", "", "", "", ""));
+
+		if($school->level == "Primary School")
+		{
+			// output the column headings
+			fputcsv($output, array(
+				"Sl No",
+				"Year",
+				"Class I (Boys)",
+				"Class I (Girls)",
+				"Class I (Total)",
+				"Class II (Boys)",
+				"Class II (Girls)",
+				"Class II (Total)",
+				"Class III (Boys)",
+				"Class III (Girls)",
+				"Class III (Total)",
+				"Class IV (Boys)",
+				"Class IV (Girls)",
+				"Class IV (Total)",
+				"Total Student",
+				"No of Teachers",
+				"Teacher : Pupils",
+				""
+			));
+		}
+		else if($school->level == "Middle School")
+		{
+			// output the column headings
+			fputcsv($output, array(
+				"Sl No",
+				"Year",
+				"Class V (Boys)",
+				"Class V (Girls)",
+				"Class VI (Boys)",
+				"Class VI (Girls)",
+				"Class VII (Boys)",
+				"Class VII (Girls)",
+				"Class VIII (Boys)",
+				"Class VIII (Girls)",
+				"Total",
+				"No of Teachers",
+				"Teacher : Pupils"
+			));
+		}
+
+		// Add one blank line after headings
+		fputcsv($output, array("","","","","","", "", "", "", "", "", "", ""));
+
+		$statistics = $this->schoolstatisticmodel->schoolStatistics($school->id);
+
+		$i = 0;
+		foreach($statistics as $s)
+		{
+			$ratio = "n/a";
+			if($s->teachers > 0)
+				$ratio = "1 : ".round($s->students/$s->teachers, 2);
+
+			$row = array(
+				++$i,
+				$s->year,
+				$s->boys_1,
+				$s->girls_1,
+				$s->boys_1 + $s->girls_1,
+				$s->boys_2,
+				$s->girls_2,
+				$s->boys_2 + $s->girls_2,
+				$s->boys_3,
+				$s->girls_3,
+				$s->boys_3 + $s->girls_3,
+				$s->boys_4,
+				$s->girls_4,
+				$s->boys_4 + $s->girls_4,
+				$s->students,
+				$s->teachers,
+				$ratio
+				);
+			fputcsv($output, $row);
+		}
+
+		exit;
+	}
+
+	public function allProgrammeDetail()
+	{
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename=all_programmes_detail-'.date('dmy').'.csv');
+		
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+
+		// output the column headings
+		fputcsv($output, array(
+			"Sl No",
+			"Programme Name",
+			"Duration",
+			"Target",
+			"Objectives",
+			"No of Intake",
+			"No of Faculties"
+		));
+
+		// Add one blank line after headings
+		fputcsv($output, array("","","","","","", ""));
+
+		$programs = $this->programmodel->all();
+
+		$i = 0;
+		foreach($programs as $p)
+		{
+			$row = array(
+				++$i,
+				$p->name,
+				$p->duration." days",
+				$p->target,
+				$p->objectives,
+				$p->no_of_intake,
+				sizeof(explode(",",$p->faculties)),
+				);
+			fputcsv($output, $row);
+		}
+
+		exit;
+	}
+
 }
 
 

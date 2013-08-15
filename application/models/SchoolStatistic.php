@@ -26,6 +26,7 @@ class Model_SchoolStatistic extends System_DbTable
             $new_row->girls_7 = 0;
             $new_row->boys_8 = 0;
             $new_row->girls_8 = 0;
+            $new_row->teachers = $data['teachers'];
             $new_row->created_at = new Zend_Db_Expr('NOW()');
             $new_row->updated_at = new Zend_Db_Expr('NOW()');
             return $new_row->save();
@@ -51,6 +52,7 @@ class Model_SchoolStatistic extends System_DbTable
             $new_row->girls_7 = $data['girls_7'];
             $new_row->boys_8 = $data['boys_8'];
             $new_row->girls_8 = $data['girls_8'];
+            $new_row->teachers = $data['teachers'];
             $new_row->created_at = new Zend_Db_Expr('NOW()');
             $new_row->updated_at = new Zend_Db_Expr('NOW()');
             return $new_row->save();
@@ -85,6 +87,7 @@ class Model_SchoolStatistic extends System_DbTable
             $row->girls_7 = 0;
             $row->boys_8 = 0;
             $row->girls_8 = 0;
+            $row->teachers = $data['teachers'];
 
             $row->updated_at = new Zend_Db_Expr('NOW()');
             return $row->save();
@@ -113,6 +116,7 @@ class Model_SchoolStatistic extends System_DbTable
             $row->girls_7 = $data['girls_7'];
             $row->boys_8 = $data['boys_8'];
             $row->girls_8 = $data['girls_8'];
+            $row->teachers = $data['teachers'];
             $row->updated_at = new Zend_Db_Expr('NOW()');
             return $row->save();
         }
@@ -125,5 +129,120 @@ class Model_SchoolStatistic extends System_DbTable
         $select = $this->select();
         $select->order('year desc');
         return $this->fetchAll($select);
+    }
+
+    public function years()
+    {
+        $select = $this->select();
+        $select->order('year asc');
+        $select->from($this->_name, array('year'=>new Zend_Db_Expr('DISTINCT(`year`)') ));
+        return $this->fetchAll($select);
+    }
+
+    public function minMaxYear($school_id = null)
+    {
+        $select = $this->select();
+
+        if($school_id != null)
+            $select->where('school_id = '.$school_id);
+        
+        $select->from($this->_name, array('min'=>new Zend_Db_Expr('MIN(`year`)'), 'max'=>new Zend_Db_Expr('MAX(`year`)') ));
+        return $this->fetchRow($select);
+    }
+
+    public function currentTeachers($school_id = null)
+    {
+        if($school_id != null)
+        {
+            $select = $this->select();
+            $select->where("school_id = ".$school_id);
+            $select->order('year desc');
+            $data = $this->fetchRow($select);
+
+            if($data)
+                return $data->teachers;
+            else
+                return 0;
+        }
+        else
+            return 0;
+    }
+
+    public function currentStudents($school_id = null)
+    {
+        if($school_id != null)
+        {
+            $schoolmodel = new Model_School();
+            
+            $school = $schoolmodel->find($school_id)->current();
+
+            $select = $this->select();
+            
+            if($school->level == 'Primary School')            
+                $select->from($this->_name, array('total'=>new Zend_Db_Expr('(`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
+            else if($school->level == 'Middle School')            
+                $select->from($this->_name, array('total'=>new Zend_Db_Expr('(`boys_5`+`boys_6`+`boys_7`+`boys_8`+`girls_5`+`girls_6`+`girls_7`+`girls_8`)') ));
+            
+            $select->where("school_id = ".$school_id);
+            $select->order('year desc');
+            $data = $this->fetchRow($select);
+
+            if($data)
+                return $data->total;
+            else
+                return 0;
+        }
+        else
+            return 0;
+    }
+
+    public function currentStatistic($school_id = null)
+    {
+        if($school_id != null)
+        {
+            $schoolmodel = new Model_School();
+            
+            $school = $schoolmodel->find($school_id)->current();
+
+            $select = $this->select();
+            
+            if($school->level == 'Primary School')            
+                $select->from($this->_name, array('teachers', 'students'=>new Zend_Db_Expr('(`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
+            else if($school->level == 'Middle School')            
+                $select->from($this->_name, array('teachers', 'students'=>new Zend_Db_Expr('(`boys_5`+`boys_6`+`boys_7`+`boys_8`+`girls_5`+`girls_6`+`girls_7`+`girls_8`)') ));
+            
+            $select->where("school_id = ".$school_id);
+            $select->order('year desc');
+            $data = $this->fetchRow($select);
+
+            return $data;
+        }
+        else
+            return null;
+    }
+
+    public function schoolStatistics($school_id = null)
+    {
+        if($school_id != null)
+        {
+            $schoolmodel = new Model_School();
+            
+            $school = $schoolmodel->find($school_id)->current();
+
+            $select = $this->select();
+            
+            if($school->level == 'Primary School')            
+                $select->from($this->_name, array('year', 'boys_1', 'boys_2', 'boys_3', 'boys_4', 'girls_1', 'girls_2', 'girls_3', 'girls_4', 'teachers', 'students'=>new Zend_Db_Expr('(`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
+            else if($school->level == 'Middle School')            
+                $select->from($this->_name, array('year', 'boys_1'=>'boys_5', 'boys_2'=>'boys_6', 'boys_3'=>'boys_7', 'boys_4'=>'boys_8', 'girls_1'=>'girls_5', 'girls_2'=>'girls_6', 'girls_3'=>'girls_7', 'girls_4'=>'girls_8', 'teachers', 'students'=>new Zend_Db_Expr('(`boys_5`+`boys_6`+`boys_7`+`boys_8`+`girls_5`+`girls_6`+`girls_7`+`girls_8`)') ));
+            
+            $select->where("school_id = ".$school_id);
+            $select->order('year desc');
+            $data = $this->fetchAll($select);
+
+            return $data;
+        }
+        else
+            return null;
     }
 }

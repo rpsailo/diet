@@ -16,7 +16,7 @@ class Model_School extends System_DbTable
         $new_row->year_of_establishment = $data['year_of_establishment'];
         $new_row->type = $data['type'];
         $new_row->level = $data['level'];
-        $new_row->no_of_teachers = $data['no_of_teachers'];
+        // $new_row->no_of_teachers = $data['no_of_teachers'];
         $new_row->user_id = $loggedin_user->id;
         $new_row->created_at = new Zend_Db_Expr('NOW()');
         $new_row->updated_at = new Zend_Db_Expr('NOW()');
@@ -39,7 +39,7 @@ class Model_School extends System_DbTable
             $row->year_of_establishment = $data['year_of_establishment'];
             $row->type = $data['type'];
             $row->level = $data['level'];
-            $row->no_of_teachers = $data['no_of_teachers'];
+            // $row->no_of_teachers = $data['no_of_teachers'];
             $row->user_id = $loggedin_user->id;
             $row->updated_at = new Zend_Db_Expr('NOW()');
             return $row->save();
@@ -50,6 +50,7 @@ class Model_School extends System_DbTable
     public function all()
     {
         $select = $this->select();
+        $select->order('level desc');
         $select->order('name asc');
         return $this->fetchAll($select);
     }

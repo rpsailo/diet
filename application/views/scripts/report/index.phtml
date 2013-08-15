@@ -2,129 +2,225 @@
 	<li><a href="/">Home</a></li>
   	<li class="active">Reports</li>
 </ul>
-<fieldset class="report-wrap">
-	<legend id="schoolReport"><i class="icon-file-text-alt"></i> School Reports</legend>
-	
-	<div class="report col-lg-12">
-		<div class="row">
-			<div class="col-lg-4">
-				<div class="panel panel-success">
-					<div class="panel-heading"><h4 class="panel-title">Number of Student in Primary School</h4></div>
-					<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
-						<div class="form-group">
-							<label class="col-lg-4 control-label">From</label>
-							<div class="col-lg-6">
-								<select name="from" class="form-control">
-									<option value="">----</option>
-									<?php for($f=2000;$f<=date('Y');$f++):?>
-									<option value="<?php echo $f;?>"><?php echo $f;?></option>
-									<?php endfor; ?>
-								</select>
+
+<div class="row">
+	<div class="col-lg-4">
+		<fieldset class="report-wrap" id="schoolReport">
+			<legend><i class="icon-file-text-alt"></i> School Report</legend>
+			
+			<div class="report col-lg-12">
+				<div class="row">
+
+					<div class="panel-group" id="accordion1">
+						<div class="panel">
+							<div class="panel-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapse_col1_1">Number of Student in Primary School</a>
+							</div>
+							<div id="collapse_col1_1" class="panel-collapse collapse">
+						      	<div class="panel-body">
+									<form id="collapseOne" action="/report/generate/" class="form form-horizontal report-form" method="POST">
+										<div class="form-group">
+											<label class="col-lg-4 control-label">From</label>
+											<div class="col-lg-6">
+												<select name="from" class="form-control">
+													<option value="">----</option>
+													<?php for($f=2000;$f<=date('Y');$f++):?>
+													<option value="<?php echo $f;?>"><?php echo $f;?></option>
+													<?php endfor; ?>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-lg-4 control-label">To</label>
+											<div class="col-lg-6">
+												<select name="to" class="form-control">
+													<option value="">----</option>
+													<?php for($f=2000;$f<=date('Y');$f++):?>
+													<option value="<?php echo $f;?>"><?php echo $f;?></option>
+													<?php endfor; ?>
+												</select>
+											</div>
+										</div>
+										<hr>
+										<p class="text-center"><button name="export" value="11" class="btn btn-default">Export CSV <i class="icon-external-link"></i></button></p>
+										<p class="text-muted text-center">If you leave blank both <b>From</b> and <b>To</b> field, all time data will be exported.</p>
+									</form>
+								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-lg-4 control-label">To</label>
-							<div class="col-lg-6">
-								<select name="to" class="form-control">
-									<option value="">----</option>
-									<?php for($f=2000;$f<=date('Y');$f++):?>
-									<option value="<?php echo $f;?>"><?php echo $f;?></option>
-									<?php endfor; ?>
-								</select>
+
+						<div class="panel">
+							<div class="panel-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse_col1_2">Number of Student in Middle School</a>
+							</div>
+							
+							<div id="collapse_col1_2" class="panel-collapse collapse">
+						      	<div class="panel-body">
+									<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
+										<div class="form-group">
+											<label class="col-lg-4 control-label">From</label>
+											<div class="col-lg-6">
+												<select name="from" class="form-control">
+													<option value="">----</option>
+													<?php for($f=2000;$f<=date('Y');$f++):?>
+													<option value="<?php echo $f;?>"><?php echo $f;?></option>
+													<?php endfor; ?>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-lg-4 control-label">To</label>
+											<div class="col-lg-6">
+												<select name="to" class="form-control">
+													<option value="">----</option>
+													<?php for($f=2000;$f<=date('Y');$f++):?>
+													<option value="<?php echo $f;?>"><?php echo $f;?></option>
+													<?php endfor; ?>
+												</select>
+											</div>
+										</div>
+										<hr>
+										<p class="text-center"><button name="export" value="12" class="btn btn-default">Export CSV <i class="icon-external-link"></i></button></p>
+
+										<p class="text-muted text-center">If you leave blank both <b>From</b> and <b>To</b> field, all time data will be exported.</p>
+									</form>
+								</div>
 							</div>
 						</div>
-						<hr>
-						<p class="text-center"><button name="export" value="1" class="btn btn-lg btn-success">Export CSV <i class="icon-external-link"></i></button></p>
-						<p class="text-muted text-center">If you leave blank both <b>From</b> and <b>To</b> field, all time data will be exported.</p>
-					</form>
-				</div>
+
+						<div class="panel">
+							<div class="panel-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse_col1_3">Number of School in Sub Division / Block</a>
+							</div>
+							<div id="collapse_col1_3" class="panel-collapse collapse">
+						      	<div class="panel-body">
+									<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
+										<p class="text-center"><button name="export" value="13" class="btn btn-default">Export CSV <i class="icon-external-link"></i></button></p>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel">
+							<div class="panel-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse_col1_4">All Schools Latest Statistic</a>
+							</div>
+							<div id="collapse_col1_4" class="panel-collapse collapse">
+						      	<div class="panel-body">
+									<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
+										<p class="text-center"><button name="export" value="14" class="btn btn-default">Export CSV <i class="icon-external-link"></i></button></p>
+										<p class="text-muted text-center">All schools with their latest statistic data will be included in the report along with latest <b>Teachers Pupils Ratio</b> for each school.</p>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel">
+							<div class="panel-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse_col1_5">Individual School Statistic (All Years)</a>
+							</div>
+							<div id="collapse_col1_5" class="panel-collapse collapse">
+						      	<div class="panel-body">
+									<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
+										<div class="form-group">
+											<label class="col-lg-3 control-label">School</label>
+											<div class="col-lg-9">
+												<select name="school_id" class="form-control">
+													<?php
+													$options = '<optgroup label="Primary School">';
+													$flag = true;
+													$schools = $this->schoolmodel->all();
+													foreach($schools as $s)
+													{
+														if($s->level == "Middle School" && $flag == true)
+														{
+															$flag = false;
+															$options .= '</optgroup><optgroup label="Middle School">';
+														}
+
+														$options .= '<option value="'.$s->id.'">'.$s->name.'</option>';
+													}
+
+													$options .= '</optgroup>';
+													echo $options;
+													?>
+												</select>
+											</div>
+										</div>
+										<p class="text-center"><button name="export" value="15" class="btn btn-default">Export CSV <i class="icon-external-link"></i></button></p>
+										<p class="text-muted text-center">All years statistic of individual school along with <b>Teacher Pupils Ratio</b> in each year will be included in the report.</p>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div> <!-- panel-group -->
+
+		 		</div>
 			</div>
-
-			<div class="col-lg-4">
-				<div class="panel panel-success">
-					<div class="panel-heading"><h4 class="panel-title">Number of Student in Middle School</h4></div>
-					
-					<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
-						<div class="form-group">
-							<label class="col-lg-4 control-label">From</label>
-							<div class="col-lg-6">
-								<select name="from" class="form-control">
-									<option value="">----</option>
-									<?php for($f=2000;$f<=date('Y');$f++):?>
-									<option value="<?php echo $f;?>"><?php echo $f;?></option>
-									<?php endfor; ?>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-lg-4 control-label">To</label>
-							<div class="col-lg-6">
-								<select name="to" class="form-control">
-									<option value="">----</option>
-									<?php for($f=2000;$f<=date('Y');$f++):?>
-									<option value="<?php echo $f;?>"><?php echo $f;?></option>
-									<?php endfor; ?>
-								</select>
-							</div>
-						</div>
-						<hr>
-						<p class="text-center"><button name="export" value="2" class="btn btn-lg btn-success">Export CSV <i class="icon-external-link"></i></button></p>
-
-						<p class="text-muted text-center">If you leave blank both <b>From</b> and <b>To</b> field, all time data will be exported.</p>
-					</form>
-				</div>
-			</div>
-
-			<div class="col-lg-4">
-				<div class="panel panel-success">
-					<div class="panel-heading"><h4 class="panel-title">Number of School in Sub Division / Block</h4></div>
-					<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
-						<p class="text-center"><button name="export" value="3" class="btn btn-lg btn-success">Export CSV <i class="icon-external-link"></i></button></p>
-					</form>
-				</div>
-				<div class="panel panel-success">
-					<div class="panel-heading"><h4 class="panel-title">Schools in Sub Division / Block</h4></div>
-					<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
-						<p class="text-center"><button name="export" value="4" class="btn btn-lg btn-success">Export CSV <i class="icon-external-link"></i></button></p>
-					</form>
-				</div>
-			</div>
-
- 		</div>
+		</fieldset>
 	</div>
-</fieldset>
 
-<fieldset class="report-wrap">
-	<legend id="teacherReport"><i class="icon-file-text-alt"></i> Teacher Reports</legend>
-	
-	<div class="report col-lg-12">
-		<div class="row">
-			<div class="col-lg-4">
-				<div class="panel panel-success">
-					<div class="panel-heading"><h4 class="panel-title">Number of School in Sub Division / Block</h4></div>
-					<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
-						<p class="text-center"><button name="export" value="1" class="btn btn-lg btn-success">Export CSV <i class="icon-external-link"></i></button></p>
-					</form>
+	<div class="col-lg-4">
+		<fieldset class="report-wrap">
+			<legend id="teacherReport"><i class="icon-file-text-alt"></i> Teacher Report</legend>
+			
+			<div class="report col-lg-12">
+				<div class="row">
+
+					<div class="panel-group" id="accordion2">
+						<div class="panel">
+							<div class="panel-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_col2_1">Number of Teachers in Sub Division / Block (All Years)</a>
+							</div>
+							<div id="collapse_col2_1" class="panel-collapse collapse">
+						      	<div class="panel-body">
+									<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
+
+										<p class="text-center"><button name="export" value="21" class="btn btn-default">Export CSV <i class="icon-external-link"></i></button></p>
+										<p class="text-center text-muted">All year statistics of the number of teachers in each sub division or block</p>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div><!-- panel-group -->
+
 				</div>
 			</div>
-		</div>
+		</fieldset>
 	</div>
-</fieldset>
 
+	<div class="col-lg-4">
+		<fieldset class="report-wrap">
+			<legend id="programmeReport"><i class="icon-file-text-alt"></i> Programme Report</legend>
+			
+			<div class="report col-lg-12">
+				<div class="row">
 
-<fieldset class="report-wrap">
-	<legend id="programmeReport"><i class="icon-file-text-alt"></i> Programme Reports</legend>
-	
-	<div class="report col-lg-12">
-		<div class="row">
-			<div class="col-lg-4">
-				<div class="panel panel-success">
-					<div class="panel-heading"><h4 class="panel-title">Number of School in Sub Division / Block</h4></div>
-					<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
-						<p class="text-center"><button name="export" value="1" class="btn btn-lg btn-success">Export CSV <i class="icon-external-link"></i></button></p>
-					</form>
+					<div class="panel-group" id="accordion3">
+						<div class="panel">
+							<div class="panel-heading">
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse_col3_1">All Programmes Detail</a>
+							</div>
+							<div id="collapse_col3_1" class="panel-collapse collapse">
+						      	<div class="panel-body">
+									<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
+										<p class="text-center"><button name="export" value="31" class="btn btn-default">Export CSV <i class="icon-external-link text-success"></i></button></p>
+										<p class="text-muted text-center">All programmes detail will be included in the report.</p>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div><!-- panel-group -->
+
 				</div>
 			</div>
-		</div>
+		</fieldset>
 	</div>
-</fieldset>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	$(window).scrollTo('#schoolReport');
+});
+</script>

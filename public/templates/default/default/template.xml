@@ -2,7 +2,7 @@
 <template>
 	<globalstyles>
 		<stylesheet>
-			<file>/library/bootstrap-v3/css/bootstrap.min.css</file>
+			<file>/library/bootstrap-v3/css/bootstrap.css</file>
 			<media>screen, projection</media>
 		</stylesheet>
 		<!-- <stylesheet>

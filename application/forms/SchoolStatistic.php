@@ -36,6 +36,14 @@ class Form_SchoolStatistic extends Twitter_Bootstrap_Form_Horizontal
             'validators'        => array(new Zend_Validate_Digits())
         ));
 
+        $this->addElement('text', 'teachers', array(
+            'label'             => 'No of Teachers',
+            'class'             => 'input-large',
+            'required'          => true,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags"),
+            'validators'        => array(new Zend_Validate_Digits())
+        ));
+            
         $this->addElement('text', 'boys_1', array(
             'class'             => 'input-mini boys',
             'label'            => 'Class I: Boys',

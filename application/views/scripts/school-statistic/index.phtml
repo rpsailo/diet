@@ -11,8 +11,9 @@
 		<table class="table table-condensed table-bordered table-hover">
 			<thead>
 				<tr>
+					<th>#</th>
 					<th>School</th>
-					<th colspan="2">Year</th>
+					<th colspan="1">Year</th>
 					<th>I</th>
 					<th>II</th>
 					<th>III</th>
@@ -22,19 +23,31 @@
 					<th>VII</th>
 					<th>VIII</th>
 					<th>Total</th>
+					<th>Teachers</th>
+					<th>Teacher : Pupils</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
 
-		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>13)); ?>
+		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>15)); ?>
 
-		<?php foreach($this->data as $row): ?>
+		<?php foreach($this->data as $key=>$row): ?>
 			<tr>
-				<td rowspan="3"><?php echo $row->name;?></td>
-				<td rowspan="3"><?php echo $row->year;?></td>
-				<th>Boys</th>
-				<td><?php echo $row->boys_1;?></td>
+				<td><?php echo ($key+1) + ($this->data->getItemCountPerPage()*($this->data->getCurrentPageNumber() - 1));?></td>
+				<td rowspan="1"><?php echo $row->name;?></td>
+				<td rowspan="1"><?php echo $row->year;?></td>
+				<!-- <th>Boys</th> -->
+				<td><?php echo (($row->boys_1 + $row->girls_1) > 0)? ($row->boys_1 + $row->girls_1):"-";?></td>
+				<td><?php echo (($row->boys_2 + $row->girls_2) > 0)? ($row->boys_2 + $row->girls_2):"-";?></td>
+				<td><?php echo (($row->boys_3 + $row->girls_3) > 0)? ($row->boys_3 + $row->girls_3):"-";?></td>
+				<td><?php echo (($row->boys_4 + $row->girls_4) > 0)? ($row->boys_4 + $row->girls_4):"-";?></td>
+				<td><?php echo (($row->boys_5 + $row->girls_5) > 0)? ($row->boys_5 + $row->girls_5):"-";?></td>
+				<td><?php echo (($row->boys_6 + $row->girls_6) > 0)? ($row->boys_6 + $row->girls_6):"-";?></td>
+				<td><?php echo (($row->boys_7 + $row->girls_7) > 0)? ($row->boys_7 + $row->girls_7):"-";?></td>
+				<td><?php echo (($row->boys_8 + $row->girls_8) > 0)? ($row->boys_8 + $row->girls_8):"-";?></td>
+				<th><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4 + $row->boys_5 + $row->boys_6 + $row->boys_7 + $row->boys_8 + $row->girls_5 + $row->girls_6 + $row->girls_7 + $row->girls_8;?></th>				
+				<!--<td><?php echo $row->boys_1;?></td>
 				<td><?php echo $row->boys_2;?></td>
 				<td><?php echo $row->boys_3;?></td>
 				<td><?php echo $row->boys_4;?></td>
@@ -42,8 +55,15 @@
 				<td><?php echo $row->boys_6;?></td>
 				<td><?php echo $row->boys_7;?></td>
 				<td><?php echo $row->boys_8;?></td>
-				<td><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->boys_5 + $row->boys_6 + $row->boys_7 + $row->boys_8;?></td>
-				<td rowspan="3">
+				<td><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->boys_5 + $row->boys_6 + $row->boys_7 + $row->boys_8;?></td>-->
+				<td rowspan="1"><?php echo $row->teachers;?></td>
+				<td rowspan="1"><?php
+				if($row->teachers > 0)
+					echo "1 : ".round(($row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4 + $row->boys_5 + $row->boys_6 + $row->boys_7 + $row->boys_8 + $row->girls_5 + $row->girls_6 + $row->girls_7 + $row->girls_8)/$row->teachers, 2);
+				else
+					echo 'n/a';
+				?></td>
+				<td rowspan="1">
 					<a class="btn btn-xs btn-info action-tooltip" data-target="#view_statistic_<?php echo $row->id;?>" data-toggle="modal" href="/school-statistic/view/id/<?php echo $row->id;?>/" title="View Statistic"><i class="icon-eye-open"></i></a>
 
 					<a class="btn btn-xs btn-info action-tooltip" href="/school-statistic/edit/id/<?php echo $row->id;?>" title="Edit Statistic"><i class="icon-pencil"></i></a>
@@ -69,7 +89,7 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<th>Girls</th>
 				<td><?php echo $row->girls_1;?></td>
 				<td><?php echo $row->girls_2;?></td>
@@ -80,8 +100,8 @@
 				<td><?php echo $row->girls_7;?></td>
 				<td><?php echo $row->girls_8;?></td>
 				<td><?php echo $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4 + $row->girls_5 + $row->girls_6 + $row->girls_7 + $row->girls_8;?></td>
-			</tr>
-			<tr>
+			</tr>-->
+			<!--<tr>
 				<th>Total</th>
 				<td><?php echo $row->boys_1 + $row->girls_1;?></td>
 				<td><?php echo $row->boys_2 + $row->girls_2;?></td>
@@ -92,12 +112,12 @@
 				<td><?php echo $row->boys_7 + $row->girls_7;?></td>
 				<td><?php echo $row->boys_8 + $row->girls_8;?></td>
 				<th><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4 + $row->boys_5 + $row->boys_6 + $row->boys_7 + $row->boys_8 + $row->girls_5 + $row->girls_6 + $row->girls_7 + $row->girls_8;?></th>
-			</tr>
+			</tr>-->
 		<?php endforeach;?>
 			</tbody>
 			<tfoot>
 				<tr>
-					<th colspan="13" class="text-right"><span class="text-info">Total Statistics: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+					<th colspan="15" class="text-right"><span class="text-info">Total Statistics: <?php echo $this->data->getTotalItemCount(); ?></span></th>
 				</tr>
 			</tfoot>
 		</table>

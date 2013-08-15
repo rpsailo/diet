@@ -11,7 +11,7 @@
 	<?php echo $this->headStyle(); ?>
 </head>
 <body class="<?php echo $this->actionName; ?> <?php echo $this->controllerName; ?> fl full">
-	<div class="navbar navbar-fixed-top hidden-print diet-navbar">
+	<div class="navbar navbar-fixed-top hidden-print diet-navbar" role="navigation">
 		<div class="container-fluid">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
 				<span class="icon-bar"></span>
@@ -27,12 +27,7 @@
 					<li<?php echo ($this->controllerName == 'index' && $this->actionName == 'index')?' class="active"':'';?>><a href="/">Home</a></li>
 
 					<li class="dropdown<?php echo ($this->controllerName == 'report')?' active':'';?>">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Report <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="/report#schoolReport">School</a></li>
-							<li><a href="/report#teacherReport">Teacher</a></li>
-							<li><a href="/report#programmeReport">Programme</a></li>
-						</ul>
+						<a href="/report">Report</a>
 					</li>
 
 					<li class="dropdown<?php echo ($this->controllerName == 'school')?' active':'';?>">
