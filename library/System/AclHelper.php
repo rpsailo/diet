@@ -81,6 +81,8 @@ class System_AclHelper
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:backup:index"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:backup:remove"), "default");
+
+		$this->acl->addResource(new Zend_Acl_Resource("default:options:index"), "default");
 		
 	}
 	

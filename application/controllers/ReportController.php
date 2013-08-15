@@ -11,6 +11,7 @@ class ReportController extends Zend_Controller_Action
 	protected $traineeform;
 	protected $schoolmodel;
 	protected $schoolstatisticmodel;
+	protected $teachermodel;
 
 	public function init()
 	{
@@ -21,6 +22,7 @@ class ReportController extends Zend_Controller_Action
 		$this->traineeform = new Form_Trainee();
 		$this->schoolmodel = new Model_School();
 		$this->schoolstatisticmodel = new Model_SchoolStatistic();
+		$this->teachermodel = new Model_Teacher();
 
 		$this->_alert = $this->_helper->getHelper("FlashMessenger");
 		$this->auth = Zend_Auth::getInstance();
@@ -60,9 +62,22 @@ class ReportController extends Zend_Controller_Action
 						break;
 
 					case 15:
-						$this->schoolStatistics();
+						$school_id = $this->_request->getParam('school_id', null);
+						$this->schoolStatistics($school_id);
 						break;
 
+					case 21:
+						$this->numberOfTeachersInMiddleSchoolInDivBlock();
+						break;
+
+					case 22:
+						$this->numberOfTeachersInPrimarySchoolInDivBlock();
+						break;
+					
+					case 23:
+						$this->trainedUntrained();
+						break;
+					
 					case 31:
 						$this->allProgrammeDetail();
 						break;
@@ -255,7 +270,7 @@ class ReportController extends Zend_Controller_Action
 
 			if($statistics->count())
 			{
-				foreach($students as $s)
+				foreach($statistics as $s)
 				{
 					$total_boys = $s->boys_5 + $s->boys_6 + $s->boys_7 + $s->boys_8;
 					$total_girls = $s->girls_5 + $s->girls_6 + $s->girls_7 + $s->girls_8;
@@ -634,7 +649,8 @@ class ReportController extends Zend_Controller_Action
 			"Target",
 			"Objectives",
 			"No of Intake",
-			"No of Faculties"
+			"No of Faculties",
+			"No of Teachers Trained Under Programme"
 		));
 
 		// Add one blank line after headings
@@ -645,6 +661,8 @@ class ReportController extends Zend_Controller_Action
 		$i = 0;
 		foreach($programs as $p)
 		{
+			$training = $this->trainingmodel->teachersInProgram($p->id);
+
 			$row = array(
 				++$i,
 				$p->name,
@@ -653,9 +671,175 @@ class ReportController extends Zend_Controller_Action
 				$p->objectives,
 				$p->no_of_intake,
 				sizeof(explode(",",$p->faculties)),
+				sizeof($training->toArray())
 				);
 			fputcsv($output, $row);
 		}
+
+		exit;
+	}
+
+	public function numberOfTeachersInMiddleSchoolInDivBlock()
+	{
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename=teachers_in_primaryschool_in_divisionblock-'.date('dmy').'.csv');
+		
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+
+		// output the column headings
+		fputcsv($output, array(
+			"Sl No",
+			"Sub Division / Block",
+			"No of Teachers",
+			"Year"
+		));
+
+		// Add one blank line after headings
+		fputcsv($output, array("","","","","","", ""));
+
+		$teachers = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division);
+
+		$data = $this->schoolmodel->divisions();
+
+		$i = 0;
+		foreach($data as $d)
+		{
+			$teachers = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division);
+
+			$row = array(
+				++$i,
+				$d->sub_division,
+				sizeof($teachers->toArray())
+				);
+			fputcsv($output, $row);
+		}
+
+		exit;
+	}
+
+	public function numberOfTeachersInPrimarySchoolInDivBlock()
+	{
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename=all_programmes_detail-'.date('dmy').'.csv');
+		
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+
+		// output the column headings
+		fputcsv($output, array(
+			"Sl No",
+			"Sub Division / Block",
+			"No of Teachers"
+		));
+
+		// Add one blank line after headings
+		fputcsv($output, array("","","","","","", ""));
+
+		$data = $this->schoolmodel->divisions();
+
+		$i = 0;
+		foreach($data as $d)
+		{
+			$teachers = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division);
+
+			$row = array(
+				++$i,
+				$d->sub_division,
+				sizeof($teachers->toArray())
+				);
+			fputcsv($output, $row);
+		}
+
+		exit;
+	}
+
+	public function trainedUntrained()
+	{
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename=trained_untrained_ongoing-'.date('dmy').'.csv');
+		
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+
+		// output the column headings
+		fputcsv($output, array(
+			"School",
+			"No of Teachers",
+			"Trained",
+			"Ongoing",
+			"Untrained",
+			"% of Trained",
+			"% of Ongoing",
+			"% of Untrained"
+		));
+
+		// Add one blank line after headings
+		fputcsv($output, array("","","","","","", "", ""));
+
+		$primary_school_teachers = $this->teachermodel->trainedUntrained('Primary School');
+		$primary_school_teachers = sizeof($primary_school_teachers->toArray());
+
+		$primary_school_teachers_trained = $this->teachermodel->trainedUntrained('Primary School', 'trained');
+		$primary_school_teachers_trained = sizeof($primary_school_teachers_trained->toArray());
+
+		$primary_school_teachers_ongoing = $this->teachermodel->trainedUntrained('Primary School', 'ongoing');
+		$primary_school_teachers_ongoing = sizeof($primary_school_teachers_ongoing->toArray());
+
+		$primary_school_teachers_untrained = $this->teachermodel->trainedUntrained('Primary School', 'untrained');
+		$primary_school_teachers_untrained = sizeof($primary_school_teachers_untrained->toArray());
+
+		if($primary_school_teachers > 0)
+		{
+			$percentage1 = round(($primary_school_teachers_trained/$primary_school_teachers) * 100, 2);
+			$percentage2 = round(($primary_school_teachers_ongoing/$primary_school_teachers) * 100, 2);
+			$percentage3 = round(($primary_school_teachers_untrained/$primary_school_teachers) * 100, 2);
+		}
+		else
+			$percentage1 = $percentage2 = $percentage3 = 'n/a';
+
+		fputcsv($output, array(
+			'Primary',
+			$primary_school_teachers,
+			$primary_school_teachers_trained,
+			$primary_school_teachers_ongoing,
+			$primary_school_teachers_untrained,
+			$percentage1,
+			$percentage2,
+			$percentage3
+			));
+
+		$middle_school_teachers = $this->teachermodel->trainedUntrained('Middle School');
+		$middle_school_teachers = sizeof($middle_school_teachers->toArray());
+
+		$middle_school_teachers_trained = $this->teachermodel->trainedUntrained('Middle School', 'trained');
+		$middle_school_teachers_trained = sizeof($middle_school_teachers_trained->toArray());
+
+		$middle_school_teachers_ongoing = $this->teachermodel->trainedUntrained('Middle School', 'ongoing');
+		$middle_school_teachers_ongoing = sizeof($middle_school_teachers_ongoing->toArray());
+
+		$middle_school_teachers_untrained = $this->teachermodel->trainedUntrained('Middle School', 'untrained');
+		$middle_school_teachers_untrained = sizeof($middle_school_teachers_untrained->toArray());
+
+		if($middle_school_teachers > 0)
+		{
+			$percentage4 = round(($middle_school_teachers_trained/$middle_school_teachers) * 100, 2);
+			$percentage5 = round(($middle_school_teachers_ongoing/$middle_school_teachers) * 100, 2);
+			$percentage6 = round(($middle_school_teachers_untrained/$middle_school_teachers) * 100, 2);
+		}
+		else
+			$percentage4 = $percentage5 = $percentage6 = 'n/a';
+
+		fputcsv($output, array(
+			'Middle',
+			$middle_school_teachers,
+			$middle_school_teachers_trained,
+			$middle_school_teachers_ongoing,
+			$middle_school_teachers_untrained,
+			$percentage4,
+			$percentage5,
+			$percentage6
+			));
 
 		exit;
 	}

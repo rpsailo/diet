@@ -103,8 +103,56 @@ class Model_Teacher extends System_DbTable
         return $this->fetchAll($select);
     }
 
+    public function distinctDivBlock()
+    {
+        $select = $this->select();
+        $select->from($this->_name, array('sub_divison'=>new Zend_Db_Expr('DISTINCT(`sub_divison`)')));
+        $select->order('sub_divison asc');
+        return $this->fetchAll($select);
+    }
+
+    public function inDivBlock($sub_division = null)
+    {
+        if($sub_division != null)
+        {
+            $select = $this->select();
+            $select->where("sub_division = '".$sub_division."'");
+            $select->order("name asc");
+            return $this->fetchAll($select);
+        }
+        else
+            return 0;
+    }
+
     public function stats()
     {
         return $this->all()->count();
+    }
+
+    public function trainedUntrained($level = '', $status = '')
+    {
+        if($level != '')
+        {
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+            $select->from(array("a"=>$this->_name), array('a.*'));
+            $select->join(array("b"=>'school'), "a.school_id = b.id", array('sub_division', 'type', 'level'));
+
+            $select->where("level = '".$level."'");
+
+            if($status != '')
+            {
+                if($status == 'trained')
+                    $select->where("professional_qualification = 'Master' OR professional_qualification = 'Bachelor' OR professional_qualification = 'Diploma'");
+                elseif($status == 'untrained')
+                    $select->where("professional_qualification = 'Nil'");
+                elseif($status == 'ongoing')
+                    $select->where("professional_qualification = 'Ongoing'");
+            }
+
+            return $this->fetchAll($select);
+        }
+        else
+            return null;
     }
 }

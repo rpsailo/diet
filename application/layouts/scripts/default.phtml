@@ -9,6 +9,35 @@
 	<?php echo $this->headScript(); ?>
 	
 	<?php echo $this->headStyle(); ?>
+<style type='text/css'>
+<?php
+$optionmodel = new Model_Options();
+$options = $optionmodel->row(array(
+	'condition' => array('`key`="colors"')
+	));
+$options = explode(",", $options->value);
+?>
+.diet-navbar {
+	background-color: <?php echo ($options[0] != '')?$options[0]:'#D0DF80'; ?>;
+}
+.diet-navbar .navbar-nav>.active>a,
+.diet-navbar .navbar-nav>.active>a:hover,
+.diet-navbar .navbar-nav>.active>a:focus {
+	/*background-color: #86B5DA;*/
+	background-color: <?php echo ($options[1] != '')?$options[1]:'#B2C25C'; ?>;
+}
+.diet-navbar .navbar-nav>.open>a,
+.diet-navbar .navbar-nav>.open>a:hover,
+.diet-navbar .navbar-nav>.open>a:focus {
+	/*background-color: #C3DFF5;*/
+	background-color: <?php echo ($options[2] != '')?$options[2]:'#BCCE5E'; ?>;
+}
+.diet-navbar .dropdown-menu>li>a:hover,
+.diet-navbar .dropdown-menu>.active>a {
+	background-color: <?php echo ($options[3] != '')?$options[3]:'#9CAC48'; ?>;
+	background-image: none;
+}
+</style>
 </head>
 <body class="<?php echo $this->actionName; ?> <?php echo $this->controllerName; ?> fl full">
 	<div class="navbar navbar-fixed-top hidden-print diet-navbar" role="navigation">

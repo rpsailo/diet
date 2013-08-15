@@ -47,4 +47,17 @@ class Model_Training extends System_DbTable
         else
             return 0;
     }
+
+    public function teachersInProgram($program_id = null)
+    {
+        if($program_id != null)
+        {
+            $select = $this->select();
+            $select->from($this->_name, array('teacher'=>new Zend_Db_Expr('DISTINCT(`teacher_id`)')));
+            $select->where("program_id = ".$program_id);
+            return $this->fetchAll($select);
+        }
+        else
+            return null;
+    }
 }

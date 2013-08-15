@@ -245,4 +245,19 @@ class Model_SchoolStatistic extends System_DbTable
         else
             return null;
     }
+
+    public function teachersInDivBlock($sub_division = null)
+    {
+        if($sub_division != null)
+        {
+            $select = $this->select();
+            $select->setIntegrityCheck(false);
+            $select->from(array("a"=>$this->_name), array("name", "type"));
+            $select->join(array("b"=>'school'), "a.school_id=b.school_id", array() );
+            $select->where("b.sub_division = ".$sub_division);
+            return $this->fetchAll($select);
+        }
+        else
+            return null;
+    }
 }

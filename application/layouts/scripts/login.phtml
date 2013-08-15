@@ -10,10 +10,17 @@
 	
 	<?php echo $this->headStyle(); ?>
 	<style type="text/css">
+<?php
+$optionmodel = new Model_Options();
+$options = $optionmodel->row(array(
+  'condition' => array('`key`="colors"')
+  ));
+$options = explode(",", $options->value);
+?>
       body {
         padding-top: 40px;
         padding-bottom: 40px;
-        background-color: #D0DF80;
+        background-color: <?php echo ($options[0] != '')?$options[0]:'#D0DF80'; ?>;
       }
 
       .form-signin {

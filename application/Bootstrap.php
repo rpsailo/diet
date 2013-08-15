@@ -123,6 +123,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initView()
 	{
 		$this->bootstrap('db');
+
+		$optionmodel = new Model_Options();
+		$options = $optionmodel->row(array(
+			'condition' => array('`key`="diet_district"')
+			));
 		
 		$zoneName = 'default';
 		$templateName = "default";
@@ -160,7 +165,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		{
 			$view->authenticate = false;
 		}
-		$view->diet_district = "Serchhip";
+		$view->diet_district = ($options->value != '')?$options->value:"Aizawl";
 		$view->doctype('XHTML1_TRANSITIONAL');
 		$view->headTitle('DIET '.$view->diet_district.' Training Management System');
 		

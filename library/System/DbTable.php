@@ -218,7 +218,7 @@ class System_DbTable extends Zend_Db_Table_Abstract
 
         if(isset($params['group']) && !empty($params['group']))
   	  	{
-			$select->group($params['group']);
+			// $select->group($params['group']);
         }
 
         if(isset($params['debug']) && $params['debug'] == true)
