@@ -17,11 +17,19 @@ class Form_ProgramToolbar extends Twitter_Bootstrap_Form_Inline
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
+        $this->addElement('text', 'year', array(
+            'label'             => 'Year',
+            'class'             => 'input-medium action-tooltip',
+            'placeholder'       => 'Year',
+            'title'       => 'Enter programme year',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
         $this->addElement('text', 'search', array(
             'label'             => 'Name',
             'class'             => 'input-medium action-tooltip',
-            'placeholder'       => 'Name of Programme',
-            'title'       => 'Name of Programme',
+            'placeholder'       => 'Name',
+            'title'       => 'Enter programme Name',
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 		

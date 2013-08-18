@@ -9,6 +9,7 @@ class Model_Program extends System_DbTable
         $loggedin_user = $auth->getIdentity();
         $new_row = $this->createRow();
         $new_row->name = $data['name'];
+        $new_row->year = $data['year'];
         $new_row->duration = $data['duration'];
         $new_row->no_of_intake = $data['no_of_intake'];
         $new_row->target = $data['target'];
@@ -29,6 +30,7 @@ class Model_Program extends System_DbTable
         $loggedin_user = $auth->getIdentity();
         $row = $this->find($id)->current();
         $row->name = $data['name'];
+        $row->year = $data['year'];
         $row->duration = $data['duration'];
         $row->no_of_intake = $data['no_of_intake'];
         $row->target = $data['target'];

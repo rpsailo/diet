@@ -29,6 +29,7 @@ class ProgramController extends Zend_Controller_Action
 		$url_params = '';
 
     	$search = $this->_request->getParam('search', null);
+    	$year = $this->_request->getParam('year', null);
     	$limit = $this->_request->getParam('limit', 20);
     	$page = $this->_request->getParam('page', 1);
 
@@ -46,6 +47,13 @@ class ProgramController extends Zend_Controller_Action
     		$url_params .= '/search/'.$search;
     		$params['condition'][] = "`name` LIKE '%".$search."%'";
     		$this->programtoolbarform->search->setValue($search);
+    	}
+
+    	if($year != null)
+    	{
+    		$url_params .= '/year/'.$year;
+    		$params['condition'][] = "YEAR(`program_date`) = ".$year;
+    		$this->programtoolbarform->year->setValue($year);
     	}
 
 		if($this->_request->isPost())

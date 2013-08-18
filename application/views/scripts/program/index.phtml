@@ -14,6 +14,7 @@
 				<tr>
 					<th>#</th>
 					<th>Name</th>
+					<th>Programme Date</th>
 					<th>Duration</th>
 					<th>Target</th>
 					<th class="col-2"></th>
@@ -27,6 +28,7 @@
 			<tr>
 				<td><?php echo ($key+1) + ($this->data->getItemCountPerPage()*($this->data->getCurrentPageNumber() - 1));?></td>
 				<td><?php echo $row->name;?></td>
+				<td><?php echo $this->Date($row->program_date, 'd F, Y');?></td>
 				<td><?php echo $row->duration;?> days</td>
 				<td><?php echo $row->target;?></td>
 				<td>					

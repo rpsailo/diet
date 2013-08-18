@@ -15,6 +15,13 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
+        $this->addElement('text', 'year', array(
+            'label'             => 'Year',
+            'class'             => 'input-xlarge',
+            'required'          => true,
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
         $this->addElement('text', 'duration', array(
             'label'             => 'Duration',
             'class'             => 'input-large',
