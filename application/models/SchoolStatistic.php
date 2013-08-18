@@ -10,6 +10,8 @@ class Model_SchoolStatistic extends System_DbTable
             $new_row = $this->createRow();
             $new_row->school_id = $data['school_id'];
             $new_row->year = $data['year'];
+            $new_row->boys_pre = $data['boys_pre'];
+            $new_row->girls_pre = $data['girls_pre'];
             $new_row->boys_1 = $data['boys_1'];
             $new_row->girls_1 = $data['girls_1'];
             $new_row->boys_2 = $data['boys_2'];
@@ -36,6 +38,8 @@ class Model_SchoolStatistic extends System_DbTable
             $new_row = $this->createRow();
             $new_row->school_id = $data['school_id'];
             $new_row->year = $data['year'];
+            $new_row->boys_pre = 0;
+            $new_row->girls_pre = 0;
             $new_row->boys_1 = 0;
             $new_row->girls_1 = 0;
             $new_row->boys_2 = 0;
@@ -71,6 +75,8 @@ class Model_SchoolStatistic extends System_DbTable
                 $row->school_id = $data['school_id'];
             
             $row->year = $data['year'];
+            $row->boys_pre = $data['boys_pre'];
+            $row->girls_pre = $data['girls_pre'];
             $row->boys_1 = $data['boys_1'];
             $row->girls_1 = $data['girls_1'];
             $row->boys_2 = $data['boys_2'];
@@ -100,6 +106,8 @@ class Model_SchoolStatistic extends System_DbTable
                 $row->school_id = $data['school_id'];
             
             $row->year = $data['year'];
+            $row->boys_pre = 0;
+            $row->girls_pre = 0;
             $row->boys_1 = 0;
             $row->girls_1 = 0;
             $row->boys_2 = 0;
@@ -179,7 +187,7 @@ class Model_SchoolStatistic extends System_DbTable
             $select = $this->select();
             
             if($school->level == 'Primary School')            
-                $select->from($this->_name, array('total'=>new Zend_Db_Expr('(`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
+                $select->from($this->_name, array('total'=>new Zend_Db_Expr('(`boys_pre`+`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_pre`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
             else if($school->level == 'Middle School')            
                 $select->from($this->_name, array('total'=>new Zend_Db_Expr('(`boys_5`+`boys_6`+`boys_7`+`boys_8`+`girls_5`+`girls_6`+`girls_7`+`girls_8`)') ));
             
@@ -207,7 +215,7 @@ class Model_SchoolStatistic extends System_DbTable
             $select = $this->select();
             
             if($school->level == 'Primary School')            
-                $select->from($this->_name, array('teachers', 'students'=>new Zend_Db_Expr('(`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
+                $select->from($this->_name, array('teachers', 'students'=>new Zend_Db_Expr('(`boys_pre`+`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_pre`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
             else if($school->level == 'Middle School')            
                 $select->from($this->_name, array('teachers', 'students'=>new Zend_Db_Expr('(`boys_5`+`boys_6`+`boys_7`+`boys_8`+`girls_5`+`girls_6`+`girls_7`+`girls_8`)') ));
             
@@ -232,7 +240,7 @@ class Model_SchoolStatistic extends System_DbTable
             $select = $this->select();
             
             if($school->level == 'Primary School')            
-                $select->from($this->_name, array('year', 'boys_1', 'boys_2', 'boys_3', 'boys_4', 'girls_1', 'girls_2', 'girls_3', 'girls_4', 'teachers', 'students'=>new Zend_Db_Expr('(`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
+                $select->from($this->_name, array('year', 'boys_pre', 'boys_1', 'boys_2', 'boys_3', 'boys_4', 'girls_pre', 'girls_1', 'girls_2', 'girls_3', 'girls_4', 'teachers', 'students'=>new Zend_Db_Expr('(`boys_pre`+`boys_1`+`boys_2`+`boys_3`+`boys_4`+`girls_pre`+`girls_1`+`girls_2`+`girls_3`+`girls_4`)') ));
             else if($school->level == 'Middle School')            
                 $select->from($this->_name, array('year', 'boys_1'=>'boys_5', 'boys_2'=>'boys_6', 'boys_3'=>'boys_7', 'boys_4'=>'boys_8', 'girls_1'=>'girls_5', 'girls_2'=>'girls_6', 'girls_3'=>'girls_7', 'girls_4'=>'girls_8', 'teachers', 'students'=>new Zend_Db_Expr('(`boys_5`+`boys_6`+`boys_7`+`boys_8`+`girls_5`+`girls_6`+`girls_7`+`girls_8`)') ));
             

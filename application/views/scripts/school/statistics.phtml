@@ -14,6 +14,7 @@
 				<tr>
 					<th colspan="2">Year</th>
 					<?php if($this->school->level == "Primary School"): ?>
+					<th>Pre</th>
 					<th>I</th>
 					<th>II</th>
 					<th>III</th>
@@ -32,18 +33,23 @@
 			</thead>
 			<tbody>
 
+		<?php if($this->school->level == "Primary School"): ?>
+		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>11)); ?>
+		<?php elseif($this->school->level == "Middle School"): ?>
 		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>10)); ?>
+		<?php endif;?>
 
 		<?php foreach($this->data as $row): ?>
 			<tr>
 				<td rowspan="3"><?php echo $row->year;?></td>
 				<th>Boys</th>
 				<?php if($this->school->level == "Primary School"): ?>
+				<td><?php echo $row->boys_pre;?></td>
 				<td><?php echo $row->boys_1;?></td>
 				<td><?php echo $row->boys_2;?></td>
 				<td><?php echo $row->boys_3;?></td>
 				<td><?php echo $row->boys_4;?></td>
-				<td><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4;?></td>
+				<td><?php echo $row->boys_pre + $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4;?></td>
 				<?php elseif($this->school->level == "Middle School"): ?>
 				<td><?php echo $row->boys_5;?></td>
 				<td><?php echo $row->boys_6;?></td>
@@ -72,11 +78,12 @@
 			<tr>
 				<th>Girls</th>
 				<?php if($this->school->level == "Primary School"): ?>
+				<td><?php echo $row->girls_pre;?></td>
 				<td><?php echo $row->girls_1;?></td>
 				<td><?php echo $row->girls_2;?></td>
 				<td><?php echo $row->girls_3;?></td>
 				<td><?php echo $row->girls_4;?></td>
-				<td><?php echo $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4;?></td>
+				<td><?php echo $row->girls_pre + $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4;?></td>
 				<?php elseif($this->school->level == "Middle School"): ?>
 				<td><?php echo $row->girls_5;?></td>
 				<td><?php echo $row->girls_6;?></td>
@@ -88,11 +95,12 @@
 			<tr>
 				<th>Total</th>
 				<?php if($this->school->level == "Primary School"): ?>
+				<td><?php echo $row->boys_pre + $row->girls_pre;?></td>
 				<td><?php echo $row->boys_1 + $row->girls_1;?></td>
 				<td><?php echo $row->boys_2 + $row->girls_2;?></td>
 				<td><?php echo $row->boys_3 + $row->girls_3;?></td>
 				<td><?php echo $row->boys_4 + $row->girls_4;?></td>
-				<th><?php echo $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4;?></th>
+				<th><?php echo $row->boys_pre + $row->boys_1 + $row->boys_2 + $row->boys_3 + $row->boys_4 + $row->girls_pre + $row->girls_1 + $row->girls_2 + $row->girls_3 + $row->girls_4;?></th>
 				<?php elseif($this->school->level == "Middle School"): ?>
 				<td><?php echo $row->boys_5 + $row->girls_5;?></td>
 				<td><?php echo $row->boys_6 + $row->girls_6;?></td>
@@ -105,7 +113,11 @@
 			</tbody>
 			<tfoot>
 				<tr>
+					<?php if($this->school->level == "Primary School"): ?>
+					<th colspan="11" class="text-right"><span class="text-info">Total Records: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+					<?php elseif($this->school->level == "Middle School"): ?>
 					<th colspan="10" class="text-right"><span class="text-info">Total Records: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+					<?php endif;?>
 				</tr>
 			</tfoot>
 		</table>

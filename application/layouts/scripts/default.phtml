@@ -48,7 +48,7 @@ $options = explode(",", $options->value);
 				<span class="icon-bar"></span>
 			</button>
 			
-			<a class="navbar-brand" href="/"><i class="icon-desktop"></i> DIET <?php echo $this->diet_district;?> <span>Training Management System</span></a>
+			<a class="navbar-brand col-sm-6" href="/"><i class="icon-desktop"></i> DIET <?php echo $this->diet_district;?> <span>Training Management System</span></a>
 			
 			<div class="nav-collapse collapse">
 				<?php if($this->authenticate):?>
@@ -97,6 +97,7 @@ $options = explode(",", $options->value);
 					<?php endif;?>
 
 				</ul>
+
 				<?php endif;?>
 
 				<?php if($this->authenticate):?>
@@ -106,6 +107,7 @@ $options = explode(",", $options->value);
 						<ul class="dropdown-menu">
 							<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'view')?' class="active"':'';?>><a href="/user/view/id/<?php echo $this->user->id;?>"><i class="icon-user"></i> Profile</a></li>
 							<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'reset-password')?' class="active"':'';?>><a href="/user/reset-password/id/<?php echo $this->user->id;?>"><i class="icon-pencil"></i> Change Password</a></li>
+							<li<?php echo ($this->controllerName == 'options' && $this->actionName == 'index')?' class="active"':'';?>><a href="/options/index"><i class="icon-pencil"></i> Settings</a></li>
 							<li class="divider"></li>
 							<li><a href="/auth/logout"><i class="icon-signout"></i> Logout</a></li>
 						</ul>

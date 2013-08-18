@@ -51,10 +51,16 @@ class Form_Teacher extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
+        $this->addElement('text', 'phone', array(
+            'label'             => 'Phone',
+            'class'             => '',
+            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        ));
+
         $this->addElement('textarea', 'present_address', array(
             'label'             => 'Present Address',
-            'class'             => 'input-lg',
-            'rows'              => 2,
+            'class'             => '',
+            'rows'              => 3,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 

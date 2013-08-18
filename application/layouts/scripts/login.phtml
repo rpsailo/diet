@@ -12,13 +12,20 @@
 	<style type="text/css">
 <?php
 $optionmodel = new Model_Options();
+$logo = $optionmodel->row(array(
+  'condition' => array('`key`="logo"')
+  ));
 $options = $optionmodel->row(array(
   'condition' => array('`key`="colors"')
   ));
 $options = explode(",", $options->value);
 ?>
       body {
+        <?php if($logo->value != null):?>
+        padding-top: 10px;
+        <?php else:?>
         padding-top: 40px;
+        <?php endif; ?>
         padding-bottom: 40px;
         background-color: <?php echo ($options[0] != '')?$options[0]:'#D0DF80'; ?>;
       }
@@ -71,6 +78,11 @@ $options = explode(",", $options->value);
 <body class="<?php echo $this->actionName; ?> <?php echo $this->controllerName; ?> fl full">
 	<div class="container">
     <div class="form-signin">
+      
+      <?php if($logo->value != null):?>
+      <p class="text-center" style="padding:0 0 20px;"><img src="<?php echo $logo->value;?>" width="200" /></p>
+      <?php endif; ?>
+      
       <h2 class="form-signin-heading"><i class="icon-signin"></i> Please sign in</h2>
       <?php echo $this->form;?>
       <?php echo $this->Alert();?>

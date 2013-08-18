@@ -287,10 +287,12 @@ class SchoolController extends Zend_Controller_Action
 		        }
 	        	else if($school->level == 'Middle School')
 	        	{
+	        		$this->schoolstatisticform->removeElement('boys_pre');
 	        		$this->schoolstatisticform->removeElement('boys_1');
 	        		$this->schoolstatisticform->removeElement('boys_2');
 	        		$this->schoolstatisticform->removeElement('boys_3');
 	        		$this->schoolstatisticform->removeElement('boys_4');
+	        		$this->schoolstatisticform->removeElement('girls_pre');
 	        		$this->schoolstatisticform->removeElement('girls_1');
 	        		$this->schoolstatisticform->removeElement('girls_2');
 	        		$this->schoolstatisticform->removeElement('girls_3');
@@ -359,10 +361,12 @@ class SchoolController extends Zend_Controller_Action
 		        }
 	        	else if($school->level == 'Middle School')
 	        	{
+	        		$this->schoolstatisticform->removeElement('boys_pre');
 	        		$this->schoolstatisticform->removeElement('boys_1');
 	        		$this->schoolstatisticform->removeElement('boys_2');
 	        		$this->schoolstatisticform->removeElement('boys_3');
 	        		$this->schoolstatisticform->removeElement('boys_4');
+	        		$this->schoolstatisticform->removeElement('girls_pre');
 	        		$this->schoolstatisticform->removeElement('girls_1');
 	        		$this->schoolstatisticform->removeElement('girls_2');
 	        		$this->schoolstatisticform->removeElement('girls_3');

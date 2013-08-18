@@ -507,7 +507,7 @@ class ReportController extends Zend_Controller_Action
 			$statistic = $this->schoolstatisticmodel->currentStatistic($s->id);
 
 			$ratio = "n/a";
-			if($statistic->teachers > 0)
+			if($statistic && $statistic->teachers > 0)
 				$ratio = "1 : ".round($statistic->students/$statistic->teachers, 2);
 
 			$row = array(

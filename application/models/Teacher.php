@@ -13,6 +13,7 @@ class Model_Teacher extends System_DbTable
         $new_row->name = $data['name'];
         $new_row->sex = $data['sex'];
         $new_row->dob = $data['dob'];
+        $new_row->phone = $data['phone'];
         $new_row->present_address = $data['present_address'];
         $new_row->permanent_address = $data['permanent_address'];
         $new_row->district = $data['district'];
@@ -47,6 +48,7 @@ class Model_Teacher extends System_DbTable
         $row->name = $data['name'];
         $row->sex = $data['sex'];
         $row->dob = $data['dob'];
+        $row->phone = $data['phone'];
         $row->present_address = $data['present_address'];
         $row->permanent_address = $data['permanent_address'];
         $row->district = $data['district'];
