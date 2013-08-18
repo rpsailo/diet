@@ -5,12 +5,14 @@ class TeacherController extends Zend_Controller_Action
 	protected $auth;
 
 	protected $teachermodel;
+	protected $schoolmodel;
 	protected $teacherform;
 	protected $trainingform;
 	protected $teachertoolbarform;
 
 	public function init()
 	{
+		$this->schoolmodel = new Model_School();
 		$this->teachermodel = new Model_Teacher();
 		$this->trainingmodel = new Model_Training();
 		$this->teacherform = new Form_Teacher();
@@ -176,7 +178,12 @@ class TeacherController extends Zend_Controller_Action
         {
         	if($this->teacherform->isValid($_POST))
         	{
-	            $result = $this->teachermodel->create($this->_request->getPost());
+        		$postData = $this->_request->getPost();
+        		$school = $this->schoolmodel->find($postData['school_id'])->current();
+        		$postData['district'] = $school->district;
+        		$postData['sub_division'] = $school->sub_division;
+
+	            $result = $this->teachermodel->create($postData);
 	            if($result)
 	            {
 	            	$this->upload($result);

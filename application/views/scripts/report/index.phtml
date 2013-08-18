@@ -171,14 +171,24 @@
 					<div class="panel-group" id="accordion2">
 						<div class="panel">
 							<div class="panel-heading">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_col2_1">Number of Teachers in Primary School in Sub Division / Block (All Years)</a>
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_col2_1">Number of Teachers in Primary School in Sub Division / Block</a>
 							</div>
 							<div id="collapse_col2_1" class="panel-collapse collapse">
 						      	<div class="panel-body">
 									<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
+										<div class="form-group">
+											<label class="col-lg-4 control-label">Year</label>
+											<div class="col-lg-6">
+												<select name="year" class="form-control">
+													<?php for($f=date('Y');$f>=2000;$f--):?>
+													<option value="<?php echo $f;?>"><?php echo $f;?></option>
+													<?php endfor; ?>
+												</select>
+											</div>
+										</div>
 
 										<p class="text-center"><button name="export" value="21" class="btn btn-default">Export CSV <i class="icon-external-link"></i></button></p>
-										<p class="text-center text-muted">All year statistics of the number of teachers in Primary School in each sub division or block.</p>
+										<p class="text-center text-muted">Statistics of the number of teachers in Primary School in each sub division or block.</p>
 									</form>
 								</div>
 							</div>
@@ -186,14 +196,24 @@
 
 						<div class="panel">
 							<div class="panel-heading">
-								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_col2_2">Number of Teachers in Middle School in Sub Division / Block (All Years)</a>
+								<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse_col2_2">Number of Teachers in Middle School in Sub Division / Block</a>
 							</div>
 							<div id="collapse_col2_2" class="panel-collapse collapse">
 						      	<div class="panel-body">
 									<form action="/report/generate/" class="form form-horizontal report-form" method="POST">
+										<div class="form-group">
+											<label class="col-lg-4 control-label">Year</label>
+											<div class="col-lg-6">
+												<select name="year" class="form-control">
+													<?php for($f=date('Y');$f>=2000;$f--):?>
+													<option value="<?php echo $f;?>"><?php echo $f;?></option>
+													<?php endfor; ?>
+												</select>
+											</div>
+										</div>
 
 										<p class="text-center"><button name="export" value="22" class="btn btn-default">Export CSV <i class="icon-external-link"></i></button></p>
-										<p class="text-center text-muted">All year statistics of the number of teachers in Middle School in each sub division or block.</p>
+										<p class="text-center text-muted">Statistics of the number of teachers in Middle School in each sub division or block.</p>
 									</form>
 								</div>
 							</div>

@@ -100,7 +100,7 @@ class OptionsController extends Zend_Controller_Action
 			$resizer->setImage($name);
 			$resizer->resizeImage($iWidth,$iHeight);
 			
-			echo $resizer->saveImage('uploads/logo/logo'.$resizer->getExtension(),100);
+			$resizer->saveImage('uploads/logo/logo'.$resizer->getExtension(),100);
 				
 			unlink($name);
 				

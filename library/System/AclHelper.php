@@ -44,6 +44,7 @@ class System_AclHelper
 		$this->acl->addResource(new Zend_Acl_Resource("default:program:trainee"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:program:add-trainee"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:program:remove-trainee"), "default");
+		$this->acl->addResource(new Zend_Acl_Resource("default:program:trainees"), "default");
 
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:add"), "default");
 		$this->acl->addResource(new Zend_Acl_Resource("default:school:index"), "default");
@@ -111,6 +112,7 @@ class System_AclHelper
 			"default:program:trainee",
 			"default:program:add-trainee",
 			"default:program:remove-trainee",
+			"default:program:trainees",
 			"default:school:add",
 			"default:school:index",
 			"default:school:edit",

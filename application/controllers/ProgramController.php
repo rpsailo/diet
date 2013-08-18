@@ -9,6 +9,7 @@ class ProgramController extends Zend_Controller_Action
 	protected $programtoolbarform;
 	protected $trainingmodel;
 	protected $traineeform;
+	protected $traineestoolbarform;
 
 	public function init()
 	{
@@ -17,6 +18,7 @@ class ProgramController extends Zend_Controller_Action
 		$this->programtoolbarform = new Form_ProgramToolbar();
 		$this->trainingmodel = new Model_Training();
 		$this->traineeform = new Form_Trainee();
+		$this->traineestoolbarform = new Form_TraineesToolbar();
 
 		$this->_alert = $this->_helper->getHelper("FlashMessenger");
 		$this->auth = Zend_Auth::getInstance();
@@ -264,6 +266,72 @@ class ProgramController extends Zend_Controller_Action
 			$this->_alert->addMessage(array("message"=>'<i class="icon icon-exclamation-sign"></i> Incorrect training ID.', "status"=>"error"));
 			$this->_redirect('/teacher/');
 		}
+	}
+
+	public function traineesAction()
+	{
+		$page = $this->_request->getParam('page', 1);
+
+		$url_params = '';
+
+    	$search = $this->_request->getParam('search', null);
+    	$limit = $this->_request->getParam('limit', 20);
+    	$page = $this->_request->getParam('page', 1);
+    	$program = $this->_request->getParam('program', null);
+    	$school = $this->_request->getParam('school', null);
+
+		$params = array(
+    		'page'		=> $page,
+    		'order'		=> 'teacher.name asc',
+    		'condition'	=> array(),
+    		'table'			=> 'training',
+			'field'			=> 'training.*',
+			'join'			=> array(
+				array(
+					'table' => 'teacher',
+					'on'	=> 'training.teacher_id = teacher.id',
+					'field'	=> array('teacher_name'=>'teacher.name')
+				),
+				array(
+					'table' => 'school',
+					'on'	=> 'teacher.school_id = school.id',
+					'field'	=> array('school_id'=>'school.id', 'school_name'=>'school.name')
+				),
+				array(
+					'table' => 'program',
+					'on'	=> 'training.program_id = program.id',
+					'field'	=> array('program_name'=>'program.name')
+				)
+			)
+		);
+
+		$this->traineestoolbarform->limit->setValue($limit);
+
+    	if($search != null)
+    	{
+    		$url_params .= '/search/'.$search;
+    		$params['condition'][] = "teacher.name LIKE '%".$search."%'";
+    		$this->traineestoolbarform->search->setValue($search);
+    	}
+    	if($program != null)
+    	{
+    		$url_params .= '/program/'.$program;
+    		$params['condition'][] = "program_id = ".$program;
+    		$this->traineestoolbarform->program->setValue($program);
+    	}
+    	if($school != null)
+    	{
+    		$url_params .= '/school/'.$school;
+    		$params['condition'][] = "school_id = ".$school;
+    		$this->traineestoolbarform->school->setValue($school);
+    	}
+
+		if($this->_request->isPost())
+    		$this->_redirect('/program/trainees'.$url_params.'/page/'.$page.'/limit/'.$limit);
+		
+
+		$this->view->data = $this->trainingmodel->paginate($params);
+		$this->view->form = $this->traineestoolbarform;
 	}
 }
 

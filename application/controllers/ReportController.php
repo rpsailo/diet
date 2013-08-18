@@ -67,11 +67,13 @@ class ReportController extends Zend_Controller_Action
 						break;
 
 					case 21:
-						$this->numberOfTeachersInMiddleSchoolInDivBlock();
+						$year = $this->_request->getParam('year', null);
+						$this->numberOfTeachersInPrimarySchoolInDivBlock($year);
 						break;
 
 					case 22:
-						$this->numberOfTeachersInPrimarySchoolInDivBlock();
+						$year = $this->_request->getParam('year', null);
+						$this->numberOfTeachersInMiddleSchoolInDivBlock($year);
 						break;
 					
 					case 23:
@@ -163,8 +165,8 @@ class ReportController extends Zend_Controller_Action
 			{
 				foreach($statistics as $s)
 				{
-					$total_boys = $s->boys_1 + $s->boys_2 + $s->boys_3 + $s->boys_4;
-					$total_girls = $s->girls_1 + $s->girls_2 + $s->girls_3 + $s->girls_4;
+					$total_boys = $s->boys_pre + $s->boys_1 + $s->boys_2 + $s->boys_3 + $s->boys_4;
+					$total_girls = $s->girls_pre +  $s->girls_1 + $s->girls_2 + $s->girls_3 + $s->girls_4;
 					$total_students = $total_boys + $total_girls;
 
 					$ratio = 'n/a';
@@ -533,11 +535,13 @@ class ReportController extends Zend_Controller_Action
 	{
 		$school = $this->schoolmodel->find($school_id)->current();
 		$filename = str_replace(' ','_',strtolower($school->name."_".$school->level));
+		$filename = str_replace(",","",$filename);
 		$filename = str_replace("'","",$filename);
+		$filename = urlencode($filename);
 
 		header('Content-Type: text/csv; charset=utf-8');
 		header('Content-Disposition: attachment; filename='.$filename.'-'.date('dmy').'.csv');
-		
+
 		// create a file pointer connected to the output stream
 		$output = fopen('php://output', 'w');
 
@@ -558,6 +562,9 @@ class ReportController extends Zend_Controller_Action
 			fputcsv($output, array(
 				"Sl No",
 				"Year",
+				"Pre School (Boys)",
+				"Pre School (Girls)",
+				"Pre School (Total)",
 				"Class I (Boys)",
 				"Class I (Girls)",
 				"Class I (Total)",
@@ -606,28 +613,57 @@ class ReportController extends Zend_Controller_Action
 		{
 			$ratio = "n/a";
 			if($s->teachers > 0)
-				$ratio = "1 : ".round($s->students/$s->teachers, 2);
+				$ratio = "1 : ".round($s->students/$s->teachers);
 
-			$row = array(
-				++$i,
-				$s->year,
-				$s->boys_1,
-				$s->girls_1,
-				$s->boys_1 + $s->girls_1,
-				$s->boys_2,
-				$s->girls_2,
-				$s->boys_2 + $s->girls_2,
-				$s->boys_3,
-				$s->girls_3,
-				$s->boys_3 + $s->girls_3,
-				$s->boys_4,
-				$s->girls_4,
-				$s->boys_4 + $s->girls_4,
-				$s->students,
-				$s->teachers,
-				$ratio
+			if($school->level == "Primary School")
+			{
+				$row = array(
+					++$i,
+					$s->year,
+					$s->boys_pre,
+					$s->girls_pre,
+					$s->boys_pre + $s->girls_pre,
+					$s->boys_1,
+					$s->girls_1,
+					$s->boys_1 + $s->girls_1,
+					$s->boys_2,
+					$s->girls_2,
+					$s->boys_2 + $s->girls_2,
+					$s->boys_3,
+					$s->girls_3,
+					$s->boys_3 + $s->girls_3,
+					$s->boys_4,
+					$s->girls_4,
+					$s->boys_4 + $s->girls_4,
+					$s->students,
+					$s->teachers,
+					$ratio
 				);
-			fputcsv($output, $row);
+				fputcsv($output, $row);
+			}
+			else if($school->level == "Middle School")
+			{
+				$row = array(
+					++$i,
+					$s->year,
+					$s->boys_1,
+					$s->girls_1,
+					$s->boys_1 + $s->girls_1,
+					$s->boys_2,
+					$s->girls_2,
+					$s->boys_2 + $s->girls_2,
+					$s->boys_3,
+					$s->girls_3,
+					$s->boys_3 + $s->girls_3,
+					$s->boys_4,
+					$s->girls_4,
+					$s->boys_4 + $s->girls_4,
+					$s->students,
+					$s->teachers,
+					$ratio
+				);
+				fputcsv($output, $row);
+			}
 		}
 
 		exit;
@@ -679,10 +715,10 @@ class ReportController extends Zend_Controller_Action
 		exit;
 	}
 
-	public function numberOfTeachersInMiddleSchoolInDivBlock()
+	public function numberOfTeachersInMiddleSchoolInDivBlock($year)
 	{
 		header('Content-Type: text/csv; charset=utf-8');
-		header('Content-Disposition: attachment; filename=teachers_in_primaryschool_in_divisionblock-'.date('dmy').'.csv');
+		header('Content-Disposition: attachment; filename=teachers_in_middleschool_in_divisionblock_'.$year.'-'.date('dmy').'.csv');
 		
 		// create a file pointer connected to the output stream
 		$output = fopen('php://output', 'w');
@@ -690,27 +726,43 @@ class ReportController extends Zend_Controller_Action
 		// output the column headings
 		fputcsv($output, array(
 			"Sl No",
+			"Year",
 			"Sub Division / Block",
-			"No of Teachers",
-			"Year"
+			"Government",
+			"Deficit",
+			"Aided",
+			"Private",
+			"Total"
 		));
 
 		// Add one blank line after headings
-		fputcsv($output, array("","","","","","", ""));
-
-		$teachers = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division);
+		fputcsv($output, array("","","","","","","","",""));
 
 		$data = $this->schoolmodel->divisions();
 
 		$i = 0;
 		foreach($data as $d)
 		{
-			$teachers = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division);
+			$teachers_govt = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Middle School", "Govt");
+			$teachers_deficit = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Middle School", "Deficit");
+			// $teachers_adhoc = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Middle School", "Adhoc");
+			$teachers_aided = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Middle School", "Aided");
+			$teachers_private = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Middle School", "Private");
+
+			$c1 = $teachers_govt;
+			$c2 = $teachers_deficit;
+			$c3 = $teachers_aided;
+			$c4 = $teachers_private;
 
 			$row = array(
 				++$i,
+				$year,
 				$d->sub_division,
-				sizeof($teachers->toArray())
+				$c1,
+				$c2,
+				$c3,
+				$c4,
+				$c1+$c2+$c3+$c4
 				);
 			fputcsv($output, $row);
 		}
@@ -718,10 +770,10 @@ class ReportController extends Zend_Controller_Action
 		exit;
 	}
 
-	public function numberOfTeachersInPrimarySchoolInDivBlock()
+	public function numberOfTeachersInPrimarySchoolInDivBlock($year)
 	{
 		header('Content-Type: text/csv; charset=utf-8');
-		header('Content-Disposition: attachment; filename=all_programmes_detail-'.date('dmy').'.csv');
+		header('Content-Disposition: attachment; filename=teachers_in_primaryschool_in_divisionblock_'.$year.'-'.date('dmy').'.csv');
 		
 		// create a file pointer connected to the output stream
 		$output = fopen('php://output', 'w');
@@ -729,24 +781,43 @@ class ReportController extends Zend_Controller_Action
 		// output the column headings
 		fputcsv($output, array(
 			"Sl No",
+			"Year",
 			"Sub Division / Block",
-			"No of Teachers"
+			"Government",
+			"Deficit",
+			"Aided",
+			"Private",
+			"Total"
 		));
 
 		// Add one blank line after headings
-		fputcsv($output, array("","","","","","", ""));
+		fputcsv($output, array("","","","","","","","",""));
 
 		$data = $this->schoolmodel->divisions();
 
 		$i = 0;
 		foreach($data as $d)
 		{
-			$teachers = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division);
+			$teachers_govt = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Primary School", "Govt");
+			$teachers_deficit = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Primary School", "Deficit");
+			// $teachers_adhoc = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Primary School", "Adhoc");
+			$teachers_aided = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Primary School", "Aided");
+			$teachers_private = $this->schoolstatisticmodel->teachersInDivBlock($d->sub_division, $year, "Primary School", "Private");
+
+			$c1 = $teachers_govt;
+			$c2 = $teachers_deficit;
+			$c3 = $teachers_aided;
+			$c4 = $teachers_private;
 
 			$row = array(
 				++$i,
+				$year,
 				$d->sub_division,
-				sizeof($teachers->toArray())
+				$c1,
+				$c2,
+				$c3,
+				$c4,
+				$c1+$c2+$c3+$c4
 				);
 			fputcsv($output, $row);
 		}

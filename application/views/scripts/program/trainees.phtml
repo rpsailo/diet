@@ -1,0 +1,64 @@
+<ul class="breadcrumb">
+	<li><a href="/">Home</a></li>
+  	<li class="active">List Trainees</li>
+</ul>
+<fieldset>
+	<legend><i class="icon-list-ul"></i> List Trainees</legend>
+	<?php echo $this->form;?>
+	<div class="row-fluid">
+		<table class="table table-striped table-condensed table-hover teacher-training-list">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Teacher Name</th>
+					<th>School</th>
+					<th>Programme</th>
+					<th>From</th>
+					<th>To</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+
+		<?php echo $this->partial('partials/table-empty.phtml', array('data'=>$this->data,'colspan'=>7)); ?>
+
+		<?php foreach($this->data as $key=>$row): ?>
+			<tr>
+				<td><?php echo ($key+1) + ($this->data->getItemCountPerPage()*($this->data->getCurrentPageNumber() - 1));?></td>
+				<td>
+					<a href="/teacher/view/id/<?php echo $row->teacher_id;?>" data-target="#view_teacher_<?php echo $row->id;?>" target="_blank" data-toggle="modal" title="Click to view detail" class="action-tooltip"><?php echo $row->teacher_name;?></a>
+
+					<div id="view_teacher_<?php echo $row->id;?>" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+									<h3 id="view_teacher_<?php echo $row->id;?>_label">Teacher: <?php echo $row->teacher_name;?></h3>
+								</div>
+								<div class="modal-body">
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-info btn-sm" data-dismiss="modal" aria-hidden="true">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>					
+				</td>
+				<td><?php echo $row->school_name; ?></td>
+				<td><?php echo $row->program_name; ?></td>
+				<td><?php echo $this->Date($row->from, 'dS F, Y');?></td>
+				<td><?php echo $this->Date($row->to, 'dS F, Y');?></td>
+				<td><?php echo $row->status; ?></td>
+			</tr>
+		<?php endforeach;?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<th colspan="7" class="text-right"><span class="text-info">Total Trainees: <?php echo $this->data->getTotalItemCount(); ?></span></th>
+				</tr>
+			</tfoot>
+		</table>
+
+		<?php echo $this->data; ?>
+	</div>
+</fieldset>

@@ -37,7 +37,7 @@ class Form_SchoolToolbar extends Twitter_Bootstrap_Form_Inline
             'label'             => 'Type',
             'title'             => 'Type',
             'class'             => 'input-medium action-tooltip',
-            'multiOptions'      => array(''=>'Type - All','Govt'=>'Govt','Deficit'=>'Deficit','Adhoc'=>'Adhoc','Aided'=>'Aided','Private'=>'Private')
+            'multiOptions'      => array(''=>'Type - All','Govt'=>'Govt','Deficit'=>'Deficit','Aided'=>'Aided','Private'=>'Private')
         ));
 
         $this->addElement('select', 'level', array(

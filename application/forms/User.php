@@ -68,12 +68,26 @@ class Form_User extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('text', 'professional_qualification', array(
+        // $this->addElement('text', 'professional_qualification', array(
+        //     'label'             => 'Professional Qualification',
+        //     'class'             => 'input-xlarge',
+        //     'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+        // ));
+
+        $this->addElement('select', 'professional_qualification', array(
             'label'             => 'Professional Qualification',
             'class'             => 'input-xlarge',
-            'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
+            'required'          => true,
+            'multiOptions'      => array(
+                ''=>'---Select Professional Qualification---',
+                'Master'=>'Master',
+                'Bachelor'=>'Bachelor',
+                'Diploma'=>'Diploma',
+                'Ongoing'=>'Ongoing',
+                'Nil'=>'Nil'
+                )
         ));
-
+        
         $this->addElement('text', 'other_qualification', array(
             'label'             => 'Other Qualification',
             'class'             => 'input-xlarge',

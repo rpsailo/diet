@@ -254,16 +254,25 @@ class Model_SchoolStatistic extends System_DbTable
             return null;
     }
 
-    public function teachersInDivBlock($sub_division = null)
+    public function teachersInDivBlock($sub_division = null, $year = null, $level, $type = '')
     {
         if($sub_division != null)
         {
             $select = $this->select();
             $select->setIntegrityCheck(false);
-            $select->from(array("a"=>$this->_name), array("name", "type"));
-            $select->join(array("b"=>'school'), "a.school_id=b.school_id", array() );
-            $select->where("b.sub_division = ".$sub_division);
-            return $this->fetchAll($select);
+            $select->from(array("a"=>$this->_name), array("total_teachers"=>new Zend_Db_Expr('SUM(`teachers`)')));
+            $select->join(array("b"=>'school'), "a.school_id=b.id", array() );
+            $select->where("b.sub_division = '".$sub_division."'");
+            $select->where("b.level = '".$level."'");
+
+            if($type != '')
+                $select->where("b.type = '".$type."'");
+
+            if($year != null)
+                $select->where("a.year = ".$year);
+
+            $row = $this->fetchRow($select);
+            return $row->total_teachers;
         }
         else
             return null;

@@ -66,6 +66,7 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
                 'Master'=>'Master',
                 'Bachelor'=>'Bachelor',
                 'Diploma'=>'Diploma',
+                'Ongoing'=>'Ongoing',
                 'Nil'=>'Nil'
                 )
         ));
@@ -74,7 +75,7 @@ class Form_TeacherToolbar extends Twitter_Bootstrap_Form_Inline
             'label'             => 'TET',
             'class'             => 'input-small action-tooltip pull-left',
             'title'             => 'Teacher Eligibility Test',
-            'multiOptions'      => array(''=>'All', 'A'=>'A', 'B'=>'B')
+            'multiOptions'      => array(''=>'All', 'A'=>'A', 'B'=>'B', 'None'=>'None')
         ));
 
         $this->addElement('select', 'status', array(
