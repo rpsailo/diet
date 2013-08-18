@@ -15,9 +15,11 @@ class Form_Program extends Twitter_Bootstrap_Form_Horizontal
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
 
-        $this->addElement('text', 'year', array(
-            'label'             => 'Year',
+        $this->addElement('text', 'program_date', array(
+            'label'             => 'Programme Date',
             'class'             => 'input-xlarge',
+            'class'             => 'datepicker input-medium',
+            'append'            =>  '<i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>',
             'required'          => true,
             'filters'           => array( new Zend_Filter_StringTrim(), "StripTags")
         ));
