@@ -29,8 +29,8 @@ class Zend_View_Helper_Ratio
 				'order' => 'created_at desc'
 				));
 
-			$teacher += $school->no_of_teachers;
-			$pupils += ($statistic->boys_1 + $statistic->boys_2 + $statistic->boys_3 + $statistic->boys_4 + $statistic->boys_5 + $statistic->boys_6 + $statistic->boys_7 + $statistic->boys_8 + $statistic->girls_1 + $statistic->girls_2 + $statistic->girls_3 + $statistic->girls_4 + $statistic->girls_5 + $statistic->girls_6 + $statistic->girls_7 + $statistic->girls_8);
+			$teacher += $statistic->teachers;
+			$pupils += ($statistic->boys_pre + $statistic->boys_1 + $statistic->boys_2 + $statistic->boys_3 + $statistic->boys_4 + $statistic->boys_5 + $statistic->boys_6 + $statistic->boys_7 + $statistic->boys_8 + $statistic->girls_pre + $statistic->girls_1 + $statistic->girls_2 + $statistic->girls_3 + $statistic->girls_4 + $statistic->girls_5 + $statistic->girls_6 + $statistic->girls_7 + $statistic->girls_8);
 		}
 
 		if($teacher > 0)

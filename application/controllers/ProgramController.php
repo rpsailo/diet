@@ -128,6 +128,7 @@ class ProgramController extends Zend_Controller_Action
 		        }
 				
 				$this->programform->populate($program->toArray());
+				$this->programform->program_date->setValue(date("Y-m-d", strtotime($program->program_date)));
 				$this->programform->faculties->setValue(explode(",", $program->faculties));
 				$this->view->form = $this->programform;
 				$this->view->program = $program;
