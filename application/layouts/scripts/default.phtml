@@ -62,7 +62,9 @@ $options = explode(",", $options->value);
 					<li class="dropdown<?php echo ($this->controllerName == 'school')?' active':'';?>">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">School <b class="caret"></b></a>
 						<ul class="dropdown-menu">
+							<?php if($this->user->role == 'administrator'): ?>
 							<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'add')?' class="active"':'';?>><a href="/school/add/">Add School</a></li>
+							<?php endif;?>
 							<li<?php echo ($this->controllerName == 'school' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school/">List Schools</a></li>
 							<li<?php echo ($this->controllerName == 'school-statistic' && $this->actionName == 'index')?' class="active"':'';?>><a href="/school-statistic/">School Statistics</a></li>
 						</ul>
@@ -71,7 +73,9 @@ $options = explode(",", $options->value);
 					<li class="dropdown<?php echo ($this->controllerName == 'program')?' active':'';?>">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Programme <b class="caret"></b></a>
 						<ul class="dropdown-menu">
+							<?php if($this->user->role == 'administrator'): ?>
 							<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'add')?' class="active"':'';?>><a href="/program/add/">Add Program</a></li>
+							<?php endif;?>
 							<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'index')?' class="active"':'';?>><a href="/program/">List Programs</a></li>
 							<li<?php echo ($this->controllerName == 'program' && $this->actionName == 'trainees')?' class="active"':'';?>><a href="/program/trainees">List Trainees</a></li>
 						</ul>
@@ -80,7 +84,9 @@ $options = explode(",", $options->value);
 					<li class="dropdown<?php echo ($this->controllerName == 'teacher')?' active':'';?>">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Teacher <b class="caret"></b></a>
 						<ul class="dropdown-menu">
+							<?php if($this->user->role == 'administrator'): ?>
 							<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'add')?' class="active"':'';?>><a href="/teacher/add/">Add Teacher</a></li>
+							<?php endif;?>
 							<li<?php echo ($this->controllerName == 'teacher' && $this->actionName == 'index')?' class="active"':'';?>><a href="/teacher/">List Teachers</a></li>
 						</ul>
 					</li>
@@ -108,7 +114,9 @@ $options = explode(",", $options->value);
 						<ul class="dropdown-menu">
 							<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'view')?' class="active"':'';?>><a href="/user/view/id/<?php echo $this->user->id;?>"><i class="icon-user"></i> Profile</a></li>
 							<li<?php echo ($this->controllerName == 'user' && $this->actionName == 'reset-password')?' class="active"':'';?>><a href="/user/reset-password/id/<?php echo $this->user->id;?>"><i class="icon-pencil"></i> Change Password</a></li>
+							<?php if($this->user->role == 'administrator'): ?>
 							<li<?php echo ($this->controllerName == 'options' && $this->actionName == 'index')?' class="active"':'';?>><a href="/options/index"><i class="icon-pencil"></i> Settings</a></li>
+							<?php endif;?>
 							<li class="divider"></li>
 							<li><a href="/auth/logout"><i class="icon-signout"></i> Logout</a></li>
 						</ul>
