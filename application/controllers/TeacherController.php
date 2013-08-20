@@ -7,6 +7,7 @@ class TeacherController extends Zend_Controller_Action
 	protected $teachermodel;
 	protected $schoolmodel;
 	protected $teacherform;
+	protected $trainingmodel;
 	protected $trainingform;
 	protected $teachertoolbarform;
 
@@ -358,7 +359,12 @@ class TeacherController extends Zend_Controller_Action
 			            $result = $this->trainingmodel->create($this->_request->getPost());
 			            if($result)
 			            {
-			            	$this->teachermodel->update(array('training_attended'=>'Yes'), 'id='.$teacher->id);
+			            	$no_of_training = $this->trainingmodel->trainingCount($teacher->id);
+			            	
+			            	$this->teachermodel->update(array(
+			            		'training_attended'=>'Yes',
+			            		'no_of_training' => $no_of_training
+			            		), 'id='.$teacher->id);
 
 			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> New training added for "'.$teacher->name.'".', "status"=>"success"));
 			                $this->_redirect("/teacher/training/id/".$teacher->id);
@@ -398,6 +404,12 @@ class TeacherController extends Zend_Controller_Action
 			{
 				$teacher_id = $training->teacher_id;
 				$training->delete();
+
+            	$no_of_training = $this->trainingmodel->trainingCount($teacher_id);
+            	
+            	$this->teachermodel->update(array(
+            		'no_of_training' => $no_of_training
+            		), 'id='.$teacher_id);
 
 				if(!$this->trainingmodel->teacherCount($teacher_id))
 					$this->teachermodel->update(array('training_attended'=>'No'), 'id='.$teacher_id);

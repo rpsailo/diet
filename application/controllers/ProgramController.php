@@ -4,6 +4,7 @@ class ProgramController extends Zend_Controller_Action
 {
 	protected $auth;
 
+	protected $teachermodel;
 	protected $programmodel;
 	protected $programform;
 	protected $programtoolbarform;
@@ -13,6 +14,7 @@ class ProgramController extends Zend_Controller_Action
 
 	public function init()
 	{
+		$this->teachermodel = new Model_Teacher();
 		$this->programmodel = new Model_Program();
 		$this->programform = new Form_Program();
 		$this->programtoolbarform = new Form_ProgramToolbar();
@@ -221,9 +223,16 @@ class ProgramController extends Zend_Controller_Action
 		        {
 		        	if($this->traineeform->isValid($_POST))
 		        	{
-			            $result = $this->trainingmodel->create($this->_request->getPost());
+		        		$postData = $this->_request->getPost();
+			            $result = $this->trainingmodel->create($postData);
 			            if($result)
 			            {
+			            	$no_of_training = $this->trainingmodel->trainingCount($postData['teacher_id']);
+			            	
+			            	$this->teachermodel->update(array(
+			            		'no_of_training' => $no_of_training
+			            		), "id=".$postData['teacher_id']);
+
 			                $this->_alert->addMessage(array("message"=>'<i class="icon icon-ok"></i> New trainee added for "'.$program->name.'".', "status"=>"success"));
 			                $this->_redirect("/program/trainee/id/".$program->id);
 			            }
@@ -262,6 +271,13 @@ class ProgramController extends Zend_Controller_Action
 			{
 				$teacher_id = $training->teacher_id;
 				$training->delete();
+
+            	$no_of_training = $this->trainingmodel->trainingCount($training->teacher_id);
+            	
+            	$this->teachermodel->update(array(
+            		'no_of_training' => $no_of_training
+            		), "id=".$training->teacher_id);
+
                 $this->_redirect("/teacher/training/id/".$teacher_id);
 			}
 			else
